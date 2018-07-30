@@ -12,6 +12,21 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "linters": {
+      "{pages,components,layouts,middleware,plugins,store}/**/*.{vue,js}": [
+        "npm run lint",
+        "eslint --fix",
+        "git add"
+      ]
+    },
+    "ignore": []
+  },
   "dependencies": {
     "nuxt": "^1.0.0"
   },
@@ -20,6 +35,8 @@
     "eslint": "^4.15.0",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",
-    "eslint-plugin-vue": "^4.0.0"
+    "eslint-plugin-vue": "^4.0.0",
+    "husky": "^1.0.0-rc.13",
+    "lint-staged": "^7.2.0"
   }
 }
