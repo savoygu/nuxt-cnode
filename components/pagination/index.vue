@@ -4,7 +4,7 @@
         :class="{'is-disabled': 1 === currentPage}"
         @click="setCurrentPage('prev')">
       <slot name="prev">
-        <i class="cn-icon-arrow_left iconfont"></i>
+        <i class="cn-icon-arrow_left"></i>
       </slot>
     </li>
     <li class="cn-pagination__item"
@@ -19,7 +19,7 @@
         @mouseenter="quickprevIconName = 'cn-icon-db-arrow_left'"
         @mouseleave="quickprevIconName = 'cn-icon-more'"
         @click="setCurrentPage('prevMore')">
-      <i class="cn-pagination__icon iconfont" :class="quickprevIconName"></i>
+      <i class="cn-pagination__icon" :class="quickprevIconName"></i>
     </li>
     <li class="cn-pagination__item"
         v-for="pager in pagers"
@@ -33,7 +33,7 @@
         @mouseenter="quicknextIconName = 'cn-icon-db-arrow_right'"
         @mouseleave="quicknextIconName = 'cn-icon-more'"
         @click="setCurrentPage('nextMore')">
-      <i class="cn-pagination__icon iconfont" :class="quicknextIconName"></i>
+      <i class="cn-pagination__icon" :class="quicknextIconName"></i>
     </li>
     <li class="cn-pagination__item"
         v-for="pager in rightPagers"
@@ -46,7 +46,7 @@
         :class="{'is-disabled': pageCount === currentPage}"
         @click="setCurrentPage('next')">
       <slot name="next">
-        <i class="cn-icon-arrow_right iconfont"></i>
+        <i class="cn-icon-arrow_right"></i>
       </slot>
     </li>
   </ul>

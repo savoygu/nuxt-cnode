@@ -9,6 +9,8 @@
         <cn-col>4</cn-col>
         <cn-col>5</cn-col>
       </cn-row>
+      {{currentPage}}
+      <cn-pagination :page-count="pageCount" :current-page="currentPage" @change="handlePageChange"/>
       <h1 class="title">
         nuxt-cnode
       </h1>
@@ -34,13 +36,28 @@
 import AppLogo from '~/components/AppLogo.vue'
 import CnRow from '~/components/row'
 import CnCol from '~/components/col'
+import CnPagination from '~/components/pagination'
 
 export default {
   components: {
     AppLogo,
     CnRow,
-    CnCol
-  }
+    CnCol,
+    CnPagination
+  },
+
+  data() {
+    return {
+      pageCount: 10,
+      currentPage: 1
+    }
+  },
+
+  methods: {
+    handlePageChange (page) {
+      this.currentPage = page
+    }
+  },
 }
 </script>
 
