@@ -1,6 +1,6 @@
-# fang
+# nuxt-cnode
 
-> 房字典
+> 基于 [Nuxt](https://github.com/nuxt/nuxt.js) (服务器端渲染 [SSR](https://ssr.vuejs.org/zh/)) 构建 [CNode](https://cnodejs.org/) 社区
 
 ## Build Setup
 
@@ -20,4 +20,3 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
-
