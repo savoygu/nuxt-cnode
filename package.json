@@ -1,7 +1,7 @@
 {
-  "name": "fang",
+  "name": "nuxt-cnode",
   "version": "1.0.0",
-  "description": "房字典",
+  "description": "基于 Nuxt (服务器端渲染 SSR) 构建 CNode 社区",
   "author": "savoygu <savoygu@gmail.com>",
   "private": true,
   "scripts": {
