@@ -3,11 +3,11 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'fang',
+    title: 'Nuxt Cnode',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '房字典' }
+      { hid: 'description', name: 'description', content: '基于 Nuxt (服务器端渲染 SSR) 构建 CNode 社区' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
