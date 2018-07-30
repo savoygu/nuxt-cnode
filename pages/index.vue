@@ -2,12 +2,20 @@
   <section class="container">
     <div>
       <app-logo/>
+      <cn-row type="flex">
+        <cn-col>1</cn-col>
+        <cn-col>2</cn-col>
+        <cn-col>3</cn-col>
+        <cn-col>4</cn-col>
+        <cn-col>5</cn-col>
+      </cn-row>
       <h1 class="title">
-        fang
+        nuxt-cnode
       </h1>
       <h2 class="subtitle">
-        房字典
+        基于 Nuxt (服务器端渲染 SSR) 构建 CNode 社区
       </h2>
+      <button class="default__button">Hello World</button>
       <div class="links">
         <a
           href="https://nuxtjs.org/"
@@ -24,15 +32,19 @@
 
 <script>
 import AppLogo from '~/components/AppLogo.vue'
+import CnRow from '~/components/row'
+import CnCol from '~/components/col'
 
 export default {
   components: {
-    AppLogo
+    AppLogo,
+    CnRow,
+    CnCol
   }
 }
 </script>
 
-<style>
+<style lang="scss">
 .container {
   min-height: 100vh;
   display: flex;
@@ -62,4 +74,3 @@ export default {
   padding-top: 15px;
 }
 </style>
-

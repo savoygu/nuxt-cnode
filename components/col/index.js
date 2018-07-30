@@ -1,5 +1,5 @@
 export default {
-  name: 'NCol',
+  name: 'CnCol',
 
   props: {
     span: {
@@ -23,7 +23,7 @@ export default {
   computed: {
     gutter () {
       let parent = this.$parent
-      while (parent && parent.$options.componentName !== 'NRow') {
+      while (parent && parent.$options.componentName !== 'CnRow') {
         parent = parent.$parent
       }
       return parent ? parent.gutter : 0
@@ -42,29 +42,29 @@ export default {
       if (this[prop] || this[prop] === 0) {
         classList.push(
           prop !== 'span'
-            ? `n-col-${prop}-${this[prop]}`
-            : `n-col-${this[prop]}`
+            ? `cn-col-${prop}-${this[prop]}`
+            : `cn-col-${this[prop]}`
         )
       }
     })
 
     ;['xs', 'sm', 'md', 'lg', 'xl'].forEach(size => {
       if (typeof this[size] === 'number') {
-        classList.push(`n-col-${size}-${this[size]}`)
+        classList.push(`cn-col-${size}-${this[size]}`)
       } else if (typeof this[size] === 'object') {
         let props = this[size]
         Object.keys(props).forEach(prop => {
           classList.push(
             prop !== 'span'
-              ? `n-col-${size}-${prop}-${props[prop]}`
-              : `n-col-${size}-${props[prop]}`
+              ? `cn-col-${size}-${prop}-${props[prop]}`
+              : `cn-col-${size}-${props[prop]}`
           )
         })
       }
     })
 
     return h(this.tag, {
-      class: ['n-col', classList],
+      class: ['cn-col', classList],
       style
     }, this.$slots.default)
   }

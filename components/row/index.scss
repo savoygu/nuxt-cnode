@@ -1,0 +1,34 @@
+@include c(row) {
+  position: relative;
+  box-sizing: border-box;
+  @include utils-clearfix;
+
+  @include m(flex) {
+    display: flex;
+    &:before,
+    &:after {
+      display: none;
+    }
+
+    @include is(justify-center) {
+      justify-content: center;
+    }
+    @include is(justify-end) {
+      justify-content: flex-end;
+    }
+    @include is(justify-space-between) {
+      justify-content: space-between;
+    }
+    @include is(justify-space-around) {
+      justify-content: space-around;
+    }
+
+    @include is(align-middle) {
+      align-items: center;
+    }
+    @include is(align-bottom) {
+      align-items: flex-end;
+    }
+  }
+
+}

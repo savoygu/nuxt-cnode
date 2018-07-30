@@ -1,0 +1,51 @@
+@include c(pagination) {
+  display: inline-flex;
+  flex-wrap: wrap;
+
+  @include e(item) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    color: #333333;
+    text-align: center;
+    border: 1px solid #DBE1EE;
+    background-color: white;
+    cursor: pointer;
+
+    &:first-child {
+      border-right: none;
+    }
+
+    &:last-child {
+      border-left: none;
+      margin-right: 0;
+    }
+
+    &:hover {
+      color: #4789F2;
+    }
+
+    @include is(active) {
+      color: white;
+      border: 1px solid #4789F2;
+      background-color: #4789F2;
+      cursor: default;
+    }
+
+    @include is(disabled) {
+      opacity: .75;
+      cursor: not-allowed;
+    }
+
+  }
+
+  @include e(icon) {
+    &.cn-icon-db-arrow_right,
+    &.cn-icon-db-arrow_left {
+      color: #4789F2;
+    }
+  }
+}

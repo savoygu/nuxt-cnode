@@ -20,6 +20,7 @@ module.exports = {
   rules: {
     "semi": [2, "never"],
     "no-console": "off",
-    "quotes": [2, "single"]
+    "quotes": [2, "single"],
+    "vue/no-side-effects-in-computed-properties": 0
   }
 }

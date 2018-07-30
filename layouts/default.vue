@@ -4,7 +4,9 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
+@import "~/assets/theme/index.scss";
+
 html {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
@@ -49,5 +51,11 @@ html {
   color: #fff;
   background-color: #35495e;
 }
-</style>
 
+@include b(default) {
+
+  @include e(button) {
+    background-color:darkturquoise;
+  }
+}
+</style>

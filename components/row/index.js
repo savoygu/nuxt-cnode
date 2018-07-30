@@ -1,7 +1,7 @@
 export default {
-  name: 'NRow',
+  name: 'CnRow',
 
-  componentName: 'NRow',
+  componentName: 'CnRow',
 
   props: {
     tag: {
@@ -36,10 +36,10 @@ export default {
   render (h) {
     return h(this.tag, {
       class: [
-        'n-row',
+        'cn-row',
         this.justify !== 'start' ? `is-justify-${this.justify}` : '',
         this.align !== 'top' ? `is-align-${this.align}` : '',
-        { 'n-row--flex': this.type === 'flex' }
+        { 'cn-row--flex': this.type === 'flex' }
       ],
       style: this.style
     }, this.$slots.default)

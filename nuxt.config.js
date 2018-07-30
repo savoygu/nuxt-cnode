@@ -34,6 +34,14 @@ module.exports = {
         })
       }
     }
-  }
+  },
+  modules: [
+    'nuxt-sass-resources-loader'
+  ],
+  sassResources: [
+    './node_modules/sass-bem/_bem.scss',
+    './assets/theme/common/var.scss',
+    './assets/theme/common/utils.scss',
+    './assets/theme/common/mixins.scss'
+  ]
 }
-
