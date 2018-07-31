@@ -23,7 +23,7 @@
         </div>
       </div>
     </div>
-    <nuxt/>
+    <nuxt nuxt-child-key="none" role="main"/>
   </div>
 </template>
 
