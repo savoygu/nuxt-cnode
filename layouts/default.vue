@@ -208,4 +208,14 @@ a {
     flex-wrap: wrap;
   }
 }
+
+@media screen and (max-width: $--break-mini) {
+    .navbar__nav {
+      justify-content: center;
+
+      a {
+        padding: 10px;
+      }
+    }
+}
 </style>

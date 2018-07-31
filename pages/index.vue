@@ -79,4 +79,14 @@ export default {
     }
   }
 }
+
+@media screen and (max-width: $--break-mini) {
+    .topic-nav {
+      padding: 10px 0;
+    }
+
+    .topic-nav__tab {
+      margin: 0 8px;
+    }
+}
 </style>
