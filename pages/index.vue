@@ -1,49 +1,41 @@
 <template>
-  <section class="container">
-    <div>
-      <app-logo/>
-      <cn-row type="flex">
-        <cn-col>1</cn-col>
-        <cn-col>2</cn-col>
-        <cn-col>3</cn-col>
-        <cn-col>4</cn-col>
-        <cn-col>5</cn-col>
-      </cn-row>
-      {{currentPage}}
-      <cn-pagination :page-count="pageCount" :current-page="currentPage" @change="handlePageChange"/>
-      <h1 class="title">
-        nuxt-cnode
-      </h1>
-      <h2 class="subtitle">
-        基于 Nuxt (服务器端渲染 SSR) 构建 CNode 社区
-      </h2>
-      <button class="default__button">Hello World</button>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green">Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey">GitHub</a>
+  <div class="main">
+    <div class="main__content">
+      <div class="main__panel">
+        <div class="topic-nav">
+          <a href="/?tab=all" class="topic-nav__tab is-current">全部</a>
+          <a href="/?tab=good" class="topic-nav__tab">精华</a>
+          <a href="/?tab=share" class="topic-nav__tab">分享</a>
+          <a href="/?tab=ask" class="topic-nav__tab">问答</a>
+          <a href="/?tab=job" class="topic-nav__tab">招聘</a>
+          <a href="/?tab=dev" class="topic-nav__tab">客户端测试</a>
+        </div>
+        <div class="main__topic">
+          <div class="topic-list">
+            <topic-item></topic-item>
+          </div>
+          <div class="main__pagination">
+            <cn-pagination :page-count="pageCount" :current-page="currentPage" @change="handlePageChange"/>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+    <div class="main__sidebar"></div>
+  </div>
 </template>
 
 <script>
-import AppLogo from '~/components/AppLogo.vue'
 import CnRow from '~/components/row'
 import CnCol from '~/components/col'
 import CnPagination from '~/components/pagination'
+import TopicItem from '~/components/topic-item'
 
 export default {
   components: {
-    AppLogo,
     CnRow,
     CnCol,
-    CnPagination
+    CnPagination,
+    TopicItem
   },
 
   data() {
@@ -62,32 +54,29 @@ export default {
 </script>
 
 <style lang="scss">
-.container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+
+@include b(main) {
+  @include e(topic) {
+    background-color: #fff;
+    border-radius: 0 0 3px 3px;
+  }
 }
 
-.title {
-  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 1 */
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
+@include b(topic-nav) {
+  padding: 10px;
+  background-color: #f6f6f6;
+  border-radius: 3px 3px 0 0;
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
+  @include e(tab) {
+    margin: 0 10px;
+    color: #80bd01;
 
-.links {
-  padding-top: 15px;
+    @include is(current) {
+      background-color: #80bd01;
+      color: #fff;
+      padding: 3px 4px;
+      border-radius: 3px;
+    }
+  }
 }
 </style>

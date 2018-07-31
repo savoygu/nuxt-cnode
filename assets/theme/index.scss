@@ -2,3 +2,53 @@
 @import 'components/col/index.scss';
 @import 'components/pagination/index.scss';
 @import './font.scss';
+
+@include b(main) {
+  display: flex;
+  width: 90%;
+  max-width: 1400px;
+  min-width: 960px;
+  min-height: 100vh;
+  margin: 15px auto;
+
+  @include e(content) {
+    flex: 1;
+    margin-right: 15px;
+  }
+
+  @include e(sidebar) {
+    flex: 0 0 290px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    background-color: yellow;
+  }
+
+  @include e(panel) {
+    margin-bottom: 13px;
+  }
+
+  @include e(pagination) {
+    padding: 10px 0 10px 10px;
+  }
+}
+
+@media screen and (max-width: $--break-large) {
+  .main {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    margin: 20px auto;
+  }
+
+  .main__content {
+    margin-right: 0;
+  }
+
+  .main__panel {
+    margin: 0 5px;
+  }
+
+  .main__sidebar {
+    display: none;
+  }
+}

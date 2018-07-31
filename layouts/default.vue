@@ -40,12 +40,12 @@
 html {
   // font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-family: "Helvetica Neue","Luxi Sans","DejaVu Sans",Tahoma,"Hiragino Sans GB",STHeiti,sans-serif!important;
-  font-size: 16px;
+  font-size: 14px;
   word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
+  // -ms-text-size-adjust: 100%;
+  // -webkit-text-size-adjust: 100%;
+  // -moz-osx-font-smoothing: grayscale;
+  // -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
 
@@ -56,6 +56,10 @@ body {
 *, *:before, *:after {
   box-sizing: border-box;
   margin: 0;
+}
+
+a {
+  text-decoration: none;
 }
 
 .button--green {
@@ -123,6 +127,7 @@ body {
 
   @include e(brand) {
     width: 160px;
+    margin-left: -20px;
     padding: 3px 20px;
     height: 40px;
     line-height: 40px;
@@ -173,8 +178,6 @@ body {
       display: block;
       padding: 10px 15px;
       line-height: 20px;
-      text-decoration: none;
-      text-shadow: none;
       color: #ccc;
 
       &:hover {
@@ -182,7 +185,27 @@ body {
       }
     }
   }
-
 }
 
+@media screen and (max-width: $--break-large) {
+  .navbar__container {
+    display: block;
+    min-width: 0;
+  }
+}
+
+@media screen and (max-width: $--break-small) {
+  .navbar__inner {
+    width: 100%;
+  }
+
+  .navbar__site {
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .navbar__nav {
+    flex-wrap: wrap;
+  }
+}
 </style>
