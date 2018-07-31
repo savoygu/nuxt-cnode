@@ -1,29 +1,44 @@
 <template>
-  <div class="topic-item">
-    <a class="topic-item__author" href="https://cnodejs.org/user/XadillaX">
-      <img class="topic-item__avatar" src="https://avatars3.githubusercontent.com/u/2842176?v=4&s=120" title="XadillaX">
+  <li class="topic-item">
+    <a class="topic-item__author" :href="`/user/${item.author.loginname}`">
+      <img class="topic-item__avatar" :src="item.author.avatar_url" :title="item.author.loginname">
     </a>
     <span class="topic-item__count">
       <span class="topic-item__replies">
-        75
+        {{item.reply_count}}
       </span>
       <span class="topic-item__seperator">/</span>
       <span class="topic-item__visits">
-        12753
+        {{item.visit_count}}
       </span>
     </span>
-    <span class="topic-item__tab is-top">置顶</span>
-    <a class="topic-item__title" href="https://cnodejs.org/topic/5b5f231f58db3ccf66a45083">【20180811】Node 地下铁第六期「成都站」线下沙龙邀约 - 企业级的 Node.js 实践</a>
-    <a class="topic-item__last" href="https://cnodejs.org/topic/5b223c1d5cd02be640901490#5b5ea7d8673571454c633d0c">
-      <img class="topic-item__user" src="https://avatars1.githubusercontent.com/u/39525221?v=4&s=120">
-      <span class="topic-item__time">20小时前</span>
+    <span class="topic-item__tab" :class="{ 'is-top': item.top || item.good }">{{item.top ? '置顶' : item.good ? '精华' : (item.tab && tabs[item.tab].name || item.tab)}}</span>
+    <a class="topic-item__title" :href="`/topic/${item.id}`" :title="item.title">
+      {{item.title}}
     </a>
-  </div>
+    <a class="topic-item__last" :href="`/topic/${item.id}`">
+      <!-- <img class="topic-item__user" src="https://avatars1.githubusercontent.com/u/39525221?v=4&s=120"> -->
+      <span class="topic-item__time">{{new Date(item.last_reply_at).getTime() / 1000 | timeAgo}}</span>
+    </a>
+  </li>
 </template>
 
 <script>
-  export default {
+  import { tabs } from '~/common/constants'
 
+  export default {
+    name: 'TopicItem',
+    props: {
+      item: {
+        type: Object,
+        required: true
+      }
+    },
+    data() {
+      return {
+        tabs: tabs
+      }
+    }
   }
 </script>
 
@@ -49,6 +64,7 @@
   }
 
   @include e(tab) {
+    margin-right: 4px;
     padding: 2px 4px;
     font-size: 12px;
     color: #999;
@@ -84,6 +100,7 @@
   @include e(title) {
     flex: 1;
     font-size: 16px;
+    line-height: 30px;
     color: #333;
     @include utils-ellipsis;
 

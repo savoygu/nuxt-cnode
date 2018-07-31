@@ -36,12 +36,22 @@ module.exports = {
     }
   },
   modules: [
-    'nuxt-sass-resources-loader'
+    'nuxt-sass-resources-loader', '@nuxtjs/axios'
   ],
   sassResources: [
     './node_modules/sass-bem/_bem.scss',
     './assets/theme/common/var.scss',
     './assets/theme/common/utils.scss',
     './assets/theme/common/mixins.scss'
-  ]
+  ],
+  axios: {
+    proxy: true
+  },
+  proxy: {
+    '/api': {
+      target: 'https://cnodejs.org/api/v1',
+      pathRewrite: { '^/api/': '' }
+    }
+  },
+  plugins: ['~/plugins/filters']
 }
