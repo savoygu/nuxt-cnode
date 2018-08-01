@@ -5,6 +5,7 @@
 
 @include b(main) {
   display: flex;
+  // display: -webkit-box;
   width: 90%;
   max-width: 1400px;
   min-width: 960px;

@@ -44,16 +44,16 @@
 
 <style lang="scss">
 @include b(topic-item) {
+  position: relative;
   display: flex;
   align-items: center;
-  position: relative;
   padding: 10px;
   font-size: 14px;
   background: #fff;
   border-top: 1px solid #f0f0f0;
 
   @include first {
-    broder-top: none;
+    border-top: none;
   }
 
   @include e(avatar) {
@@ -64,6 +64,7 @@
   }
 
   @include e(tab) {
+    flex: 0 0 32px;
     margin-right: 4px;
     padding: 2px 4px;
     font-size: 12px;
@@ -78,8 +79,7 @@
   }
 
   @include e(count) {
-    flex: 0 1 70px;
-    width: 70px;
+    flex: 0 0 70px;
     text-align: center;
   }
 
@@ -102,7 +102,7 @@
     font-size: 16px;
     line-height: 30px;
     color: #333;
-    @include utils-ellipsis;
+    // @include utils-ellipsis;
 
     @include visited {
       color: #888;
@@ -110,8 +110,10 @@
   }
 
   @include e(last) {
-    margin-left: 20px;
+    display: block;
+    flex: 0 0 80px;
     font-size: 11px;
+    text-align: right;
     color: #778087;
   }
 
@@ -125,12 +127,17 @@
 
   @include e(time) {
     min-width: 50px;
+    white-space: nowrap;
   }
 }
 
 @media screen and (max-width: $--break-large) {
   .topic-item__user {
     display: none;
+  }
+
+  .topic-item__title {
+    @include utils-ellipsis;
   }
 }
 </style>
