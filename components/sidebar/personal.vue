@@ -1,5 +1,5 @@
 <template>
-  <sidebar-wrapper header="个人信息">
+  <sidebar-wrapper :header="header">
     <div class="personal">
       <div class="personal__user">
         <a class="personal__user-avatar" href="/user/savoygu">
@@ -22,6 +22,13 @@
 
     components: {
       SidebarWrapper
+    },
+
+    props: {
+      header: {
+        type: String,
+        default: '个人信息'
+      }
     }
   }
 </script>

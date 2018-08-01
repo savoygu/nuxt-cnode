@@ -1,5 +1,5 @@
 <template>
-  <sidebar-wrapper header="无人回复的话题">
+  <sidebar-wrapper :header="header">
     <ul class="noreply-topic__list">
       <li class="noreply-topic__item" v-for="topic in topics" :key="topic.id">
         <a class="is-dark" :href="`https://cnodejs.org/topic/${topic.id}`" :title="topic.title">{{ topic.title }}</a>
@@ -15,6 +15,13 @@
 
     components: {
       SidebarWrapper
+    },
+
+    props: {
+      header: {
+        type: String,
+        default: '无人回复的话题'
+      }
     },
 
     data () {

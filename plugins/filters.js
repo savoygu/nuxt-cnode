@@ -16,7 +16,7 @@ export function timeAgo(time) {
   } else if(between < 2592000) {
     return pluralize(~~(between / 86400), ' 天前')
   } else if(between < 31536000) {
-    return pluralize(~~(between / 2592000), ' 月前')
+    return pluralize(~~(between / 2592000), ' 个月前')
   } else {
     return pluralize(~~(between / 31536000), ' 年前')
   }

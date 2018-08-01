@@ -27,6 +27,12 @@
   </div>
 </template>
 
+<script>
+  if (process.BROWSER_BUILD) {
+    require('~/assets/prettify/prettify.js')
+  }
+</script>
+
 <style lang="scss">
 @import "~/assets/theme/index.scss";
 /* =======================
@@ -61,35 +67,6 @@ body {
 
 a {
   text-decoration: none;
-}
-
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
 }
 
 @include b(navbar) {
@@ -150,14 +127,12 @@ a {
     input {
       width: 233px;
       height: 26px;
-      vertical-align: middle;
       padding: 3px 5px 3px 22px;
       font-size: 13px;
       font-weight: 400;
       line-height: 1;
       color: #666;
       background: url(https://o4j806krb.qnssl.com/public/images/search.e53b380a.hashed.png) 4px 4px no-repeat #888;
-      background-color: #888;
       border: 0;
       border-radius: 15px;
       transition: all .5s;

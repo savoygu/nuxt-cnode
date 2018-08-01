@@ -28,6 +28,15 @@ export default {
   // Actions
   // =================================================
   actions: {
+    FETCH_ITEM ({ commit, state }, { id }) {
+      return lazy(
+        item => commit('SET_ITEM', { item }),
+        () => this.$axios.$get('/api/topic/' + id, {
+          mdrender: false
+        }),
+        Object.assign({ id, loading: true, comments: [] }, state.items[id])
+      )
+    },
     FETCH_TOPIC ({ commit, state }, { tab, page, prefetch }) {
       if (state.topics[tab][page] && state.topics[tab][page].length) {
         prefetch = true
@@ -65,6 +74,10 @@ export default {
   // Mutations
   // =================================================
   mutations: {
+    SET_ITEM: (state, { item }) => {
+      Vue.set(state.items, item.id, item)
+    },
+
     SET_TOPIC: (state, { tab, ids, page }) => {
       Vue.set(state.topics[tab], page, ids)
     },

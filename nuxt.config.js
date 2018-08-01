@@ -11,8 +11,14 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script: [
+      { innerHTML: 'window.onload = function () {console.log(123); prettyPrint() }', type: 'text/javascript' }
     ]
   },
+  css: [
+    '~/assets/prettify/prettify.css'
+  ],
   /*
   ** Customize the progress bar color
   */
@@ -33,7 +39,8 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
-    }
+    },
+    vendor: ['~/assets/prettify/prettify.js']
   },
   modules: [
     'nuxt-sass-resources-loader', '@nuxtjs/axios'

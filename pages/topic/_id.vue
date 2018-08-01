@@ -1,0 +1,148 @@
+<template>
+  <div class="main">
+    <div class="main__content">
+      <div class="main__panel">
+        <div class="topic topic-article">
+          <div class="topic-article__header">
+            <h3 class="topic-article__title"><span>{{item.top ? '置顶' : item.good ? '精品' : tabs[item.tab].name}}</span>
+              {{item.title}}
+            </h3>
+            <div class="topic-article__changes">
+              <div>
+                <span>
+                  发布于 {{ item.create_at | timeAgo }}
+                </span>
+                <span>
+                  作者 {{item.author.loginname}}
+                </span>
+                <span>
+                  {{item.visit_count}} 次预览
+                </span>
+                <span>
+                  最后一次回复是 {{item.last_reply_at | timeAgo}}
+                </span>
+                <span>
+                  来自 {{tabs[item.tab].name}}
+                </span>
+              </div>
+              <button class="topic-article__collection button--green">收藏</button>
+            </div>
+          </div>
+          <div class="topic-article__content">
+            <div class="topic-article__markdown" v-html="item.content"></div>
+          </div>
+        </div>
+        <comment :reply-count="item.reply_count" :replies="item.replies"></comment>
+        <div class="topic topic-reply">
+
+        </div>
+      </div>
+    </div>
+    <div class="main__sidebar sidebar">
+      <personal header="作者"></personal>
+      <noreply-topic header="作者其它话题"></noreply-topic>
+      <noreply-topic></noreply-topic>
+    </div>
+  </div>
+</template>
+
+<script>
+import LazyWrapper from '~/components/lazy-wrapper'
+import Comment from '~/components/comment'
+import Personal from '~/components/sidebar/personal'
+import Anonymous from '~/components/sidebar/anonymous'
+import NoreplyTopic from '~/components/sidebar/noreply-topic'
+import { tabs } from '~/common/constants'
+export default {
+  name: 'Topic',
+
+  components: {
+    LazyWrapper,
+    Comment,
+    Personal,
+    NoreplyTopic
+  },
+
+  head() {
+    return {
+      title: this.item.title
+    }
+  },
+
+  data () {
+    return {
+      tabs
+    }
+  },
+
+  computed: {
+    id () {
+      return this.$route.params.id
+    },
+    item () {
+      return this.$store.state.items[this.id]
+    }
+  },
+
+  fetch ({ store, params: { id } }) {
+    return store.dispatch('FETCH_ITEM', { id })
+  }
+}
+</script>
+
+<style lang="scss">
+@include b(topic) {
+  margin-bottom: 13px;
+  background-color: #fff;
+}
+
+@include b(topic-article) {
+
+  @include e(header) {
+    padding: 10px;
+    border-radius: 3px 3px 0 0;
+  }
+
+  @include e(title) {
+    width: 75%;
+    margin: 8px 0;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 130%;
+
+    span {
+      font-size: 12px;
+      padding: 2px 4px;
+      color: #fff;
+      background: #80bd01;
+      border-radius: 3px;
+    }
+  }
+
+  @include e(changes) {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #838383;
+
+    span {
+      &::before {
+        content: "•";
+      }
+    }
+  }
+
+  @include e(collection) {
+  }
+
+  @include e(content) {
+    padding: 10px;
+    border-top: 1px solid #e5e5e5;
+    border-radius: 0 0 3px 3px;
+  }
+
+  @include e(markdown) {
+    margin: 0 10px;
+  }
+}
+</style>
