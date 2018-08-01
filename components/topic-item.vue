@@ -18,7 +18,7 @@
     </a>
     <a class="topic-item__last" :href="`/topic/${item.id}`">
       <!-- <img class="topic-item__user" src="https://avatars1.githubusercontent.com/u/39525221?v=4&s=120"> -->
-      <span class="topic-item__time">{{new Date(item.last_reply_at).getTime() / 1000 | timeAgo}}</span>
+      <span class="topic-item__time">{{ item.last_reply_at | timeAgo}}</span>
     </a>
   </li>
 </template>

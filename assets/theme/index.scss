@@ -20,7 +20,6 @@
     flex: 0 0 290px;
     margin-bottom: 20px;
     font-size: 14px;
-    background-color: yellow;
   }
 
   @include e(panel) {
@@ -31,6 +30,51 @@
     padding: 10px 0 10px 10px;
   }
 }
+
+@include b(sidebar) {
+  font-size: 13px;
+
+  a {
+    color: #778087;
+
+    @include hover {
+      text-decoration: underline;
+    }
+
+    @include is(dark) {
+      text-decoration: none;
+    }
+  }
+
+  @include e(panel) {
+    margin-bottom: 13px;
+  }
+
+  @include e(inner) {
+    padding: 10px;
+    line-height: 2em;
+    background-color: #fff;
+    border-radius: 0 0 3px 3px;
+  }
+
+  @include e(header) {
+    padding: 10px;
+    color: #51585c;
+    background-color: #f6f6f6;
+    border-radius: 3px 3px 0 0;
+
+    a {
+      color: #666;
+
+      @include p(':active', ':hover', ':visited') {
+        color: #385f8a;
+      }
+    }
+  }
+
+}
+
+
 
 @media screen and (max-width: $--break-large) {
   .main {

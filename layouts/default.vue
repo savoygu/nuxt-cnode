@@ -50,6 +50,7 @@ html {
 }
 
 body {
+  color: #333;
   background-color: #e1e1e1;
 }
 

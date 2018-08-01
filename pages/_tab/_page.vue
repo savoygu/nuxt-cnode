@@ -27,7 +27,14 @@
         </div>
       </div>
     </div>
-    <div class="main__sidebar"></div>
+    <div class="main__sidebar sidebar">
+      <anonymous></anonymous>
+      <personal></personal>
+      <create-topic></create-topic>
+      <noreply-topic></noreply-topic>
+      <leaderboard></leaderboard>
+      <client-qrcode></client-qrcode>
+    </div>
   </div>
 </template>
 
@@ -35,13 +42,25 @@
 import CnPagination from '~/components/pagination'
 import TopicItem from '~/components/topic-item'
 import LazyWrapper from '~/components/lazy-wrapper'
+import Personal from '~/components/sidebar/personal'
+import Anonymous from '~/components/sidebar/anonymous'
+import NoreplyTopic from '~/components/sidebar/noreply-topic'
+import Leaderboard from '~/components/sidebar/leaderboard'
+import ClientQrcode from '~/components/sidebar/client-qrcode'
+import CreateTopic from '~/components/sidebar/create-topic'
 import { tabs, validTabs } from '~/common/constants'
 
 export default {
   components: {
     CnPagination,
     TopicItem,
-    LazyWrapper
+    LazyWrapper,
+    Personal,
+    Anonymous,
+    NoreplyTopic,
+    Leaderboard,
+    ClientQrcode,
+    CreateTopic
   },
 
   validate ({ params: { tab } }) {
@@ -123,7 +142,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .topic-list {
   transition: all 0.3s cubic-bezier(0.55, 0, 0.1, 1);
 }
