@@ -14,11 +14,20 @@
           </div>
           <ul class="navbar__nav">
             <li><a href="/">首页</a></li>
+            <li v-if="user"><a href="/">未读消息</a></li>
             <li><a href="/">新手入门</a></li>
             <li><a href="/">API</a></li>
             <li><a href="/">关于</a></li>
-            <li><a href="/">注册</a></li>
-            <li><a href="/">登录</a></li>
+            <lazy-wrapper :loading="user && user.loading" height="40px">
+              <template v-if="user">
+                <li><a href="/">设置</a></li>
+                <li><a href="/">退出</a></li>
+              </template>
+              <template v-else>
+                <li><a href="/">注册</a></li>
+                <li><a href="/">登录</a></li>
+              </template>
+            </lazy-wrapper>
           </ul>
         </div>
       </div>
@@ -26,6 +35,27 @@
     <nuxt nuxt-child-key="none" role="main"/>
   </div>
 </template>
+
+<script>
+import LazyWrapper from '~/components/lazy-wrapper'
+
+export default {
+  name: 'defaultLayout',
+
+  components: {
+    LazyWrapper
+  },
+
+  computed: {
+    accesstoken () {
+      return this.$store.state.accesstoken
+    },
+    user () {
+      return this.$store.state.tokens[this.accesstoken]
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 html {
