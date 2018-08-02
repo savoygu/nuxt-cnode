@@ -1,8 +1,8 @@
 <template>
   <li class="topic-item">
-    <a class="topic-item__author" :href="`/user/${item.author.loginname}`">
+    <nuxt-link class="topic-item__author" :to="`/user/${item.author.loginname}`">
       <img class="topic-item__avatar" :src="item.author.avatar_url" :title="item.author.loginname">
-    </a>
+    </nuxt-link>
     <span class="topic-item__count">
       <span class="topic-item__replies">
         {{item.reply_count}}
@@ -13,13 +13,13 @@
       </span>
     </span>
     <span class="topic-item__tab" :class="{ 'is-top': item.top || item.good }">{{item.top ? '置顶' : item.good ? '精华' : (item.tab && tabs[item.tab].name || item.tab)}}</span>
-    <a class="topic-item__title" :href="`/topic/${item.id}`" :title="item.title">
+    <nuxt-link class="topic-item__title" :to="`/topic/${item.id}`" :title="item.title">
       {{item.title}}
-    </a>
-    <a class="topic-item__last" :href="`/topic/${item.id}`">
+    </nuxt-link>
+    <nuxt-link class="topic-item__last" :to="`/topic/${item.id}`">
       <!-- <img class="topic-item__user" src="https://avatars1.githubusercontent.com/u/39525221?v=4&s=120"> -->
       <span class="topic-item__time">{{ item.last_reply_at | timeAgo}}</span>
-    </a>
+    </nuxt-link>
   </li>
 </template>
 

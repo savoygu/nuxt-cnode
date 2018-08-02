@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="main__content">
-      <lazy-wrapper :loading="loading">
+      <lazy-wrapper :loading="item.loading">
         <div class="main__panel">
           <div class="topic topic-article">
             <div class="topic-article__header">
@@ -87,9 +87,6 @@ export default {
   computed: {
     id () {
       return this.$route.params.id
-    },
-    loading () {
-      return this.$store.state.items[this.id].loading
     },
     item () {
       return this.$store.state.items[this.id]

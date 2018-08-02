@@ -91,8 +91,9 @@ export default {
   // =================================================
   mutations: {
     SET_ITEM: (state, { item }) => {
-      console.log(item)
-      Vue.set(state.items, item.id, item)
+      if (item) {
+        Vue.set(state.items, item.id, item)
+      }
     },
 
     SET_TOPIC: (state, { tab, ids, page }) => {
@@ -108,7 +109,6 @@ export default {
     },
 
     SET_ACCESSTOKEN: (state, { item, accesstoken }) => {
-      console.log(item)
       Vue.set(state, 'accesstoken', accesstoken)
       Vue.set(state.tokens, accesstoken, item)
     }
