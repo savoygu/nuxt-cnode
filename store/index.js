@@ -15,6 +15,13 @@ export default {
       },
       topics: {
         /* [page: number] : [ [id: number] ] */
+      },
+      accesstoken: '',
+      tokens: {
+        /* [accesstoken: string]: User */
+      },
+      users: {
+        /* [id: string]: User */
       }
     }
 
@@ -31,12 +38,11 @@ export default {
     FETCH_ITEM ({ commit, state }, { id }) {
       return lazy(
         item => commit('SET_ITEM', { item }),
-        () => this.$axios.$get('/api/topic/' + id, {
-          mdrender: false
-        }),
-        Object.assign({ id, loading: true, comments: [] }, state.items[id])
+        () => this.$axios.$get('/api/topic/' + id),
+        Object.assign({ id, loading: true, replies: [] }, state.items[id])
       )
     },
+
     FETCH_TOPIC ({ commit, state }, { tab, page, prefetch }) {
       if (state.topics[tab][page] && state.topics[tab][page].length) {
         prefetch = true
@@ -68,6 +74,16 @@ export default {
         }),
         (state.topics[tab][page] || []).map(id => state.items[id])
       )
+    },
+
+    FETCH_ACCESSTOKEN ({ commit, state }, { accesstoken }) {
+      return lazy(
+        item => commit('SET_ACCESSTOKEN', { accesstoken, item }),
+        () => this.$axios.$post('/api/accesstoken', {
+          accesstoken
+        }),
+        Object.assign({ accesstoken, loading: true }, state.tokens[accesstoken])
+      )
     }
   },
   // =================================================
@@ -75,6 +91,7 @@ export default {
   // =================================================
   mutations: {
     SET_ITEM: (state, { item }) => {
+      console.log(item)
       Vue.set(state.items, item.id, item)
     },
 
@@ -88,6 +105,12 @@ export default {
           Vue.set(state.items, item.id, item)
         }
       })
+    },
+
+    SET_ACCESSTOKEN: (state, { item, accesstoken }) => {
+      console.log(item)
+      Vue.set(state, 'accesstoken', accesstoken)
+      Vue.set(state.tokens, accesstoken, item)
     }
   }
 }

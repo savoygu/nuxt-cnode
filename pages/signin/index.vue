@@ -57,12 +57,18 @@
     },
 
     methods: {
-      signin () {
-        if (!this.accesstoken) {
+      async signin () {
+        const { accesstoken } = this
+
+        if (!accesstoken) {
           this.errorText = '请输入您的 Access Token'
           this.visible = true
           return false
         }
+        await this.$store.dispatch('FETCH_ACCESSTOKEN', { accesstoken })
+        // TODO: 从哪来回哪去
+        // 跳转到首页
+        this.$router.push('/')
       }
     },
   }
