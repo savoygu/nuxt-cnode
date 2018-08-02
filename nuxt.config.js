@@ -3,7 +3,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'Nuxt Cnode',
+    title: 'Nuxt CNode：Node.js专业中文社区',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -48,7 +48,10 @@ module.exports = {
     ]
   },
   modules: [
-    'nuxt-sass-resources-loader', '@nuxtjs/pwa', '@nuxtjs/component-cache', '@nuxtjs/axios'
+    'nuxt-sass-resources-loader',
+    // '@nuxtjs/pwa',
+    // '@nuxtjs/component-cache',
+    '@nuxtjs/axios'
   ],
   sassResources: [
     'sass-bem/_bem.scss',
@@ -70,18 +73,18 @@ module.exports = {
     '~/plugins/packages.js',
     { src: '~/assets/prettify/prettify.js', ssr: false }
   ],
-  serverMiddleware: ['~/common/cache.js'],
-  render: {
-    http2: {
-      push: true
-    },
-    static: {
-      maxAge: '1y',
-      setHeaders(res, path) {
-        if (path.includes('sw.js')) {
-          res.setHeader('Cache-Control', `public, max-age=${15 * 60}`)
-        }
-      }
-    }
-  }
+  // serverMiddleware: ['~/common/cache.js'],
+  // render: {
+  //   http2: {
+  //     push: true
+  //   },
+  //   static: {
+  //     maxAge: '1y',
+  //     setHeaders(res, path) {
+  //       if (path.includes('sw.js')) {
+  //         res.setHeader('Cache-Control', `public, max-age=${15 * 60}`)
+  //       }
+  //     }
+  //   }
+  // }
 }

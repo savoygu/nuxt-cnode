@@ -1,5 +1,8 @@
-import express from 'express'
-import apicache from 'apicache'
+// import express from 'express'
+// import apicache from 'apicache'
+
+const express = require('express')
+const apicache = require('apicache')
 
 const app = express()
 
@@ -8,7 +11,12 @@ app.use(apicache.middleware('15 minutes'))
 
 // apicache.options({ debug: true })
 
-export default {
+// export default {
+//   path: '/api/',
+//   handler: app
+// }
+
+module.exports = {
   path: '/api/',
   handler: app
 }
