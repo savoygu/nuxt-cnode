@@ -16,12 +16,21 @@
     }
   }
 
-  @include m(blue) {
+  @include m(skyblue) {
     @include button;
     background-color: #5bc0de;
 
     @include hover {
       background-color: #2f96b4;
+    }
+  }
+
+  @include m(blue) {
+    @include button;
+    background-color: #08c;
+
+    @include hover {
+      background-color: #05c;
     }
   }
 }

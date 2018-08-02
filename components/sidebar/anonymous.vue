@@ -3,7 +3,7 @@
     <p class="anonymous__community">CNode：Node.js专业中文社区</p>
     <div>
       你可以 <a class="anonymous__signin" href="/signin">登录</a> 或 <a class="anonymous__signup" href="/signup">注册</a> 也可以
-      <a class="anonymous__github is-dark" href="/auth/github"><span class="button--blue">通过 Github 登录</span></a>
+      <a class="anonymous__github is-dark" href="/auth/github"><span class="button--skyblue">通过 Github 登录</span></a>
     </div>
   </sidebar-wrapper>
 </template>
