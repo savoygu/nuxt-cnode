@@ -1,41 +1,43 @@
 <template>
   <div class="main">
     <div class="main__content">
-      <div class="main__panel">
-        <div class="topic topic-article">
-          <div class="topic-article__header">
-            <h3 class="topic-article__title"><span>{{item.top ? '置顶' : item.good ? '精品' : tabs[item.tab].name}}</span>
-              {{item.title}}
-            </h3>
-            <div class="topic-article__changes">
-              <div>
-                <span>
-                  发布于 {{ item.create_at | timeAgo }}
-                </span>
-                <span>
-                  作者 {{item.author.loginname}}
-                </span>
-                <span>
-                  {{item.visit_count}} 次预览
-                </span>
-                <span>
-                  最后一次回复是 {{item.last_reply_at | timeAgo}}
-                </span>
-                <span>
-                  来自 {{tabs[item.tab].name}}
-                </span>
+      <lazy-wrapper :loading="loading">
+        <div class="main__panel">
+          <div class="topic topic-article">
+            <div class="topic-article__header">
+              <h3 class="topic-article__title"><span>{{item.top ? '置顶' : item.good ? '精品' : tabs[item.tab].name}}</span>
+                {{item.title}}
+              </h3>
+              <div class="topic-article__changes">
+                <div>
+                  <span>
+                    发布于 {{ item.create_at | timeAgo }}
+                  </span>
+                  <span>
+                    作者 {{item.author.loginname}}
+                  </span>
+                  <span>
+                    {{item.visit_count}} 次预览
+                  </span>
+                  <span>
+                    最后一次回复是 {{item.last_reply_at | timeAgo}}
+                  </span>
+                  <span>
+                    来自 {{tabs[item.tab].name}}
+                  </span>
+                </div>
+                <button class="topic-article__collection button--green">收藏</button>
               </div>
-              <button class="topic-article__collection button--green">收藏</button>
+            </div>
+            <div class="topic-article__content">
+              <div class="topic-article__markdown" v-html="item.content"></div>
             </div>
           </div>
-          <div class="topic-article__content">
-            <div class="topic-article__markdown" v-html="item.content"></div>
-          </div>
         </div>
-      </div>
-      <div class="main__panel">
-        <comment :reply-count="item.reply_count" :replies="item.replies"></comment>
-      </div>
+        <div class="main__panel">
+          <comment :reply-count="item.reply_count" :replies="item.replies"></comment>
+        </div>
+      </lazy-wrapper>
       <div class="main__panel">
         <div class="topic topic-reply">
 
@@ -54,7 +56,6 @@
 import LazyWrapper from '~/components/lazy-wrapper'
 import Comment from '~/components/comment'
 import Personal from '~/components/sidebar/personal'
-import Anonymous from '~/components/sidebar/anonymous'
 import NoreplyTopic from '~/components/sidebar/noreply-topic'
 import { tabs } from '~/common/constants'
 export default {
@@ -73,6 +74,10 @@ export default {
     }
   },
 
+  fetch ({ store, params: { id } }) {
+    return store.dispatch('FETCH_ITEM', { id })
+  },
+
   data () {
     return {
       tabs
@@ -83,13 +88,12 @@ export default {
     id () {
       return this.$route.params.id
     },
+    loading () {
+      return this.$store.state.items[this.id].loading
+    },
     item () {
       return this.$store.state.items[this.id]
     }
-  },
-
-  fetch ({ store, params: { id } }) {
-    return store.dispatch('FETCH_ITEM', { id })
   }
 }
 </script>
