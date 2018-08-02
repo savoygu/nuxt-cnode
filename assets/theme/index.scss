@@ -1,10 +1,4 @@
-@import 'components/row/index.scss';
-@import 'components/col/index.scss';
-@import 'components/pagination/index.scss';
 @import './font.scss';
-
-@import 'normalize-scss';
-@include normalize();
 
 @include b(button) {
   @include m(green) {

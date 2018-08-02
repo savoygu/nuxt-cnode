@@ -13,13 +13,13 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
     script: [
-      { innerHTML: 'window.onload = function () {prettyPrint() }', type: 'text/javascript' }
+      { innerHTML: 'window.onload = function () { prettyPrint() }', type: 'text/javascript' }
     ]
   },
   css: [
-    '~assets/prettify/prettify.css',
+    '~/assets/prettify/prettify.css',
     { src: 'reset-css/sass/_reset.scss', lang: 'scss' },
-    { src: '~assets/theme/index.scss', lang: 'scss' }
+    { src: '~/assets/theme/index.scss', lang: 'scss' }
   ],
   /*
   ** Customize the progress bar color
@@ -42,16 +42,16 @@ module.exports = {
         })
       }
     },
-    vendor: ['~/assets/prettify/prettify.js']
+    vendor: ['~/assets/prettify/prettify.js', 'axios']
   },
   modules: [
     'nuxt-sass-resources-loader', '@nuxtjs/axios'
   ],
   sassResources: [
     'sass-bem/_bem.scss',
-    '~assets/theme/common/var.scss',
-    '~assets/theme/common/utils.scss',
-    '~assets/theme/common/mixins.scss'
+    '~/assets/theme/common/var.scss',
+    '~/assets/theme/common/utils.scss',
+    '~/assets/theme/common/mixins.scss'
   ],
   axios: {
     proxy: true
@@ -63,7 +63,8 @@ module.exports = {
     }
   },
   plugins: [
-    '~plugins/filters',
+    '~/plugins/filters.js',
+    '~/plugins/packages.js',
     { src: '~/assets/prettify/prettify.js', ssr: false }
   ]
 }

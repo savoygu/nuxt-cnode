@@ -3,13 +3,13 @@
     <div class="main__content">
       <div class="main__panel">
         <div class="topic-nav">
-          <router-link :to="'/'+item"
+          <nuxt-link :to="'/'+item"
             v-for="item in validTabs"
             :key="item"
             class="topic-nav__tab"
             :class="{ 'is-current': tab === item  }">
             {{tabs[item].name}}
-          </router-link>
+          </nuxt-link>
         </div>
         <div class="main__topic">
           <lazy-wrapper :loading="loading">
@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import CnPagination from '~/components/pagination'
 import TopicItem from '~/components/topic-item'
 import LazyWrapper from '~/components/lazy-wrapper'
 import Personal from '~/components/sidebar/personal'
@@ -51,8 +50,9 @@ import CreateTopic from '~/components/sidebar/create-topic'
 import { tabs, validTabs } from '~/common/constants'
 
 export default {
+  name: 'Tab',
+
   components: {
-    CnPagination,
     TopicItem,
     LazyWrapper,
     Personal,
