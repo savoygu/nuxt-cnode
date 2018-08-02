@@ -64,7 +64,7 @@
   }
 
   @include e(tab) {
-    flex: 0 0 32px;
+    // flex: 0 0 32px;
     margin-right: 4px;
     padding: 2px 4px;
     font-size: 12px;
