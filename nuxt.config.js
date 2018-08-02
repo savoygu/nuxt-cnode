@@ -42,10 +42,13 @@ module.exports = {
         })
       }
     },
-    vendor: ['~/assets/prettify/prettify.js', 'axios']
+    vendor: [
+      '~/assets/prettify/prettify.js',
+      'axios'
+    ]
   },
   modules: [
-    'nuxt-sass-resources-loader', '@nuxtjs/axios'
+    'nuxt-sass-resources-loader', '@nuxtjs/pwa', '@nuxtjs/component-cache', '@nuxtjs/axios'
   ],
   sassResources: [
     'sass-bem/_bem.scss',
@@ -66,5 +69,19 @@ module.exports = {
     '~/plugins/filters.js',
     '~/plugins/packages.js',
     { src: '~/assets/prettify/prettify.js', ssr: false }
-  ]
+  ],
+  serverMiddleware: ['~/common/cache.js'],
+  render: {
+    http2: {
+      push: true
+    },
+    static: {
+      maxAge: '1y',
+      setHeaders(res, path) {
+        if (path.includes('sw.js')) {
+          res.setHeader('Cache-Control', `public, max-age=${15 * 60}`)
+        }
+      }
+    }
+  }
 }

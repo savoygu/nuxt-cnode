@@ -36,6 +36,10 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.1",
+    "@nuxtjs/component-cache": "^1.1.1",
+    "@nuxtjs/pwa": "^2.0.8",
+    "apicache": "^1.2.3",
+    "express": "^4.16.3",
     "normalize-scss": "^7.0.1",
     "nuxt": "^1.0.0",
     "reset-css": "^4.0.1"
