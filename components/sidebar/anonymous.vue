@@ -26,7 +26,19 @@
     margin-bottom: 10px;
   }
 
-  @include p('e:signin', 'e:signup') {
+  // @include p('e:signin', 'e:signup') {
+  //   @include hover {
+  //     text-decoration: underline;
+  //   }
+  // }
+
+  @include e(signin) {
+    @include hover {
+      text-decoration: underline;
+    }
+  }
+
+  @include e(signup) {
     @include hover {
       text-decoration: underline;
     }

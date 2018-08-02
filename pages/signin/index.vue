@@ -10,14 +10,17 @@
             </breadcrumb>
           </div>
           <div class="signin__content">
-            <div class="control__group">
-              <label class="control__label" for="accesstoken">Access Token</label>
-              <div class="control__item">
-                <input class="input--large" size="30" type="text">
+            <alert type="error" v-model="visible" :text="errorText"></alert>
+            <div class="control">
+              <div class="control__group">
+                <label class="control__label" for="accesstoken">Access Token</label>
+                <div class="control__item">
+                  <input class="input--large" v-model="accesstoken"  name="accesstoken" size="30" type="text">
+                </div>
               </div>
             </div>
             <div class="control__action">
-              <button class="button--blue">登录</button>
+              <button class="button--blue" @click="signin">登录</button>
             </div>
           </div>
         </div>
@@ -32,6 +35,7 @@
 <script>
   import About from '~/components/sidebar/about'
   import Breadcrumb from '~/components/breadcrumb'
+  import Alert from '~/components/alert'
   import BreadcrumbItem from '~/components/breadcrumb/item'
 
   export default {
@@ -40,8 +44,27 @@
     components: {
       About,
       Breadcrumb,
-      BreadcrumbItem
-    }
+      BreadcrumbItem,
+      Alert
+    },
+
+    data () {
+      return {
+        accesstoken: '',
+        visible: false,
+        errorText: ''
+      }
+    },
+
+    methods: {
+      signin () {
+        if (!this.accesstoken) {
+          this.errorText = '请输入您的 Access Token'
+          this.visible = true
+          return false
+        }
+      }
+    },
   }
 </script>
 
@@ -52,6 +75,11 @@
     background-color: #f6f6f6;
     border-radius: 3px 3px 0 0;
   }
+
+  @include e(content) {
+    padding: 10px;
+    border-radius: 0 0 3px 3px;
+  }
 }
 
 @include b(input) {
@@ -61,8 +89,9 @@
   }
 }
 
-
 @include b(control) {
+  margin-top: 40px;
+
   @include e(group) {
     display: flex;
     align-items: center;

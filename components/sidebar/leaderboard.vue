@@ -57,7 +57,6 @@
     max-width: 120px;
     white-space: nowrap;
   }
-
 }
 
 </style>

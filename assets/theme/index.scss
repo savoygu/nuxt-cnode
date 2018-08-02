@@ -94,7 +94,13 @@
     a {
       color: #666;
 
-      @include p(':active', ':hover', ':visited') {
+      // @include p(':active', ':hover', ':visited') {
+      //   color: #385f8a;
+      // }
+
+      &:active,
+      &:hover,
+      &:visited {
         color: #385f8a;
       }
     }

@@ -24,7 +24,17 @@
 
 <style lang="scss">
 @include b(about) {
-  @include p('e:community', 'e:here') {
+  // @include p('e:community', 'e:here') {
+  //   font-size: 14px;
+  //   margin-bottom: 10px;
+  // }
+
+  @include e(community) {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  @include e(here) {
     font-size: 14px;
     margin-bottom: 10px;
   }
