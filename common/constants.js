@@ -8,3 +8,5 @@ export const tabs = {
 }
 
 export const validTabs = Object.keys(tabs)
+
+export const STORE_NAMESPACE = 'CNode'

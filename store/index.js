@@ -2,6 +2,7 @@ import Vue from 'vue'
 
 import { validTabs } from '~/common/constants'
 import { lazy } from '~/common/utils'
+import { store } from '~/common/store'
 import { CancelToken } from 'axios'
 
 export default {
@@ -109,6 +110,10 @@ export default {
     },
 
     SET_ACCESSTOKEN: (state, { item, accesstoken }) => {
+      // 存储到本地
+      store.set('accesstoken', accesstoken, true)
+      store.set('user', item, true)
+
       Vue.set(state, 'accesstoken', accesstoken)
       Vue.set(state.tokens, accesstoken, item)
     }
