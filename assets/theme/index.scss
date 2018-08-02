@@ -46,6 +46,7 @@
 
   @include e(panel) {
     margin-bottom: 13px;
+    background-color: #fff;
   }
 
   @include e(pagination) {

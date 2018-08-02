@@ -32,7 +32,11 @@
             <div class="topic-article__markdown" v-html="item.content"></div>
           </div>
         </div>
+      </div>
+      <div class="main__panel">
         <comment :reply-count="item.reply_count" :replies="item.replies"></comment>
+      </div>
+      <div class="main__panel">
         <div class="topic topic-reply">
 
         </div>
@@ -91,11 +95,6 @@ export default {
 </script>
 
 <style lang="scss">
-@include b(topic) {
-  margin-bottom: 13px;
-  background-color: #fff;
-}
-
 @include b(topic-article) {
 
   @include e(header) {
