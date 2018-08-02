@@ -13,11 +13,11 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
     script: [
-      { innerHTML: 'window.onload = function () {console.log(123); prettyPrint() }', type: 'text/javascript' }
+      { innerHTML: 'window.onload = function () {prettyPrint() }', type: 'text/javascript' }
     ]
   },
   css: [
-    '~/assets/prettify/prettify.css'
+    '~assets/prettify/prettify.css'
   ],
   /*
   ** Customize the progress bar color
@@ -46,10 +46,10 @@ module.exports = {
     'nuxt-sass-resources-loader', '@nuxtjs/axios'
   ],
   sassResources: [
-    './node_modules/sass-bem/_bem.scss',
-    './assets/theme/common/var.scss',
-    './assets/theme/common/utils.scss',
-    './assets/theme/common/mixins.scss'
+    'sass-bem/_bem.scss',
+    '~assets/theme/common/var.scss',
+    '~assets/theme/common/utils.scss',
+    '~assets/theme/common/mixins.scss'
   ],
   axios: {
     proxy: true
@@ -60,5 +60,8 @@ module.exports = {
       pathRewrite: { '^/api/': '' }
     }
   },
-  plugins: ['~/plugins/filters']
+  plugins: [
+    '~plugins/filters',
+    { src: '~/assets/prettify/prettify.js', ssr: false }
+  ]
 }

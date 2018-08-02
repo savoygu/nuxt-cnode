@@ -27,12 +27,6 @@
   </div>
 </template>
 
-<script>
-  if (process.BROWSER_BUILD) {
-    require('~/assets/prettify/prettify.js')
-  }
-</script>
-
 <style lang="scss">
 @import "~/assets/theme/index.scss";
 /* =======================
