@@ -4,28 +4,28 @@
       <div class="navbar__inner">
         <div class="navbar__container">
           <div class="navbar__site">
-            <a class="navbar__brand">
+            <nuxt-link class="navbar__brand" to="/">
               <img src="//o4j806krb.qnssl.com/public/images/cnodejs_light.svg" alt="Cnode 中文社区">
-            </a>
+            </nuxt-link>
             <form class="navbar__search" action="/search">
               <!-- <i class="cn-icon-search"></i> -->
               <input type="text" id="q" name="q">
             </form>
           </div>
           <ul class="navbar__nav">
-            <li><a href="/">首页</a></li>
-            <li v-if="user"><a href="/">未读消息</a></li>
-            <li><a href="/">新手入门</a></li>
-            <li><a href="/">API</a></li>
-            <li><a href="/">关于</a></li>
+            <li><nuxt-link to="/">首页</nuxt-link></li>
+            <li v-if="user"><nuxt-link to="/">未读消息</nuxt-link></li>
+            <li><nuxt-link to="/">新手入门</nuxt-link></li>
+            <li><nuxt-link to="/">API</nuxt-link></li>
+            <li><nuxt-link to="/">关于</nuxt-link></li>
             <lazy-wrapper :loading="user && user.loading" height="40px">
               <template v-if="user">
-                <li><a href="/">设置</a></li>
-                <li><a href="/">退出</a></li>
+                <li><nuxt-link to="/">设置</nuxt-link></li>
+                <li><nuxt-link to="/">退出</nuxt-link></li>
               </template>
               <template v-else>
-                <li><a href="/">注册</a></li>
-                <li><a href="/">登录</a></li>
+                <li><nuxt-link to="/signin">注册</nuxt-link></li>
+                <li><nuxt-link to="/signin">登录</nuxt-link></li>
               </template>
             </lazy-wrapper>
           </ul>
@@ -33,11 +33,24 @@
       </div>
     </div>
     <nuxt nuxt-child-key="none" role="main"/>
+    <div class="footer">
+      <div class="footer__main">
+        <div class="footer__links">
+          <a class="is-dark" href="https://cnodejs.org/rss">RSS</a>
+          |
+          <a class="is-dark" href="https://github.com/savoygu/nuxt-cnode">源码地址</a>
+        </div>
+        <div class="footer__aim">
+          <p>CNode 社区为国内最专业的 Node.js 开源技术社区，致力于 Node.js 的技术研究。</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import LazyWrapper from '~/components/lazy-wrapper'
+import { store } from '~/common/store'
 
 export default {
   name: 'defaultLayout',
@@ -53,6 +66,11 @@ export default {
     user () {
       return this.$store.state.tokens[this.accesstoken]
     }
+  },
+
+  created () {
+    const { accesstoken, user } = store.getAll()
+    this.$store.commit('SET_ACCESSTOKEN', { accesstoken, item: user })
   }
 }
 </script>
@@ -178,10 +196,44 @@ a {
   }
 }
 
+@include b(footer) {
+  background-color: #fff;
+
+  @include e(main) {
+    width: 90%;
+    max-width: 1400px;
+    min-width: 960px;
+    margin: 0 auto;
+    padding: 20px 0;
+    font-size: 13px;
+    line-height: 2em;
+    color: #e2e2e2;
+  }
+
+
+  @include e(links) {
+
+    a {
+      color: #666;
+      text-decoration: none
+    }
+  }
+
+  @include e(aim) {
+    line-height: 20px;
+    color: #ababab;
+  }
+}
+
+
 @media screen and (max-width: $--break-large) {
   .navbar__container {
     display: block;
     min-width: 0;
+  }
+
+  .footer {
+    display: none;
   }
 }
 
