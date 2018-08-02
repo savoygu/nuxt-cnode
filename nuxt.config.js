@@ -17,7 +17,9 @@ module.exports = {
     ]
   },
   css: [
-    '~assets/prettify/prettify.css'
+    '~assets/prettify/prettify.css',
+    { src: 'reset-css/sass/_reset.scss', lang: 'scss' },
+    { src: '~assets/theme/index.scss', lang: 'scss' }
   ],
   /*
   ** Customize the progress bar color

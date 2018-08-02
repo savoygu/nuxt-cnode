@@ -28,15 +28,6 @@
 </template>
 
 <style lang="scss">
-@import "~/assets/theme/index.scss";
-/* =======================
-  CSS Reset
- ======================= */
-@import "reset-css/sass/_reset.scss";
-
-@import "normalize-scss";
-@include normalize();
-
 html {
   // font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-family: "Helvetica Neue","Luxi Sans","DejaVu Sans",Tahoma,"Hiragino Sans GB",STHeiti,sans-serif!important;
