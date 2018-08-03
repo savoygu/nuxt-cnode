@@ -12,19 +12,28 @@
               <input type="text" id="q" name="q">
             </form>
           </div>
-          <ul class="navbar__nav">
-            <li><nuxt-link to="/">首页</nuxt-link></li>
-            <li v-if="user"><nuxt-link to="/my/messages">未读消息</nuxt-link></li>
-            <li><nuxt-link to="/getstart">新手入门</nuxt-link></li>
-            <li><nuxt-link to="/api">API</nuxt-link></li>
-            <li><nuxt-link to="/about">关于</nuxt-link></li>
-            <lazy-wrapper :loading="user && user.loading" height="40px">
-              <li v-if="user"><nuxt-link to="/settings">设置</nuxt-link></li>
-              <li v-if="user"><span @click="logout">退出</span></li>
-              <li v-if="!user"><nuxt-link to="/signin">注册</nuxt-link></li>
-              <li v-if="!user"><nuxt-link to="/signin">登录</nuxt-link></li>
-            </lazy-wrapper>
-          </ul>
+          <div class="navbar__nav">
+            <span><nuxt-link to="/">首页</nuxt-link></span>
+            <no-ssr><span v-if="user"><nuxt-link to="/my/messages">未读消息</nuxt-link></span></no-ssr>
+            <span><nuxt-link to="/getstart">新手入门</nuxt-link></span>
+            <span><nuxt-link to="/api">API</nuxt-link></span>
+            <span><nuxt-link to="/about">关于</nuxt-link></span>
+            <no-ssr>
+              <span class="navbar__nossr">
+                <template v-if="user">
+                  <nuxt-link to="/settings">设置</nuxt-link>
+                  <span class="navbar__logout" @click="logout">退出</span>
+                </template>
+                <template v-else>
+                  <nuxt-link to="/signin">注册</nuxt-link>
+                  <nuxt-link to="/signin">登录</nuxt-link>
+                </template>
+              </span>
+              <span slot="placeholder">
+                <lazy-wrapper :loading="true" height="40px"></lazy-wrapper>
+              </span>
+            </no-ssr>
+          </div>
         </div>
       </div>
     </div>
@@ -180,7 +189,7 @@ a {
     display: flex;
     align-items: center;
 
-    a, span {
+    a, .navbar__logout {
       display: block;
       padding: 10px 15px;
       line-height: 20px;
@@ -189,6 +198,12 @@ a {
 
       &:hover {
         color: #fff;
+      }
+    }
+
+    .navbar__nossr {
+      a, span {
+        display: inline-block;
       }
     }
   }

@@ -15,7 +15,7 @@ export default {
       required: true
     }
   },
-  serverCacheKey: props => props.show
+  // serverCacheKey: props => props.show
 }
 </script>
 
