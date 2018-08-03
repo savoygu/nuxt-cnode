@@ -29,7 +29,7 @@
     </div>
     <div class="main__sidebar sidebar">
       <anonymous v-if="!user"></anonymous>
-      <personal v-if="user"></personal>
+      <personal v-else :user="user"></personal>
       <create-topic></create-topic>
       <noreply-topic></noreply-topic>
       <leaderboard></leaderboard>

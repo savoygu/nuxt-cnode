@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="main__sidebar sidebar">
-      <personal header="作者"></personal>
+      <personal header="作者" :user="user"></personal>
       <noreply-topic header="作者其它话题"></noreply-topic>
       <noreply-topic></noreply-topic>
     </div>
@@ -90,6 +90,13 @@ export default {
     },
     item () {
       return this.$store.state.items[this.id]
+    },
+    user () {
+      const { loginname, avatar_url } = this.item.author
+      return {
+        loginname,
+        avatar_url
+      }
     }
   }
 }

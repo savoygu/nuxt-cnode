@@ -2,14 +2,14 @@
   <sidebar-wrapper :header="header">
     <div class="personal">
       <div class="personal__user">
-        <a class="personal__user-avatar" href="/user/savoygu">
-          <img src="https://avatars2.githubusercontent.com/u/9302866?v=4&s=120" alt="savoygu">
-        </a>
+        <nuxt-link class="personal__user-avatar" :to="`/user/${name}`">
+          <img :src="avatar" alt="savoygu">
+        </nuxt-link>
         <span class="personal__user-name">
-          <a class="is-dark" href="/user/savoygu">savoygu</a>
+          <nuxt-link class="is-dark" :to="`/user/${name}`">{{name}}</nuxt-link>
         </span>
       </div>
-      <div class="personal__board">积分:40</div>
+      <div class="personal__board">积分: {{user.score}}</div>
       <div class="personal__signature">“ 这家伙很懒，什么个性签名都没有留下。 ”</div>
     </div>
   </sidebar-wrapper>
@@ -28,6 +28,21 @@
       header: {
         type: String,
         default: '个人信息'
+      },
+      user: {
+        type: Object,
+        default () {
+          return {}
+        }
+      }
+    },
+
+    computed: {
+      name () {
+        return this.user.loginname || this.user.author.loginname
+      },
+      avatar () {
+        return this.user.avatar_url || this.user.author.avatar_url
       }
     }
   }

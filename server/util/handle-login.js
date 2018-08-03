@@ -11,13 +11,12 @@ router.post('/login', (req, res, next) => {
     })
     .then(response => {
       const data = response.data
-      console.log(data)
       if (response.status === 200 && data.success) {
         req.session.user = {
           accesstoken: req.body.accesstoken,
           loginname: data.loginname,
           id: data.id,
-          avatarUrl: data.avatar_url
+          avatar_url: data.avatar_url
         }
 
         res.json({

@@ -47,7 +47,7 @@
       </template>
     </div>
     <div class="main__sidebar sidebar">
-      <personal></personal>
+      <personal :user="user"></personal>
       <create-topic></create-topic>
       <client-qrcode></client-qrcode>
     </div>
