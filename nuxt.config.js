@@ -59,23 +59,26 @@ module.exports = {
     '~/assets/theme/common/utils.scss',
     '~/assets/theme/common/mixins.scss'
   ],
-  axios: {
-    proxy: true
-  },
-  proxy: {
-    '/api': {
-      target: 'https://cnodejs.org/api/v1',
-      pathRewrite: { '^/api/': '' }
-    }
-  },
+  // axios: {
+  //   proxy: true
+  // },
+  // proxy: {
+  //   '/api': {
+  //     target: 'http://localhost:3333/api',
+  //     pathRewrite: { '^/api/': '' }
+  //   }
+  // },
   plugins: [
     '~/plugins/filters.js',
     '~/plugins/packages.js',
     { src: '~/assets/prettify/prettify.js', ssr: false },
     { src: '~/plugins/localStorage.js', ssr: false }
   ],
-  srcDir: 'client/'
-  // serverMiddleware: ['~/common/cache.js'],
+  srcDir: 'client/',
+  serverMiddleware: [
+    // '~/common/cache.js'
+    '../server/app.js'
+  ],
   // render: {
   //   http2: {
   //     push: true

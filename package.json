@@ -9,7 +9,9 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore  --ignore-pattern 'client/assets/prettify/*' ."
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore  --ignore-pattern 'client/assets/prettify/*' .",
+    "server": "nodemon server/app.js",
+    "fly": "npm-run-all --parallel dev server"
   },
   "husky": {
     "hooks": {
@@ -39,11 +41,15 @@
     "@nuxtjs/component-cache": "^1.1.1",
     "@nuxtjs/pwa": "^2.0.8",
     "apicache": "^1.2.3",
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
     "cookie": "^0.3.1",
     "express": "^4.16.3",
+    "express-session": "^1.15.6",
     "js-cookie": "^2.2.0",
     "normalize-scss": "^7.0.1",
     "nuxt": "^1.0.0",
+    "query-string": "^6.1.0",
     "reset-css": "^4.0.1",
     "store2": "^2.7.0",
     "vuex-persistedstate": "^2.5.4"
@@ -59,6 +65,8 @@
     "husky": "^1.0.0-rc.13",
     "lint-staged": "^7.2.0",
     "node-sass": "^4.9.2",
+    "nodemon": "^1.18.3",
+    "npm-run-all": "^4.1.3",
     "nuxt-sass-resources-loader": "^2.0.3",
     "sass-bem": "^2.6.5",
     "sass-loader": "^7.0.3"
