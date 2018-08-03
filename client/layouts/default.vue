@@ -14,25 +14,22 @@
           </div>
           <div class="navbar__nav">
             <span><nuxt-link to="/">首页</nuxt-link></span>
-            <no-ssr><span v-if="user"><nuxt-link to="/my/messages">未读消息</nuxt-link></span></no-ssr>
+            <span v-if="user"><nuxt-link to="/my/messages">未读消息</nuxt-link></span>
             <span><nuxt-link to="/getstart">新手入门</nuxt-link></span>
             <span><nuxt-link to="/api">API</nuxt-link></span>
             <span><nuxt-link to="/about">关于</nuxt-link></span>
-            <no-ssr>
+            <lazy-wrapper :loading="user && user.loading" height="40px">
               <span class="navbar__nossr">
                 <template v-if="user">
                   <nuxt-link to="/settings">设置</nuxt-link>
-                  <span class="navbar__logout" @click="logout">退出</span>
+                  <span class="navbar__logout" @click="$store.dispatch('LOGOUT')">退出</span>
                 </template>
                 <template v-else>
                   <nuxt-link to="/signin">注册</nuxt-link>
                   <nuxt-link to="/signin">登录</nuxt-link>
                 </template>
               </span>
-              <span slot="placeholder">
-                <lazy-wrapper :loading="true" height="40px"></lazy-wrapper>
-              </span>
-            </no-ssr>
+            </lazy-wrapper>
           </div>
         </div>
       </div>
@@ -69,13 +66,6 @@ export default {
     },
     user () {
       return this.$store.state.user
-    }
-  },
-
-  methods: {
-    logout () {
-      this.$store.commit('SET_ACCESSTOKEN', { accesstoken: '', item: null  })
-      this.$router.push('/')
     }
   }
 }

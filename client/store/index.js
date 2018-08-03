@@ -17,7 +17,6 @@ export default {
       topics: {
         /* [page: number] : [ [id: number] ] */
       },
-      accesstoken: '',
       user: null,
       users: {
         /* [id: string]: User */
@@ -34,6 +33,13 @@ export default {
   // Actions
   // =================================================
   actions: {
+    nuxtServerInit({ commit }, { req }) {
+      if (req.session.user) {
+        const user = req.session.user
+        commit('SET_ACCESSTOKEN', { accesstoken: user.accesstoken, item: user })
+      }
+    },
+
     FETCH_ITEM ({ commit, state }, { id }) {
       return lazy(
         item => commit('SET_ITEM', { item }),
@@ -77,12 +83,18 @@ export default {
 
     FETCH_ACCESSTOKEN ({ commit, state }, { accesstoken }) {
       return lazy(
-        item => commit('SET_ACCESSTOKEN', { accesstoken, item }),
-        () => this.$axios.$post('/api/accesstoken', {
+        item => commit('SET_ACCESSTOKEN', { item }),
+        () => this.$axios.$post('/api/user/login', {
           accesstoken
         }),
-        Object.assign({ accesstoken, loading: true }, state.user)
+        Object.assign({ loading: true }, state.user)
       )
+    },
+
+    async LOGOUT ({ commit }) {
+      await this.$axios.$get('/api/user/logout')
+      commit('SET_ACCESSTOKEN', { item: null })
+      this.$router.push('/')
     }
   },
   // =================================================
@@ -107,8 +119,7 @@ export default {
       })
     },
 
-    SET_ACCESSTOKEN: (state, { item, accesstoken }) => {
-      Vue.set(state, 'accesstoken', accesstoken)
+    SET_ACCESSTOKEN: (state, { item }) => {
       Vue.set(state, 'user', item)
     }
   }

@@ -11,7 +11,7 @@ export const lazy = (commit, task, optimistic, enabled) => {
 
   // Do real task in background
   Promise.resolve(task(optimistic))
-    .then(res => optimistic.accesstoken ? res : res.data)
+    .then(res => res.data)
     .then(commit)
     .catch(console.error)
 
