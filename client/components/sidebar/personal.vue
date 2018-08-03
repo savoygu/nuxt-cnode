@@ -39,10 +39,12 @@
 
     computed: {
       name () {
-        return this.user.loginname || this.user.author.loginname
+        const { user } = this
+        return user ? (user.author ? user.author.loginname : user.loginname) : ''
       },
       avatar () {
-        return this.user.avatar_url || this.user.author.avatar_url
+        const { user } = this
+        return user ? (user.author ? user.author.avatar_url : user.avatar_url) : ''
       }
     }
   }

@@ -13,7 +13,7 @@
                   <span>
                     发布于 {{ item.create_at | timeAgo }}
                   </span>
-                  <span>
+                  <span v-if="item.author">
                     作者 {{item.author.loginname}}
                   </span>
                   <span>
@@ -23,7 +23,7 @@
                     最后一次回复是 {{item.last_reply_at | timeAgo}}
                   </span>
                   <span>
-                    来自 {{tabs[item.tab].name}}
+                    来自 {{tabs[item.tab] && tabs[item.tab].name}}
                   </span>
                 </div>
                 <button class="topic-article__collection button--green">收藏</button>
@@ -92,7 +92,7 @@ export default {
       return this.$store.state.items[this.id]
     },
     user () {
-      const { loginname, avatar_url } = this.item.author
+      const { loginname, avatar_url } = this.item.author || {}
       return {
         loginname,
         avatar_url
