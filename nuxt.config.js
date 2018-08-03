@@ -74,6 +74,7 @@ module.exports = {
     { src: '~/assets/prettify/prettify.js', ssr: false },
     { src: '~/plugins/localStorage.js', ssr: false }
   ],
+  srcDir: 'client/'
   // serverMiddleware: ['~/common/cache.js'],
   // render: {
   //   http2: {

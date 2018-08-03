@@ -9,7 +9,7 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore  --ignore-pattern 'assets/prettify/*' ."
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore  --ignore-pattern 'client/assets/prettify/*' ."
   },
   "husky": {
     "hooks": {
@@ -19,14 +19,14 @@
   },
   "lint-staged": {
     "linters": {
-      "{pages,components,layouts,middleware,plugins,store}/**/*.{vue,js}": [
+      "client/{pages,components,layouts,middleware,plugins,store}/**/*.{vue,js}": [
         "npm run lint",
         "eslint --fix",
         "git add"
       ]
     },
     "ignore": [
-      "assets"
+      "client/assets"
     ]
   },
   "commitlint": {
