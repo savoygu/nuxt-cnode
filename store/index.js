@@ -18,9 +18,7 @@ export default {
         /* [page: number] : [ [id: number] ] */
       },
       accesstoken: '',
-      tokens: {
-        /* [accesstoken: string]: User */
-      },
+      user: null,
       users: {
         /* [id: string]: User */
       }
@@ -83,7 +81,7 @@ export default {
         () => this.$axios.$post('/api/accesstoken', {
           accesstoken
         }),
-        Object.assign({ accesstoken, loading: true }, state.tokens[accesstoken])
+        Object.assign({ accesstoken, loading: true }, state.user)
       )
     }
   },
@@ -110,12 +108,8 @@ export default {
     },
 
     SET_ACCESSTOKEN: (state, { item, accesstoken }) => {
-      // 存储到本地
-      store.set('accesstoken', accesstoken, true)
-      store.set('user', item, true)
-
       Vue.set(state, 'accesstoken', accesstoken)
-      Vue.set(state.tokens, accesstoken, item)
+      Vue.set(state, 'user', item)
     }
   }
 }

@@ -1,3 +1,6 @@
+/**
+ * 已废弃，替代方案为 ~/plugins/localStorage.js
+ */
 import store2 from 'store2'
 import { STORE_NAMESPACE } from '~/common/constants'
 

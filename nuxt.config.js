@@ -71,7 +71,8 @@ module.exports = {
   plugins: [
     '~/plugins/filters.js',
     '~/plugins/packages.js',
-    { src: '~/assets/prettify/prettify.js', ssr: false }
+    { src: '~/assets/prettify/prettify.js', ssr: false },
+    { src: '~/plugins/localStorage.js', ssr: false }
   ],
   // serverMiddleware: ['~/common/cache.js'],
   // render: {

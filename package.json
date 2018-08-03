@@ -43,7 +43,8 @@
     "normalize-scss": "^7.0.1",
     "nuxt": "^1.0.0",
     "reset-css": "^4.0.1",
-    "store2": "^2.7.0"
+    "store2": "^2.7.0",
+    "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.0.0",

@@ -14,19 +14,15 @@
           </div>
           <ul class="navbar__nav">
             <li><nuxt-link to="/">首页</nuxt-link></li>
-            <li v-if="user"><nuxt-link to="/">未读消息</nuxt-link></li>
-            <li><nuxt-link to="/">新手入门</nuxt-link></li>
-            <li><nuxt-link to="/">API</nuxt-link></li>
-            <li><nuxt-link to="/">关于</nuxt-link></li>
+            <li v-if="user"><nuxt-link to="/my/messages">未读消息</nuxt-link></li>
+            <li><nuxt-link to="/getstart">新手入门</nuxt-link></li>
+            <li><nuxt-link to="/api">API</nuxt-link></li>
+            <li><nuxt-link to="/about">关于</nuxt-link></li>
             <lazy-wrapper :loading="user && user.loading" height="40px">
-              <template v-if="user">
-                <li><nuxt-link to="/">设置</nuxt-link></li>
-                <li><nuxt-link to="/">退出</nuxt-link></li>
-              </template>
-              <template v-else>
-                <li><nuxt-link to="/signin">注册</nuxt-link></li>
-                <li><nuxt-link to="/signin">登录</nuxt-link></li>
-              </template>
+              <li v-if="user"><nuxt-link to="/settings">设置</nuxt-link></li>
+              <li v-if="user"><span @click="logout">退出</span></li>
+              <li v-if="!user"><nuxt-link to="/signin">注册</nuxt-link></li>
+              <li v-if="!user"><nuxt-link to="/signin">登录</nuxt-link></li>
             </lazy-wrapper>
           </ul>
         </div>
@@ -50,7 +46,6 @@
 
 <script>
 import LazyWrapper from '~/components/lazy-wrapper'
-import { store } from '~/common/store'
 
 export default {
   name: 'defaultLayout',
@@ -64,13 +59,15 @@ export default {
       return this.$store.state.accesstoken
     },
     user () {
-      return this.$store.state.tokens[this.accesstoken]
+      return this.$store.state.user
     }
   },
 
-  created () {
-    const { accesstoken, user } = store.getAll()
-    this.$store.commit('SET_ACCESSTOKEN', { accesstoken, item: user })
+  methods: {
+    logout () {
+      this.$store.commit('SET_ACCESSTOKEN', { accesstoken: '', item: null  })
+      this.$router.push('/')
+    }
   }
 }
 </script>
@@ -183,11 +180,12 @@ a {
     display: flex;
     align-items: center;
 
-    a {
+    a, span {
       display: block;
       padding: 10px 15px;
       line-height: 20px;
       color: #ccc;
+      cursor: pointer;
 
       &:hover {
         color: #fff;
