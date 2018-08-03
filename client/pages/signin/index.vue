@@ -35,8 +35,8 @@
 <script>
   import About from '~/components/sidebar/about'
   import Breadcrumb from '~/components/breadcrumb'
-  import Alert from '~/components/alert'
   import BreadcrumbItem from '~/components/breadcrumb/item'
+  import Alert from '~/components/alert'
 
   export default {
     name: 'Signin',

@@ -95,7 +95,16 @@ export default {
       await this.$axios.$get('/api/user/logout')
       commit('SET_ACCESSTOKEN', { item: null })
       this.$router.push('/')
-    }
+    },
+
+    FETCH_USER ({ commit, state }, { name }) {
+      return lazy(
+        user => commit('SET_USER', { name, user }),
+        () => this.$axios.$get('/api/user/' + name),
+        Object.assign({ name, loading: true, replies: [], topices: [] }, state.users[name])
+      )
+    },
+
   },
   // =================================================
   // Mutations
@@ -121,6 +130,10 @@ export default {
 
     SET_ACCESSTOKEN: (state, { item }) => {
       Vue.set(state, 'user', item)
+    },
+
+    SET_USER: (state, { name, user }) => {
+      Vue.set(state.users, name, user || false) /* false means user not found */
     }
   }
 }
