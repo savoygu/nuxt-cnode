@@ -28,8 +28,8 @@
       </div>
     </div>
     <div class="main__sidebar sidebar">
-      <anonymous></anonymous>
-      <personal></personal>
+      <anonymous v-if="!user"></anonymous>
+      <personal v-if="user"></personal>
       <create-topic></create-topic>
       <noreply-topic></noreply-topic>
       <leaderboard></leaderboard>
@@ -102,6 +102,9 @@ export default {
     },
     loading () {
       return this.displayedTopics.length === 0
+    },
+    user () {
+      return this.$store.state.user
     }
   },
 

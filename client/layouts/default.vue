@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="cnode">
     <div class="navbar">
       <div class="navbar__inner">
         <div class="navbar__container">
@@ -34,7 +34,9 @@
         </div>
       </div>
     </div>
-    <nuxt nuxt-child-key="none" role="main"/>
+    <div class="content">
+      <nuxt nuxt-child-key="none" role="main"/>
+    </div>
     <div class="footer">
       <div class="footer__main">
         <div class="footer__links">
@@ -85,8 +87,23 @@ html {
 }
 
 body {
+  min-height: 100%;
   color: #333;
   background-color: #e1e1e1;
+}
+
+html, body, #__nuxt, #__layout {
+  height: 100%;
+}
+
+.cnode {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
 }
 
 *, *:before, *:after {
