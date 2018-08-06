@@ -1,5 +1,8 @@
 # dependencies
 node_modules
+client/static/editormd/lib/codemirror/**
+!client/static/editormd/lib/codemirror/codemirror.min.js
+!client/static/editormd/lib/codemirror/codemirror.min.css
 
 # logs
 npm-debug.log

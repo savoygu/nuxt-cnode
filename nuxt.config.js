@@ -11,13 +11,11 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ],
-    script: [
-      { innerHTML: 'window.onload = function () { prettyPrint() }', type: 'text/javascript' }
     ]
   },
   css: [
     '~/assets/prettify/prettify.css',
+    '~/assets/editormd/css/editormd.css',
     { src: 'reset-css/sass/_reset.scss', lang: 'scss' },
     { src: '~/assets/theme/index.scss', lang: 'scss' }
   ],
@@ -44,7 +42,9 @@ module.exports = {
     },
     vendor: [
       '~/assets/prettify/prettify.js',
-      'axios'
+      '~/assets/jquery/jquery.js',
+      '~/assets/editormd/editormd.js',
+      'axios',
     ]
   },
   modules: [
@@ -72,7 +72,9 @@ module.exports = {
     '~/plugins/filters.js',
     '~/plugins/packages.js',
     { src: '~/assets/prettify/prettify.js', ssr: false },
-    { src: '~/plugins/localStorage.js', ssr: false }
+    { src: '~/plugins/localStorage.js', ssr: false },
+    { src: '~/assets/jquery/jquery.js', ssr: false },
+    { src: '~/assets/editormd/editormd.js', ssr: false }
   ],
   srcDir: 'client/',
   serverMiddleware: [

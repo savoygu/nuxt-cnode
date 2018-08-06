@@ -9,7 +9,7 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore  --ignore-pattern 'client/assets/prettify/*' .",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --ignore-pattern 'client/assets/**' --ignore-pattern 'client/static/editormd/**' .",
     "server": "nodemon server/app.js",
     "fly": "npm-run-all --parallel dev server"
   },
@@ -28,7 +28,7 @@
       ]
     },
     "ignore": [
-      "client/assets"
+      "client/{assets,static}"
     ]
   },
   "commitlint": {
@@ -44,8 +44,10 @@
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "cookie": "^0.3.1",
+    "editor.md": "^1.5.0",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
+    "jquery": "^3.3.1",
     "js-cookie": "^2.2.0",
     "normalize-scss": "^7.0.1",
     "nuxt": "^1.0.0",

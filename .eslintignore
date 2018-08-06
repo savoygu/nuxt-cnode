@@ -1,1 +1,2 @@
-/client/assets/prettify/*
+/client/assets/**
+/static/**
