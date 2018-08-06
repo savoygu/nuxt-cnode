@@ -1,8 +1,8 @@
 <template>
   <sidebar-wrapper>
-    <nuxt-link class="create-topic is-dark" to="/topic/create">
+    <a class="create-topic is-dark" href="/topic/create">
       <span class="button--green">发布话题</span>
-    </nuxt-link>
+    </a>
   </sidebar-wrapper>
 </template>
 

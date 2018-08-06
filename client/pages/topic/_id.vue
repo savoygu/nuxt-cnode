@@ -70,7 +70,10 @@ export default {
 
   head() {
     return {
-      title: this.item.title
+      title: this.item.title,
+      // script: [
+      //   { innerHTML: 'window.onload = function () { prettyPrint() }', type: 'text/javascript', body: true }
+      // ]
     }
   },
 
@@ -98,6 +101,10 @@ export default {
         avatar_url
       }
     }
+  },
+
+  mounted () {
+    prettyPrint()
   }
 }
 </script>

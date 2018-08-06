@@ -6,17 +6,5 @@
   </head>
   <body {{ BODY_ATTRS }}>
     {{ APP }}
-    <script>
-      window.onload = function () {
-        prettyPrint()
-
-        var editormdEle = document.querySelector('#editormd')
-        if (editormdEle) {
-          var editor = editormd('editormd', {
-            path: '/editormd/lib/'
-          })
-        }
-      }
-    </script>
   </body>
 </html>
