@@ -26,7 +26,10 @@
                     来自 {{tabs[item.tab] && tabs[item.tab].name}}
                   </span>
                 </div>
-                <button class="topic-article__collection button--green">收藏</button>
+                <div style="display: flex;">
+                  <div class="topic-article__lazy-wrapper"><lazy-wrapper :loading="loading"></lazy-wrapper></div>
+                  <button class="topic-article__collection" :class="item.is_collect ? 'button--white' : 'button--green'" @click="collectTopic">{{ item.is_collect ? '取消收藏': '收藏' }}</button>
+                </div>
               </div>
               <div class="topic-article__manage" v-if="currentUser.loginname === user.loginname">
                 <a :href="`/topic/${item.id}/edit`"><i class="cn-icon-edit"></i></a>
@@ -106,6 +109,15 @@ export default {
     },
     currentUser () {
       return this.$store.state.user || {}
+    },
+    loading () {
+      return this.$store.state.loading
+    }
+  },
+
+  methods: {
+    collectTopic () {
+      this.$store.dispatch('COLLECT_TOPIC', { id: this.id, cancel: this.item.is_collect })
     }
   },
 
@@ -174,5 +186,12 @@ export default {
   @include e(markdown) {
     margin: 0 10px;
   }
+
+  @include e(lazy-wrapper) {
+    display: inline-block;
+    height: 34px;
+    margin-top: -5px;
+  }
+
 }
 </style>

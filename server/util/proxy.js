@@ -8,6 +8,8 @@ module.exports = function (req, res, next) {
   const user = req.session.user || {}
   const needAccessToken = req.query.needAccessToken
 
+  console.log(user)
+
   if (needAccessToken && !user.accesstoken) {
     res.status(401).send({
       success: false,

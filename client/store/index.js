@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 import { validTabs } from '~/common/constants'
 import { lazy } from '~/common/utils'
-import { get, post } from '~/common/http'
+// import { get, post } from '~/common/http'
 import { store } from '~/common/store'
 import { CancelToken } from 'axios'
 
@@ -50,8 +50,11 @@ export default {
     FETCH_ITEM ({ commit, state }, { id, mdrender = true }) {
       return lazy(
         item => commit('SET_ITEM', { item }),
-        () => get('/topic/' + id, {
-          mdrender: mdrender
+        () => this.$axios.$get('/api/topic/' + id, {
+          params: {
+            mdrender: mdrender,
+            needAccessToken: state.user ? true : ''
+          }
         }),
         Object.assign({ id, loading: true, replies: [] }, state.items[id])
       )
@@ -93,7 +96,7 @@ export default {
     FETCH_ACCESSTOKEN ({ commit, state }, { accesstoken }) {
       return lazy(
         item => commit('SET_ACCESSTOKEN', { item }),
-        () => post('/user/login', {},  {
+        () => this.$axios.$post('/api/user/login', {
           accesstoken
         }),
         Object.assign({ loading: true }, state.user)
@@ -101,7 +104,7 @@ export default {
     },
 
     async LOGOUT ({ commit }) {
-      await get('/user/logout')
+      await this.$axios.$get('/api/user/logout')
       commit('SET_ACCESSTOKEN', { item: null })
       this.$router.push('/')
     },
@@ -109,16 +112,14 @@ export default {
     FETCH_USER ({ commit, state }, { name }) {
       return lazy(
         user => commit('SET_USER', { name, user }),
-        () => get('/user/' + name),
+        () => this.$axios.$get('/api/user/' + name),
         Object.assign({ name, loading: true, replies: [], topices: [] }, state.users[name])
       )
     },
 
     async CREATE_TOPIC ({ commit, state }, { tab, title, content }) {
       commit('SET_LOADING', { loading: true })
-      await post('/topics', {
-        needAccessToken: true
-      }, {
+      await this.$axios.$post('/api/topics?needAccessToken=true', {
         tab: 'dev', // 防止误操作😆
         title,
         content
@@ -129,9 +130,7 @@ export default {
 
     async UPDATE_TOPIC ({ commit, state }, { id, tab, title, content }) {
       commit('SET_LOADING', { loading: true })
-      await post('/topics/update', {
-        needAccessToken: true
-      }, {
+      await this.$axios.$post('/api/topics/update?needAccessToken=true', {
         topic_id: id,
         tab: 'dev', // 防止误操作😆
         title,
@@ -139,6 +138,15 @@ export default {
       })
       commit('SET_LOADING', { loading: false })
       this.$router.push('/')
+    },
+
+    async COLLECT_TOPIC ({ commit, state }, { id, cancel }) {
+      commit('SET_LOADING', { loading: true })
+      await this.$axios.$post(`/api/topic_collect/${cancel ? 'de_collect' : 'collect'}?needAccessToken=true`, {
+        topic_id: id
+      })
+      commit('SET_LOADING', { loading: false })
+      commit('SET_ITEM', { item: Object.assign({}, state.items[id], { is_collect: !cancel }) })
     }
   },
   // =================================================
