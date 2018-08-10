@@ -28,6 +28,9 @@
                 </div>
                 <button class="topic-article__collection button--green">收藏</button>
               </div>
+              <div class="topic-article__manage" v-if="currentUser.loginname === user.loginname">
+                <a :href="`/topic/${item.id}/edit`"><i class="cn-icon-edit"></i></a>
+              </div>
             </div>
             <div class="topic-article__content">
               <div class="topic-article__markdown" v-html="item.content"></div>
@@ -100,6 +103,9 @@ export default {
         loginname,
         avatar_url
       }
+    },
+    currentUser () {
+      return this.$store.state.user || {}
     }
   },
 
@@ -146,7 +152,17 @@ export default {
     }
   }
 
-  @include e(collection) {
+  @include e(manage) {
+    i {
+      color: #000;
+      opacity: .4;
+    }
+
+    &:hover {
+      i {
+        opacity: 1;
+      }
+    }
   }
 
   @include e(content) {

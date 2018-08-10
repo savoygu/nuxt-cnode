@@ -1,7 +1,7 @@
 
 import axios from 'axios'
 
-const baseURL = process.env.API_BASE || ''
+const baseURL = process.env.API_BASE || 'http://localhost:3000'
 
 const parseURL = (url, params) => {
   const str = Object.keys(params).reduce((result, key) => {

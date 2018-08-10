@@ -47,10 +47,12 @@ export default {
       }
     },
 
-    FETCH_ITEM ({ commit, state }, { id }) {
+    FETCH_ITEM ({ commit, state }, { id, mdrender = true }) {
       return lazy(
         item => commit('SET_ITEM', { item }),
-        () => get('/topic/' + id),
+        () => get('/topic/' + id, {
+          mdrender: mdrender
+        }),
         Object.assign({ id, loading: true, replies: [] }, state.items[id])
       )
     },
@@ -117,6 +119,20 @@ export default {
       await post('/topics', {
         needAccessToken: true
       }, {
+        tab: 'dev', // 防止误操作😆
+        title,
+        content
+      })
+      commit('SET_LOADING', { loading: false })
+      this.$router.push('/')
+    },
+
+    async UPDATE_TOPIC ({ commit, state }, { id, tab, title, content }) {
+      commit('SET_LOADING', { loading: true })
+      await post('/topics/update', {
+        needAccessToken: true
+      }, {
+        topic_id: id,
         tab: 'dev', // 防止误操作😆
         title,
         content
