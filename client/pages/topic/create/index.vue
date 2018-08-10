@@ -9,6 +9,7 @@
           </breadcrumb>
         </div>
         <div class="topic-create__content">
+          <div class="topic-create__alert" v-if="visible"><alert type="error" v-model="visible" :text="errorText"></alert></div>
           <div class="topic-create__plate">
             <span>选择板块：</span>
             <select name="plate" id="plate" v-model="tab">
@@ -24,7 +25,7 @@
           </div>
           <div class="topic-create__text">
             <div id="editormd">
-              <textarea style="display:none;" v-model="content">### Hello Editor.md !</textarea>
+              <textarea ref="content" style="display:none;" v-model="content">### Hello Editor.md !</textarea>
             </div>
           </div>
           <div class="topic-create__statusbar">
@@ -33,7 +34,8 @@
             <div class="topic-create__cursor"></div>
           </div>
           <div class="topic-create__submit">
-            <button class="button--blue">提交</button>
+            <button class="button--blue" @click="createTopic">提交</button>
+            <span class="topic-create__lazy-wrapper"><lazy-wrapper :loading="loading"></lazy-wrapper></span>
           </div>
         </div>
       </div>
@@ -43,15 +45,19 @@
 </template>
 
 <script>
+import LazyWrapper from '~/components/lazy-wrapper'
 import Breadcrumb from '~/components/breadcrumb'
 import BreadcrumbItem from '~/components/breadcrumb/item'
+import Alert from '~/components/alert'
 
 export default {
   name: 'TopicCreate',
 
   components: {
+    LazyWrapper,
     Breadcrumb,
-    BreadcrumbItem
+    BreadcrumbItem,
+    Alert
   },
 
   head () {
@@ -63,24 +69,47 @@ export default {
     }
   },
 
-  watch: {
-    '$route.path' (to, from) {
-      console.log(to, from)
-    }
-  },
-
   data () {
     return {
       tab: '',
       title: '',
-      content: ''
+      content: '',
+      visible: false,
+      errorText: ''
+    }
+  },
+
+  computed: {
+    loading () {
+      return this.$store.state.loading
     }
   },
 
   methods: {
-    submitTopic () {
+    setErrorText (errorText) {
+      this.visible = true
+      this.errorText = errorText
+      return
+    },
 
-      this.$store.dispatch('CREATE_TOPIC')
+    validateTopicField () {
+      const { tab, title, $refs: { content }, setErrorText } = this
+      if (!tab) {
+        return setErrorText('请选择要发布到的板块。')
+      } else if (title.length < 10) {
+        return setErrorText('标题字数要在 10 个字以上。')
+      } else if (!content.value) {
+        return setErrorText('请输入要发布的内容。')
+      }
+      return true
+    },
+
+    createTopic () {
+      const { tab, title, $refs: { content } } = this
+      if (!this.validateTopicField()) {
+        return
+      }
+      this.$store.dispatch('CREATE_TOPIC', { tab, title, content: content.value })
     }
   }
 }
@@ -95,6 +124,10 @@ export default {
   @include e(content) {
     padding: 10px;
     border-top: 1px solid #e5e5e5;
+  }
+
+  @include e(alert) {
+    margin-bottom: 20px;
   }
 
   @include e(plate) {
@@ -122,6 +155,15 @@ export default {
       box-shadow: 0 0 2px rgba(60,60,60,.5);
       outline: none;
     }
+  }
+
+  @include e(submit) {
+    display: flex;
+  }
+
+  @include e(lazy-wrapper) {
+    height: 34px;
+    margin-top: -5px;
   }
 
 }

@@ -2,6 +2,7 @@ import Vue from 'vue'
 
 import { validTabs } from '~/common/constants'
 import { lazy } from '~/common/utils'
+import { get, post } from '~/common/http'
 import { store } from '~/common/store'
 import { CancelToken } from 'axios'
 
@@ -20,7 +21,11 @@ export default {
       user: null,
       users: {
         /* [id: string]: User */
-      }
+      },
+      createdTopics: {
+
+      },
+      loading: false
     }
 
     validTabs.forEach(tab => {
@@ -37,13 +42,15 @@ export default {
       if (req.session.user) {
         const user = req.session.user
         commit('SET_ACCESSTOKEN', { accesstoken: user.accesstoken, item: user })
+      } else {
+        commit('SET_ACCESSTOKEN', { accesstoken: '', item: null })
       }
     },
 
     FETCH_ITEM ({ commit, state }, { id }) {
       return lazy(
         item => commit('SET_ITEM', { item }),
-        () => this.$axios.$get('/api/topic/' + id),
+        () => get('/topic/' + id),
         Object.assign({ id, loading: true, replies: [] }, state.items[id])
       )
     },
@@ -84,7 +91,7 @@ export default {
     FETCH_ACCESSTOKEN ({ commit, state }, { accesstoken }) {
       return lazy(
         item => commit('SET_ACCESSTOKEN', { item }),
-        () => this.$axios.$post('/api/user/login', {
+        () => post('/user/login', {},  {
           accesstoken
         }),
         Object.assign({ loading: true }, state.user)
@@ -92,7 +99,7 @@ export default {
     },
 
     async LOGOUT ({ commit }) {
-      await this.$axios.$get('/api/user/logout')
+      await get('/user/logout')
       commit('SET_ACCESSTOKEN', { item: null })
       this.$router.push('/')
     },
@@ -100,11 +107,23 @@ export default {
     FETCH_USER ({ commit, state }, { name }) {
       return lazy(
         user => commit('SET_USER', { name, user }),
-        () => this.$axios.$get('/api/user/' + name),
+        () => get('/user/' + name),
         Object.assign({ name, loading: true, replies: [], topices: [] }, state.users[name])
       )
     },
 
+    async CREATE_TOPIC ({ commit, state }, { tab, title, content }) {
+      commit('SET_LOADING', { loading: true })
+      await post('/topics', {
+        needAccessToken: true
+      }, {
+        tab: 'dev', // 防止误操作😆
+        title,
+        content
+      })
+      commit('SET_LOADING', { loading: false })
+      this.$router.push('/')
+    }
   },
   // =================================================
   // Mutations
@@ -134,6 +153,10 @@ export default {
 
     SET_USER: (state, { name, user }) => {
       Vue.set(state.users, name, user || false) /* false means user not found */
+    },
+
+    SET_LOADING: (state, { loading }) => {
+      Vue.set(state, 'loading', loading)
     }
   }
 }

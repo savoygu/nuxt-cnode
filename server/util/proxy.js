@@ -1,14 +1,14 @@
 const axios = require('axios')
 const queryString = require('query-string')
 
-const baseURL = 'http://cnodejs.org/api/v1'
+const baseURL = 'https://cnodejs.org/api/v1'
 
 module.exports = function (req, res, next) {
   const path = req.path
   const user = req.session.user || {}
   const needAccessToken = req.query.needAccessToken
 
-  if (needAccessToken && !user.accessToken) {
+  if (needAccessToken && !user.accesstoken) {
     res.status(401).send({
       success: false,
       error_msg: '你需要先进行登录'
@@ -16,7 +16,7 @@ module.exports = function (req, res, next) {
   }
 
   const query = Object.assign({}, req.query, {
-    accesstoken: (needAccessToken && req.method === 'GET') ? user.accessToken : ''
+    accesstoken: (needAccessToken && req.method === 'GET') ? user.accesstoken : ''
   })
 
   if (query.needAccessToken) {
@@ -28,7 +28,7 @@ module.exports = function (req, res, next) {
       method: req.method,
       params: query,
       data: queryString.stringify(Object.assign({}, req.body, {
-        accesstoken: (needAccessToken && req.method === 'POST') ? user.accessToken : ''
+        accesstoken: (needAccessToken && req.method === 'POST') ? user.accesstoken : ''
       })),
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
