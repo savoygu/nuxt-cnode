@@ -21,7 +21,7 @@
             <lazy-wrapper :loading="user && user.loading" height="40px">
               <span class="navbar__nossr">
                 <template v-if="user">
-                  <nuxt-link to="/settings">设置</nuxt-link>
+                  <nuxt-link to="/setting">设置</nuxt-link>
                   <span class="navbar__logout" @click="$store.dispatch('LOGOUT')">退出</span>
                 </template>
                 <template v-else>

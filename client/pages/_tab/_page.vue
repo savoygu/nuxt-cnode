@@ -29,8 +29,10 @@
     </div>
     <div class="main__sidebar sidebar">
       <anonymous v-if="!user"></anonymous>
-      <personal v-else :user="user"></personal>
-      <create-topic></create-topic>
+      <template v-else>
+        <personal :user="user"></personal>
+        <create-topic></create-topic>
+      </template>
       <noreply-topic></noreply-topic>
       <leaderboard></leaderboard>
       <client-qrcode></client-qrcode>
