@@ -3,7 +3,7 @@
     <div class="personal">
       <div class="personal__user">
         <nuxt-link class="personal__user-avatar" :to="`/user/${name}`">
-          <img :src="avatar" alt="savoygu">
+          <img :src="avatar" :alt="name">
         </nuxt-link>
         <span class="personal__user-name">
           <nuxt-link class="is-dark" :to="`/user/${name}`">{{name}}</nuxt-link>
@@ -37,15 +37,17 @@
       }
     },
 
-    computed: {
-      name () {
-        const { user } = this
-        return user ? (user.author ? user.author.loginname : user.loginname) : ''
-      },
-      avatar () {
-        const { user } = this
-        return user ? (user.author ? user.author.avatar_url : user.avatar_url) : ''
+    data () {
+      return {
+        avatar: '',
+        name: ''
       }
+    },
+
+    mounted () {
+      const { user } = this
+      this.avatar = user ? (user.author ? user.author.avatar_url : user.avatar_url) : ''
+      this.name = user ? (user.author ? user.author.loginname : user.loginname) : ''
     }
   }
 </script>

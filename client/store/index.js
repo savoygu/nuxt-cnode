@@ -25,6 +25,9 @@ export default {
       createdTopics: {
 
       },
+      collections: {
+        /* [name: string]: User Collect */
+      },
       loading: false
     }
 
@@ -147,6 +150,14 @@ export default {
       })
       commit('SET_LOADING', { loading: false })
       commit('SET_ITEM', { item: Object.assign({}, state.items[id], { is_collect: !cancel }) })
+    },
+
+    FETCH_COLLECT ({ commit, state }, { name }) {
+      return lazy(
+        collections => commit('SET_COLLECT', { name, collections }),
+        () => this.$axios.$get(`/api/topic_collect/${name}`),
+        Object.assign({ name, loading: true }, state.collections[name])
+      )
     }
   },
   // =================================================
@@ -181,6 +192,10 @@ export default {
 
     SET_LOADING: (state, { loading }) => {
       Vue.set(state, 'loading', loading)
+    },
+
+    SET_COLLECT: (state, { name, collections }) => {
+      Vue.set(state.collections, name, collections)
     }
   }
 }

@@ -16,7 +16,7 @@
             </div>
             <div class="user__profile">
               <div class="user__score">{{user.score}} 积分</div>
-              <div class="user__collection">3个话题收藏</div>
+              <div class="user__collection"><nuxt-link :to="`/user/${user.loginname}/collections`">查看话题收藏</nuxt-link></div>
             </div>
             <p class="user__register">注册时间 {{user.create_at | timeAgo}}</p>
           </div>
@@ -126,7 +126,10 @@ export default {
 
   @include e(collection) {
     line-height: 2em;
-    color: #778087;
+
+    a {
+      color: #778087;
+    }
   }
 
   @include e(register) {
