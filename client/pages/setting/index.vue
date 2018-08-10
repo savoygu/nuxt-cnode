@@ -1,59 +1,30 @@
 <template>
-  <div class="main">
-    <div class="main__content">
-      <div class="main__panel">
-        <div class="main__header">
-          <breadcrumb>
-            <breadcrumb-item to="/">主页</breadcrumb-item>
-            <breadcrumb-item>设置</breadcrumb-item>
-          </breadcrumb>
-        </div>
-        <div class="setting">
-          <sidebar-wrapper header="Access Token">
-            <div class="setting-token">字符串：{{user.accesstoken}}</div>
-            <div class="setting-code">
-              <span>二维码：</span>
-              <div>
-                <img :src="`http://qr.liantu.com/api.php?&w=200&text=${user.accesstoken}`" alt="">
-              </div>
-            </div>
-          </sidebar-wrapper>
+  <div class="setting">
+    <sidebar-wrapper header="Access Token">
+      <div class="setting-token">字符串：{{user.accesstoken}}</div>
+      <div class="setting-code">
+        <span>二维码：</span>
+        <div>
+          <img :src="`http://qr.liantu.com/api.php?&w=200&text=${user.accesstoken}`" alt="">
         </div>
       </div>
-    </div>
-    <div class="main__sidebar sidebar">
-      <anonymous v-if="!user"></anonymous>
-      <template v-else>
-        <personal :user="user"></personal>
-        <create-topic></create-topic>
-      </template>
-      <client-qrcode></client-qrcode>
-    </div>
+    </sidebar-wrapper>
   </div>
 </template>
 
 <script>
-import LazyWrapper from '~/components/lazy-wrapper'
 import SidebarWrapper from '~/components/sidebar/sidebar-wrapper'
-import Anonymous from '~/components/sidebar/anonymous'
-import Personal from '~/components/sidebar/personal'
-import CreateTopic from '~/components/sidebar/create-topic'
-import ClientQrcode from '~/components/sidebar/client-qrcode'
-import Breadcrumb from '~/components/breadcrumb'
-import BreadcrumbItem from '~/components/breadcrumb/item'
 
 export default {
   name: 'User',
 
   components: {
-    LazyWrapper,
-    SidebarWrapper,
-    Anonymous,
-    Personal,
-    CreateTopic,
-    ClientQrcode,
-    Breadcrumb,
-    BreadcrumbItem
+    SidebarWrapper
+  },
+
+  layout (context) {
+    context.store.commit('SET_PAGE', { page: '设置' })
+    return 'sidebar'
   },
 
   computed: {

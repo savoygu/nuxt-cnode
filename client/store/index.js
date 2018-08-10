@@ -28,7 +28,8 @@ export default {
       collections: {
         /* [name: string]: User Collect */
       },
-      loading: false
+      loading: false,
+      page: ''
     }
 
     validTabs.forEach(tab => {
@@ -196,6 +197,10 @@ export default {
 
     SET_COLLECT: (state, { name, collections }) => {
       Vue.set(state.collections, name, collections)
+    },
+
+    SET_PAGE: (state, { page }) => {
+      Vue.set(state, 'page', page)
     }
   }
 }
