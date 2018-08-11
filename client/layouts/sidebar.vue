@@ -2,7 +2,7 @@
   <div class="cnode">
     <Header />
     <div class="main">
-      <div class="main__content">
+      <!-- <div class="main__content">
         <div class="main__panel">
           <div class="main__header">
             <breadcrumb>
@@ -10,9 +10,9 @@
               <breadcrumb-item>{{page}}</breadcrumb-item>
             </breadcrumb>
           </div>
-          <nuxt nuxt-child-key="none" role="main"/>
         </div>
-      </div>
+      </div> -->
+      <nuxt nuxt-child-key="none" role="main"/>
       <div class="main__sidebar sidebar">
         <anonymous v-if="!user"></anonymous>
         <template v-else>
@@ -33,8 +33,8 @@ import Anonymous from '~/components/sidebar/anonymous'
 import Personal from '~/components/sidebar/personal'
 import CreateTopic from '~/components/sidebar/create-topic'
 import ClientQrcode from '~/components/sidebar/client-qrcode'
-import Breadcrumb from '~/components/breadcrumb'
-import BreadcrumbItem from '~/components/breadcrumb/item'
+// import Breadcrumb from '~/components/breadcrumb'
+// import BreadcrumbItem from '~/components/breadcrumb/item'
 
 export default {
   name: 'sidebarLayout',
@@ -46,18 +46,18 @@ export default {
     Personal,
     CreateTopic,
     ClientQrcode,
-    Breadcrumb,
-    BreadcrumbItem
+    // Breadcrumb,
+    // BreadcrumbItem
   },
 
   // props: ['page'],
 
   computed: {
+    // page () {
+    //   return this.$store.state.page
+    // },
     user () {
       return this.$store.state.user
-    },
-    page () {
-      return this.$store.state.page
     }
   }
 }

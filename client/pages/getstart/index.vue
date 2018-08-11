@@ -1,18 +1,33 @@
 <template>
-  <div class="getstart">
-    <div class="markdown-text">
-      <h2>新手入门，来给我安排一下</h2>
+  <div class="main__content">
+    <div class="main__panel">
+      <div class="main__header">
+        <breadcrumb>
+          <breadcrumb-item to="/">主页</breadcrumb-item>
+          <breadcrumb-item>Node.js 新手入门</breadcrumb-item>
+        </breadcrumb>
+      </div>
+      <div class="getstart">
+        <div class="markdown-text">
+          <h2>新手入门，来给我安排一下</h2>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import Breadcrumb from '~/components/breadcrumb'
+import BreadcrumbItem from '~/components/breadcrumb/item'
+
 export default {
   name: 'User',
 
-  layout (context) {
-    context.store.commit('SET_PAGE', { page: 'Node.js 新手入门' })
-    return 'sidebar'
+  layout: 'sidebar',
+
+  components: {
+    Breadcrumb,
+    BreadcrumbItem
   }
 }
 </script>

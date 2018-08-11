@@ -1,19 +1,35 @@
 <template>
-  <div class="about">
-    <div class="markdown-text">
-      <h2>安排一下我？</h2>
+  <div class="main__content">
+    <div class="main__panel">
+      <div class="main__header">
+        <breadcrumb>
+          <breadcrumb-item to="/">主页</breadcrumb-item>
+          <breadcrumb-item>关于</breadcrumb-item>
+        </breadcrumb>
+      </div>
+      <div class="about">
+        <div class="markdown-text">
+          <h2>安排一下我？</h2>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import Breadcrumb from '~/components/breadcrumb'
+import BreadcrumbItem from '~/components/breadcrumb/item'
+
 export default {
   name: 'User',
 
-  layout (context) {
-    context.store.commit('SET_PAGE', { page: '关于' })
-    return 'sidebar'
+  layout: 'sidebar',
+
+  components: {
+    Breadcrumb,
+    BreadcrumbItem
   }
+
 }
 </script>
 

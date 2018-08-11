@@ -1,5 +1,5 @@
 <template>
-  <div class="main topic-create">
+  <div class="main">
     <div class="main__content">
       <div class="main__panel">
         <div class="main__header">
@@ -8,7 +8,7 @@
             <breadcrumb-item>发布话题</breadcrumb-item>
           </breadcrumb>
         </div>
-        <div class="topic-create__content">
+        <div class="topic-create">
           <div class="topic-create__alert" v-if="visible"><alert type="error" v-model="visible" :text="errorText"></alert></div>
           <div class="topic-create__plate">
             <span>选择板块：</span>
@@ -23,7 +23,7 @@
           <div class="topic-create__title">
             <input type="text" v-model="title" placeholder="标题字数 10 字以上">
           </div>
-          <div class="topic-create__text">
+          <div class="topic-create__content">
             <div id="editormd">
               <textarea ref="content" style="display:none;" v-model="content">### Hello Editor.md !</textarea>
             </div>
@@ -117,13 +117,11 @@ export default {
 
 <style lang="scss">
 @include b(topic-create) {
+  padding: 10px;
+  border-top: 1px solid #e5e5e5;
+
   .CodeMirror, .editormd-preview {
     height: 450px;
-  }
-
-  @include e(content) {
-    padding: 10px;
-    border-top: 1px solid #e5e5e5;
   }
 
   @include e(alert) {

@@ -1,77 +1,66 @@
 <template>
-  <div class="main">
-    <div class="main__content">
-      <template v-if="user">
+  <div class="main__content">
+    <template v-if="user">
+      <div class="main__panel">
+        <div class="main__header">
+          <breadcrumb>
+            <breadcrumb-item to="/">主页</breadcrumb-item>
+            <breadcrumb-item></breadcrumb-item>
+          </breadcrumb>
+        </div>
+        <div class="user__info">
+          <div class="user__personal">
+            <img class="user__avatar" :src="user.avatar_url" alt="">
+            <span class="user__name">{{user.loginname}}</span>
+          </div>
+          <div class="user__profile">
+            <div class="user__score">{{user.score}} 积分</div>
+            <div class="user__collection"><nuxt-link :to="`/user/${user.loginname}/collections`">查看话题收藏</nuxt-link></div>
+          </div>
+          <p class="user__register">注册时间 {{user.create_at | timeAgo}}</p>
+        </div>
+      </div>
+      <lazy-wrapper :loading="user.loading">
         <div class="main__panel">
           <div class="main__header">
-            <breadcrumb>
-              <breadcrumb-item to="/">主页</breadcrumb-item>
-              <breadcrumb-item></breadcrumb-item>
-            </breadcrumb>
+            最近创建的话题
           </div>
-          <div class="user__info">
-            <div class="user__personal">
-              <img class="user__avatar" :src="user.avatar_url" alt="">
-              <span class="user__name">{{user.loginname}}</span>
-            </div>
-            <div class="user__profile">
-              <div class="user__score">{{user.score}} 积分</div>
-              <div class="user__collection"><nuxt-link :to="`/user/${user.loginname}/collections`">查看话题收藏</nuxt-link></div>
-            </div>
-            <p class="user__register">注册时间 {{user.create_at | timeAgo}}</p>
-          </div>
+          <ul class="latest-topic">
+            <latest-topic-item v-for="topic in user.recent_topics" :topic="topic" :key="topic.id"></latest-topic-item>
+          </ul>
+          <!-- <div class="latest-topic__more"><a href="#">查看更多»</a></div> -->
         </div>
-        <lazy-wrapper :loading="user.loading">
-          <div class="main__panel">
-            <div class="main__header">
-              最近创建的话题
-            </div>
-            <ul class="latest-topic">
-              <latest-topic-item v-for="topic in user.recent_topics" :topic="topic" :key="topic.id"></latest-topic-item>
-            </ul>
-            <!-- <div class="latest-topic__more"><a href="#">查看更多»</a></div> -->
+        <div class="main__panel">
+          <div class="main__header">
+            最近参与的话题
           </div>
-          <div class="main__panel">
-            <div class="main__header">
-              最近参与的话题
-            </div>
-            <ul class="latest-topic">
-              <latest-topic-item v-for="topic in user.recent_replies" :topic="topic" :key="topic.id"></latest-topic-item>
-            </ul>
-            <!-- <div class="latest-topic__more"><a href="#">查看更多»</a></div> -->
-          </div>
-        </lazy-wrapper>
-      </template>
-      <template v-else>
-        <h1>没有找到用户</h1>
-      </template>
-    </div>
-    <div class="main__sidebar sidebar">
-      <personal :user="user"></personal>
-      <create-topic></create-topic>
-      <client-qrcode></client-qrcode>
-    </div>
+          <ul class="latest-topic">
+            <latest-topic-item v-for="topic in user.recent_replies" :topic="topic" :key="topic.id"></latest-topic-item>
+          </ul>
+          <!-- <div class="latest-topic__more"><a href="#">查看更多»</a></div> -->
+        </div>
+      </lazy-wrapper>
+    </template>
+    <template v-else>
+      <h1>没有找到用户</h1>
+    </template>
   </div>
 </template>
 
 <script>
 import LazyWrapper from '~/components/lazy-wrapper'
 import LatestTopicItem from '~/components/latest-topic-item'
-import Personal from '~/components/sidebar/personal'
-import CreateTopic from '~/components/sidebar/create-topic'
-import ClientQrcode from '~/components/sidebar/client-qrcode'
 import Breadcrumb from '~/components/breadcrumb'
 import BreadcrumbItem from '~/components/breadcrumb/item'
 
 export default {
   name: 'User',
 
+  layout: 'sidebar',
+
   components: {
     LazyWrapper,
     LatestTopicItem,
-    Personal,
-    CreateTopic,
-    ClientQrcode,
     Breadcrumb,
     BreadcrumbItem
   },
