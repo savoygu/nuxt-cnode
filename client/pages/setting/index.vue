@@ -28,7 +28,7 @@ import Breadcrumb from '~/components/breadcrumb'
 import BreadcrumbItem from '~/components/breadcrumb/item'
 
 export default {
-  name: 'User',
+  name: 'setting',
 
   layout: 'sidebar',
 
