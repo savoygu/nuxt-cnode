@@ -9,7 +9,7 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --ignore-pattern 'client/assets/**' --ignore-pattern 'client/static/editormd/**' .",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --ignore-pattern 'client/assets/**' --ignore-pattern 'client/static/**' .",
     "server": "nodemon server/app.js",
     "fly": "npm-run-all --parallel dev server"
   },
