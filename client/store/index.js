@@ -182,12 +182,13 @@ export default {
       )
     },
 
-    async REPLAY_TOPIC ({ commit, state }, { id, content, reply_id }) {
+    async REPLY_TOPIC ({ commit, state, dispatch }, { id, content, reply_id }) {
       let data = { content }
       if (reply_id) {
         data.reply_id = reply_id
       }
       await this.$axios.$post(`/api/topic/${id}/replies?needAccessToken=true`, data)
+      dispatch('FETCH_ITEM', { id })
     },
 
     async STAR_TOPIC ({ commit, state }, { reply_id }) {

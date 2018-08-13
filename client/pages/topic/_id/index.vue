@@ -45,8 +45,15 @@
         </div>
       </lazy-wrapper>
       <div class="main__panel">
+        <div class="main__header">
+          添加回复
+        </div>
         <div class="topic topic-reply">
-
+          <div class="topic-reply__inner">
+            <textarea rows="8" style="display: none;"></textarea>
+          </div>
+          <button class="button--blue" @click="replyTopic">回复</button>
+          <alert type="error" v-model="visible" :text="errorText"></alert>
         </div>
       </div>
     </div>
@@ -64,6 +71,8 @@ import Comment from '~/components/comment'
 import Personal from '~/components/sidebar/personal'
 import NoreplyTopic from '~/components/sidebar/noreply-topic'
 import { tabs } from '~/common/constants'
+import Alert from '~/components/alert'
+
 export default {
   name: 'Topic',
 
@@ -71,7 +80,8 @@ export default {
     LazyWrapper,
     Comment,
     Personal,
-    NoreplyTopic
+    NoreplyTopic,
+    Alert
   },
 
   head() {
@@ -80,6 +90,13 @@ export default {
       // script: [
       //   { innerHTML: 'window.onload = function () { prettyPrint() }', type: 'text/javascript', body: true }
       // ]
+      link: [
+        { rel: 'stylesheet', href: '//cdn.jsdelivr.net/editor/0.1.0/editor.css' }
+      ],
+      script: [
+        { src: '//cdn.jsdelivr.net/editor/0.1.0/editor.js' },
+        { src: '//cdn.jsdelivr.net/editor/0.1.0/marked.js' }
+      ]
     }
   },
 
@@ -89,7 +106,9 @@ export default {
 
   data () {
     return {
-      tabs
+      tabs,
+      visible: false,
+      errorText: ''
     }
   },
 
@@ -118,11 +137,39 @@ export default {
   methods: {
     collectTopic () {
       this.$store.dispatch('COLLECT_TOPIC', { id: this.id, cancel: this.item.is_collect })
+    },
+
+    replyTopic () {
+      const content = this.editor.codemirror.getValue()
+      if (!content) {
+        this.visible = true
+        this.errorText = '请输入回复的内容。'
+        return
+      }
+      this.$store.dispatch('REPLY_TOPIC', { id: this.id, content })
     }
+  },
+
+  updated () {
+    var toolbar = document.querySelector('.editor-toolbar')
+    this.$nextTick(_ => {
+      if (!toolbar) {
+        this.editor = new Editor({
+          status: false
+        })
+        this.editor.render()
+      }
+    })
   },
 
   mounted () {
     prettyPrint()
+    this.$nextTick(_ => {
+      this.editor = new Editor({
+        status: false
+      })
+      this.editor.render()
+    })
   }
 }
 </script>
@@ -194,4 +241,27 @@ export default {
   }
 
 }
+
+@include b(topic-reply) {
+  padding: 10px;
+  border-top: 1px solid #e5e5e5;
+
+  textarea {
+    width: 98%;
+    height: 200px;
+    padding: .5em;
+    font-size: 15px;
+    line-height: 2em;
+    resize: vertical;
+  }
+
+  .CodeMirror {
+    height: 160px;
+  }
+
+  button {
+    margin: 10px 0;
+  }
+}
+
 </style>
