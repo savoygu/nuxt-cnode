@@ -41,16 +41,19 @@
           </div>
         </div>
         <div class="main__panel">
-          <comment :reply-count="item.reply_count" :id="item.id" :replies="item.replies"></comment>
+          <comment :reply-count="item.reply_count"
+            :id="item.id"
+            :replies="item.replies"
+            @comment="commentTopic"></comment>
         </div>
       </lazy-wrapper>
-      <div class="main__panel">
+      <div class="main__panel" id="reply-topic">
         <div class="main__header">
           添加回复
         </div>
         <div class="topic topic-reply">
           <div class="topic-reply__inner">
-            <textarea rows="8" style="display: none;"></textarea>
+            <textarea rows="8" style="display: none;" class="reply-0"></textarea>
           </div>
           <button class="button--blue" @click="replyTopic">回复</button>
           <alert type="error" v-model="visible" :text="errorText"></alert>
@@ -108,7 +111,8 @@ export default {
     return {
       tabs,
       visible: false,
-      errorText: ''
+      errorText: '',
+      reply: {}
     }
   },
 
@@ -146,7 +150,16 @@ export default {
         this.errorText = '请输入回复的内容。'
         return
       }
-      this.$store.dispatch('REPLY_TOPIC', { id: this.id, content })
+      let data = { id: this.id, content }
+      if (this.reply.id) {
+        data.reply_id = this.reply.id
+      }
+      this.$store.dispatch('REPLY_TOPIC', data)
+    },
+
+    commentTopic (reply) {
+      this.editor.codemirror.getDoc().setValue(`@${reply.author.loginname} `)
+      this.reply = reply
     }
   },
 
@@ -155,6 +168,7 @@ export default {
     this.$nextTick(_ => {
       if (!toolbar) {
         this.editor = new Editor({
+          element: document.querySelector('.reply-0'),
           status: false
         })
         this.editor.render()
@@ -166,6 +180,7 @@ export default {
     prettyPrint()
     this.$nextTick(_ => {
       this.editor = new Editor({
+        element: document.querySelector('.reply-0'),
         status: false
       })
       this.editor.render()

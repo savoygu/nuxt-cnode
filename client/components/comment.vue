@@ -20,7 +20,7 @@
                 {{reply.ups.length}}
               </span>
             </span>
-            <span><i class="cn-icon-share"></i></span>
+            <a href="#reply-topic" @click="$emit('comment', reply)"><i class="cn-icon-share"></i></a>
           </div>
         </div>
         <div class="topic-comment__content" v-html="reply.content"></div>
@@ -42,6 +42,12 @@
         }
       },
       id: String
+    },
+
+    data () {
+      return {
+        repling: {}
+      }
     },
 
     methods: {
