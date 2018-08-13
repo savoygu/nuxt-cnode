@@ -62,10 +62,13 @@ export default {
 
   head () {
     return {
-      script: [
-        { innerHTML: 'window.onload = function () { editormd("editormd", { path: "/editormd/lib/" }) }', type: 'text/javascript', body: true },
+      link: [
+        { rel: 'stylesheet', href: '//cdn.jsdelivr.net/editor/0.1.0/editor.css' }
       ],
-      __dangerouslyDisableSanitizers: ['script']
+      script: [
+        { src: '//cdn.jsdelivr.net/editor/0.1.0/editor.js' },
+        { src: '//cdn.jsdelivr.net/editor/0.1.0/marked.js' }
+      ]
     }
   },
 
@@ -103,31 +106,35 @@ export default {
     },
 
     validateTopicField () {
-      const { tab, title, $refs: { content }, setErrorText } = this
+      const { tab, title, editor, setErrorText } = this
       if (!tab) {
         return setErrorText('请选择要发布到的板块。')
       } else if (title.length < 10) {
         return setErrorText('标题字数要在 10 个字以上。')
-      } else if (!content.value) {
+      } else if (!editor.codemirror.getValue()) {
         return setErrorText('请输入要发布的内容。')
       }
       return true
     },
 
     createTopic () {
-      const { id, tab, title, $refs: { content } } = this
+      const { id, tab, title, editor } = this
       if (!this.validateTopicField()) {
         return
       }
-      this.$store.dispatch('UPDATE_TOPIC', { id, tab, title, content: content.value })
+      this.$store.dispatch('UPDATE_TOPIC', { id, tab, title, content: editor.codemirror.getValue() })
     }
   },
 
   mounted () {
+    this.editor = new Editor()
+    this.editor.render()
+
     const { tab, content, title } = this.item
     this.tab = tab
     this.title = title
     this.content = content
+    this.editor.codemirror.getDoc().setValue(content)
   }
 }
 </script>
