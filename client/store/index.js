@@ -160,7 +160,7 @@ export default {
       return lazy(
         collections => commit('SET_COLLECT', { name, collections }),
         () => this.$axios.$get(`/api/topic_collect/${name}`),
-        Object.assign({ loading: true }, state.collections[name] || [])
+        { loading: true }
       )
     },
 
@@ -168,7 +168,7 @@ export default {
       return lazy(
         data => commit('SET_MESSAGE', { data }),
         () => this.$axios.$get('/api/messages?needAccessToken=true'),
-        Object.assign({ loading: true })
+        { loading: true }
       )
     }
   },
@@ -207,6 +207,7 @@ export default {
     },
 
     SET_COLLECT: (state, { name, collections }) => {
+      Vue.set(state, 'loading', !!collections.loading)
       Vue.set(state.collections, name, collections)
     },
 
@@ -215,6 +216,7 @@ export default {
     },
 
     SET_MESSAGE: (state, { data }) => {
+      Vue.set(state, 'loading', !!data.loading)
       Vue.set(state.messages, 'read', data.has_read_messages)
       Vue.set(state.messages, 'unread', data.hasnot_read_messages)
     }

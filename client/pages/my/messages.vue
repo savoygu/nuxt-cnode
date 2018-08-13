@@ -7,28 +7,32 @@
           <breadcrumb-item>新消息</breadcrumb-item>
         </breadcrumb>
       </div>
-      <div class="messages">
-        <template v-if="unread && unread.length">
-          <message-item v-for="item in unread" :key="item.id" :item="item"></message-item>
-        </template>
-        <p v-else class="messages__none">无消息</p>
-      </div>
-    </div>
-    <div class="main__panel">
+      <lazy-wrapper :loading="loading">
+        <div class="messages">
+          <template v-if="unread && unread.length">
+            <message-item v-for="item in unread" :key="item.id" :item="item"></message-item>
+          </template>
+          <p v-else class="messages__none">无消息</p>
+        </div>
+      </lazy-wrapper>
+
       <div class="main__header">
         过往消息
       </div>
-      <div class="messages__beyond">
-        <template v-if="read && read.length">
-          <message-item v-for="item in read" :key="item.id" :item="item"></message-item>
-        </template>
-        <p v-else class="messages__none">无消息</p>
-      </div>
+      <lazy-wrapper :loading="loading">
+        <div class="messages__beyond">
+          <template v-if="read && read.length">
+            <message-item v-for="item in read" :key="item.id" :item="item"></message-item>
+          </template>
+          <p v-else class="messages__none">无消息</p>
+        </div>
+      </lazy-wrapper>
     </div>
   </div>
 </template>
 
 <script>
+import LazyWrapper from '~/components/lazy-wrapper'
 import Breadcrumb from '~/components/breadcrumb'
 import BreadcrumbItem from '~/components/breadcrumb/item'
 import MessageItem from '~/components/message-item'
@@ -39,6 +43,7 @@ export default {
   layout: 'sidebar',
 
   components: {
+    LazyWrapper,
     Breadcrumb,
     BreadcrumbItem,
     MessageItem
@@ -59,6 +64,10 @@ export default {
 
     unread () {
       return this.messages.unread
+    },
+
+    loading () {
+      return this.$store.state.loading
     }
   }
 }
