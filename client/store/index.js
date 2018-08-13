@@ -29,7 +29,7 @@ export default {
         /* [name: string]: User Collect */
       },
       loading: false,
-      page: '',
+      // page: '',
       messages: {
         /* [name: string]: { read: [], unread: [] } */
       }
@@ -54,15 +54,25 @@ export default {
       }
     },
 
-    FETCH_ITEM ({ commit, state }, { id, mdrender = true }) {
+    FETCH_ITEM ({ commit, state, dispatch }, { id, mdrender = true }) {
       return lazy(
         item => commit('SET_ITEM', { item }),
-        () => this.$axios.$get('/api/topic/' + id, {
-          params: {
-            mdrender: mdrender,
-            needAccessToken: state.user ? true : ''
-          }
-        }),
+        async () => {
+          let item = await this.$axios.$get('/api/topic/' + id, {
+            params: {
+              mdrender: mdrender,
+              needAccessToken: state.user ? true : ''
+            }
+          })
+
+          await dispatch('FETCH_USER', { name: item.data.author.loginname })
+
+          // let name = item.data.author.loginname
+          // let user = await this.$axios.$get('/api/user/' + name)
+          // commit('SET_USER', { name, user: user.data })
+
+          return item
+        },
         Object.assign({ id, loading: true, replies: [] }, state.items[id])
       )
     },
@@ -200,6 +210,13 @@ export default {
 
     SET_USER: (state, { name, user }) => {
       Vue.set(state.users, name, user || false) /* false means user not found */
+      if (
+        user && !user.loading &&
+        state.user &&
+        user.loginname === state.user.loginname
+      ) { // 如果获取的是当前登录用户
+        Vue.set(state, 'user', Object.assign({}, state.user, user))
+      }
     },
 
     SET_LOADING: (state, { loading }) => {

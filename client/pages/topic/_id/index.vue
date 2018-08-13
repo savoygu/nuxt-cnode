@@ -102,7 +102,7 @@ export default {
     },
     user () {
       const { loginname, avatar_url } = this.item.author || {}
-      return {
+      return this.$store.state.users[loginname] || {
         loginname,
         avatar_url
       }

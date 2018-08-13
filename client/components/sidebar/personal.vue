@@ -37,17 +37,24 @@
       }
     },
 
-    data () {
-      return {
-        avatar: '',
-        name: ''
-      }
-    },
+    computed: {
+      avatar () {
+        let user = this.user
+        return user ? (
+          user.author ?
+            user.author.avatar_url :
+            user.avatar_url
+        ) : ''
+      },
 
-    mounted () {
-      const { user } = this
-      this.avatar = user ? (user.author ? user.author.avatar_url : user.avatar_url) : ''
-      this.name = user ? (user.author ? user.author.loginname : user.loginname) : ''
+      name () {
+        let user = this.user
+        return user ? (
+          user.author ?
+            user.author.loginname :
+             user.loginname
+        ) : ''
+      }
     }
   }
 </script>
