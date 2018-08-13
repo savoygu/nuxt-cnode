@@ -88,20 +88,15 @@ export default {
     Alert
   },
 
-  head() {
+  head () {
     return {
       title: this.item.title,
-      // script: [
-      //   { innerHTML: 'window.onload = function () { prettyPrint() }', type: 'text/javascript', body: true }
-      // ]
       link: [
         { rel: 'stylesheet', href: '//cdn.jsdelivr.net/editor/0.1.0/editor.css' }
       ],
       script: [
-        { src: '/editor/editor.js', ssr: false },
-        { src: '/editor/marked.js', ssr: false },
-        // { src: '//cdn.jsdelivr.net/editor/0.1.0/editor.js' },
-        // { src: '//cdn.jsdelivr.net/editor/0.1.0/marked.js' }
+        { src: '//cdn.jsdelivr.net/editor/0.1.0/editor.js' },
+        { src: '//cdn.jsdelivr.net/editor/0.1.0/marked.js' }
       ]
     }
   },
