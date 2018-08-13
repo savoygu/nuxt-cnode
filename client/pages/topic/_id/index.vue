@@ -41,7 +41,7 @@
           </div>
         </div>
         <div class="main__panel">
-          <comment :reply-count="item.reply_count" :replies="item.replies"></comment>
+          <comment :reply-count="item.reply_count" :id="item.id" :replies="item.replies"></comment>
         </div>
       </lazy-wrapper>
       <div class="main__panel">

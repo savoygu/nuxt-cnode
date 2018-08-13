@@ -14,7 +14,7 @@
             <a class="topic-comment__time" :href="`#${reply.id}`">1楼•{{reply.create_at | timeAgo}}</a>
           </div>
           <div class="topic-comment__action">
-            <span :class="{ 'is-uped': reply.is_uped }">
+            <span :class="{ 'is-uped': reply.is_uped }" @click="starTopic(reply)">
               <i class="cn-icon-star"></i>
               <span class="topic-comment__count">
                 {{reply.ups.length}}
@@ -40,6 +40,13 @@
         default () {
           return []
         }
+      },
+      id: String
+    },
+
+    methods: {
+      starTopic (reply) {
+        this.$store.dispatch('STAR_TOPIC', { id: this.id, reply_id: reply.id })
       }
     }
   }

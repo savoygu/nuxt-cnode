@@ -191,8 +191,15 @@ export default {
       dispatch('FETCH_ITEM', { id })
     },
 
-    async STAR_TOPIC ({ commit, state }, { reply_id }) {
-      await this.$axios.$post(`/api/reply/${reply_id}/ups?needAccessToken=true`)
+    async STAR_TOPIC ({ commit, state }, { id, reply_id }) {
+      try {
+        let res = await this.$axios.$post(`/api/reply/${reply_id}/ups?needAccessToken=true`)
+        if (res.success) {
+          commit('UPDATE_TOPIC_STAR', { id, reply_id, data: res })
+        }
+      } catch(err) {
+        console.log(err.message)
+      }
     }
   },
   // =================================================
@@ -249,6 +256,20 @@ export default {
       Vue.set(state, 'loading', !!data.loading)
       Vue.set(state.messages, 'read', data.has_read_messages)
       Vue.set(state.messages, 'unread', data.hasnot_read_messages)
+    },
+
+    UPDATE_TOPIC_STAR: (state, { id, reply_id, data }) => {
+      state.items[id].replies = state.items[id].replies.map(v => {
+        if (v.id === reply_id) {
+          v.is_uped = data.action === 'up'
+          if (v.is_uped) {
+            v.ups.push(state.user.id)
+          } else {
+            v.ups.splice(v.ups.indexOf(state.user.id), 1)
+          }
+        }
+        return v
+      })
     }
   }
 }
