@@ -66,9 +66,9 @@
           return false
         }
         await this.$store.dispatch('FETCH_ACCESSTOKEN', { accesstoken })
-        // TODO: 从哪来回哪去
-        // 跳转到首页
-        this.$router.push('/')
+        // 从哪来回哪去
+        // this.$router.push(this.$route.query.from)
+        window.location.href = this.$route.query.from
       }
     },
   }
