@@ -75,6 +75,7 @@ import Personal from '~/components/sidebar/personal'
 import NoreplyTopic from '~/components/sidebar/noreply-topic'
 import { tabs } from '~/common/constants'
 import Alert from '~/components/alert'
+import { mixinAuth } from '~/common/utils'
 
 export default {
   name: 'Topic',
@@ -97,8 +98,8 @@ export default {
         { rel: 'stylesheet', href: '//cdn.jsdelivr.net/editor/0.1.0/editor.css' }
       ],
       script: [
-        { src: '/editor/editor.js' },
-        { src: '/editor/marked.js' }
+        { src: '/editor/editor.js', ssr: false },
+        { src: '/editor/marked.js', ssr: false },
         // { src: '//cdn.jsdelivr.net/editor/0.1.0/editor.js' },
         // { src: '//cdn.jsdelivr.net/editor/0.1.0/marked.js' }
       ]
@@ -108,6 +109,8 @@ export default {
   fetch ({ store, params: { id } }) {
     return store.dispatch('FETCH_ITEM', { id })
   },
+
+  mixins: [mixinAuth],
 
   data () {
     return {
@@ -142,10 +145,14 @@ export default {
 
   methods: {
     collectTopic () {
+      if (this.checkAuth()) return
+
       this.$store.dispatch('COLLECT_TOPIC', { id: this.id, cancel: this.item.is_collect })
     },
 
     replyTopic () {
+      if (this.checkAuth()) return
+
       const content = this.editor.codemirror.getValue()
       if (!content) {
         this.visible = true
@@ -160,6 +167,8 @@ export default {
     },
 
     commentTopic (reply) {
+      if (this.checkAuth()) return
+
       this.editor.codemirror.getDoc().setValue(`@${reply.author.loginname} `)
       this.reply = reply
     }

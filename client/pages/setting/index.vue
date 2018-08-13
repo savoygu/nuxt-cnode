@@ -7,7 +7,7 @@
           <breadcrumb-item>设置</breadcrumb-item>
         </breadcrumb>
       </div>
-      <div class="setting">
+      <div class="setting" v-if="user">
         <sidebar-wrapper header="Access Token">
           <div class="setting-token">字符串：{{user.accesstoken}}</div>
           <div class="setting-code">
@@ -29,6 +29,8 @@ import BreadcrumbItem from '~/components/breadcrumb/item'
 
 export default {
   name: 'setting',
+
+  middleware: 'auth',
 
   layout: 'sidebar',
 

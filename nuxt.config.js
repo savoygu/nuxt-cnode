@@ -41,7 +41,6 @@ module.exports = {
     },
     vendor: [
       '~/assets/prettify/prettify.js',
-      '~/assets/jquery/jquery.js',
       'axios',
     ]
   },

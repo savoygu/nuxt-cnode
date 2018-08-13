@@ -158,12 +158,17 @@ export default {
     },
 
     async COLLECT_TOPIC ({ commit, state }, { id, cancel }) {
-      commit('SET_LOADING', { loading: true })
-      await this.$axios.$post(`/api/topic_collect/${cancel ? 'de_collect' : 'collect'}?needAccessToken=true`, {
-        topic_id: id
-      })
-      commit('SET_LOADING', { loading: false })
-      commit('SET_ITEM', { item: Object.assign({}, state.items[id], { is_collect: !cancel }) })
+      try {
+        commit('SET_LOADING', { loading: true })
+        await this.$axios.$post(`/api/topic_collect/${cancel ? 'de_collect' : 'collect'}?needAccessToken=true`, {
+          topic_id: id
+        })
+        commit('SET_ITEM', { item: Object.assign({}, state.items[id], { is_collect: !cancel }) })
+      } catch (err) {
+        console.log(err)
+      } finally {
+        commit('SET_LOADING', { loading: false })
+      }
     },
 
     FETCH_COLLECT ({ commit, state }, { name }) {

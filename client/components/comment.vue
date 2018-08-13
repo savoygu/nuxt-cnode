@@ -30,32 +30,38 @@
 </template>
 
 <script>
-  export default {
-    name: 'Comment',
+import { mixinAuth } from '~/common/utils'
 
-    props: {
-      replyCount: Number,
-      replies: {
-        type: Array,
-        default () {
-          return []
-        }
-      },
-      id: String
-    },
+export default {
+  name: 'Comment',
 
-    data () {
-      return {
-        repling: {}
+  props: {
+    replyCount: Number,
+    replies: {
+      type: Array,
+      default () {
+        return []
       }
     },
+    id: String
+  },
 
-    methods: {
-      starTopic (reply) {
-        this.$store.dispatch('STAR_TOPIC', { id: this.id, reply_id: reply.id })
-      }
+  mixins: [mixinAuth],
+
+  data () {
+    return {
+      repling: {}
+    }
+  },
+
+  methods: {
+    starTopic (reply) {
+      if (this.checkAuth()) return
+
+      this.$store.dispatch('STAR_TOPIC', { id: this.id, reply_id: reply.id })
     }
   }
+}
 </script>
 
 <style lang="scss">

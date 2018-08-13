@@ -53,6 +53,8 @@ import Alert from '~/components/alert'
 export default {
   name: 'TopicCreate',
 
+  middleware: 'auth',
+
   components: {
     LazyWrapper,
     Breadcrumb,

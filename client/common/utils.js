@@ -18,3 +18,14 @@ export const lazy = (commit, task, optimistic, enabled) => {
   // Commit optimistic value and resolve
   return Promise.resolve(commit(optimistic))
 }
+
+export const mixinAuth = {
+  methods: {
+    checkAuth () {
+      if (!this.$store.state.user) {
+        this.$router.push(`/signin?from=${this.$route.fullPath}`)
+        return true
+      }
+    }
+  }
+}
