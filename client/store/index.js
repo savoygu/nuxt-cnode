@@ -29,7 +29,10 @@ export default {
         /* [name: string]: User Collect */
       },
       loading: false,
-      page: ''
+      page: '',
+      messages: {
+        /* [name: string]: { read: [], unread: [] } */
+      }
     }
 
     validTabs.forEach(tab => {
@@ -157,7 +160,15 @@ export default {
       return lazy(
         collections => commit('SET_COLLECT', { name, collections }),
         () => this.$axios.$get(`/api/topic_collect/${name}`),
-        Object.assign({ name, loading: true }, state.collections[name])
+        Object.assign({ loading: true }, state.collections[name] || [])
+      )
+    },
+
+    FETCH_MESSAGE ({ commit, state }) {
+      return lazy(
+        data => commit('SET_MESSAGE', { data }),
+        () => this.$axios.$get('/api/messages?needAccessToken=true'),
+        Object.assign({ loading: true })
       )
     }
   },
@@ -201,6 +212,11 @@ export default {
 
     SET_PAGE: (state, { page }) => {
       Vue.set(state, 'page', page)
+    },
+
+    SET_MESSAGE: (state, { data }) => {
+      Vue.set(state.messages, 'read', data.has_read_messages)
+      Vue.set(state.messages, 'unread', data.hasnot_read_messages)
     }
   }
 }

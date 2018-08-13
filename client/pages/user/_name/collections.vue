@@ -7,16 +7,14 @@
           <breadcrumb-item>{{user.loginname}} 收藏的话题</breadcrumb-item>
         </breadcrumb>
       </div>
-      <template v-if="collections.length">
-        <div class="collect-topic">
-          <lazy-wrapper :loading="collections.loading">
+      <div class="collect-topic">
+        <lazy-wrapper :loading="collections.loading">
+          <template v-if="collections.length">
             <topic-item v-for="item in collections" :key="item.id" :item="item"></topic-item>
-          </lazy-wrapper>
-        </div>
-      </template>
-      <template v-else>
-        <p class="collect-topic__none">暂无话题</p>
-      </template>
+          </template>
+          <p v-else class="collect-topic__none">暂无话题</p>
+        </lazy-wrapper>
+      </div>
     </div>
   </div>
 </template>
