@@ -35,7 +35,7 @@
       |__ common
         |__ mixins.scss
         |__ utils.scss
-        |__ var.scss                                # SCSS 变量
+        |__ var.scss                                # SCSS 变量
       |__ font.scss                                 # 字体
       |__ index.scss
       |__ reset.scss                                # 样式重置
