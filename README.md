@@ -2,6 +2,24 @@
 
 > 基于 [Nuxt](https://github.com/nuxt/nuxt.js) (服务器端渲染 [SSR](https://ssr.vuejs.org/zh/)) 构建 [CNode](https://cnodejs.org/) 社区
 
+## 提前知晓 80%
+
+### 未登录
+
+![未登录](./screenshot/anonymous.gif)
+
+### 登录中
+
+![登录中](./screenshot/user.gif)
+
+### 响应式
+
+![登录中](./screenshot/responsive.gif)
+
+## 项目结构
+
+
+
 ## Build Setup
 
 ``` bash
