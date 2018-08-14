@@ -132,11 +132,11 @@ export default {
     this.editor = new Editor()
     this.editor.render()
 
-    const { tab, content, title } = this.item
+    const { tab, content, text, title } = this.item
     this.tab = tab
     this.title = title
     this.content = content
-    this.editor.codemirror.getDoc().setValue(content)
+    this.editor.codemirror.getDoc().setValue(text)
   }
 }
 </script>

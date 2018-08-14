@@ -5,6 +5,7 @@ import { lazy } from '~/common/utils'
 // import { get, post } from '~/common/http'
 import { store } from '~/common/store'
 import { CancelToken } from 'axios'
+import { Object } from 'core-js'
 
 export default {
   // =================================================
@@ -59,11 +60,16 @@ export default {
           let item = await this.$axios.$get('/api/topic/' + id, {
             params: {
               mdrender,
-              needAccessToken: state.user ? true : ''
+              needAccessToken: (state.user && mdrender) ? true : ''
             }
           })
 
-          await dispatch('FETCH_USER', { name: item.data.author.loginname })
+          if (mdrender) {
+            await dispatch('FETCH_USER', { name: item.data.author.loginname })
+            return item
+          } else {
+            item.data.text = item.data.content
+          }
 
           return item
         },
@@ -188,6 +194,7 @@ export default {
         await this.$axios.$post(`/api/topic_collect/${cancel ? 'de_collect' : 'collect'}?needAccessToken=true`, {
           topic_id: id
         })
+        this.$toast.success(`${cancel ? '取消': ''}收藏成功`)
         commit('SET_ITEM', { item: Object.assign({}, state.items[id], { is_collect: !cancel }) })
       } catch (err) { } finally {
         commit('SET_STATE', { loading: false })
