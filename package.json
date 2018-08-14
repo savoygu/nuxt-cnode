@@ -11,7 +11,8 @@
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --ignore-pattern 'client/assets/**' --ignore-pattern 'client/static/**' .",
     "server": "nodemon server/app.js",
-    "fly": "npm-run-all --parallel dev server"
+    "fly": "npm-run-all --parallel dev server",
+    "filemap": "node filemap.js -i node_modules .git .nuxt screenshot"
   },
   "husky": {
     "hooks": {
@@ -65,6 +66,7 @@
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",
     "eslint-plugin-vue": "^4.0.0",
+    "filemap.js": "^0.0.3",
     "husky": "^1.0.0-rc.13",
     "lint-staged": "^7.2.0",
     "node-sass": "^4.9.2",

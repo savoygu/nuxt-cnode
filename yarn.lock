@@ -2992,6 +2992,10 @@ file-type@^3.1.0:
   version "3.9.0"
   resolved "http://registry.npm.taobao.org/file-type/download/file-type-3.9.0.tgz#257a078384d1db8087bc449d107d52a52672b9e9"
 
+filemap.js@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.npmjs.org/filemap.js/-/filemap.js-0.0.3.tgz#184873003d10d0f36783092dc50275f9c76e58d1"
+
 filesize@^3.5.11:
   version "3.6.1"
   resolved "http://registry.npm.taobao.org/filesize/download/filesize-3.6.1.tgz#090bb3ee01b6f801a8a8be99d31710b3422bb317"
