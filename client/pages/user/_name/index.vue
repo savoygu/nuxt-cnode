@@ -25,18 +25,18 @@
           <div class="main__header">
             最近创建的话题
           </div>
-          <ul class="latest-topic">
+          <div class="latest-topic">
             <latest-topic-item v-for="topic in user.recent_topics" :topic="topic" :key="topic.id"></latest-topic-item>
-          </ul>
+          </div>
           <!-- <div class="latest-topic__more"><a href="#">查看更多»</a></div> -->
         </div>
         <div class="main__panel">
           <div class="main__header">
             最近参与的话题
           </div>
-          <ul class="latest-topic">
+          <div class="latest-topic">
             <latest-topic-item v-for="topic in user.recent_replies" :topic="topic" :key="topic.id"></latest-topic-item>
-          </ul>
+          </div>
           <!-- <div class="latest-topic__more"><a href="#">查看更多»</a></div> -->
         </div>
       </lazy-wrapper>

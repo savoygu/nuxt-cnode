@@ -4,7 +4,7 @@
       <img :src="topic.author.avatar_url" :alt="topic.author.loginname">
     </nuxt-link>
     <nuxt-link class="latest-topic__title" :to="`/topic/${topic.id}`">
-      <h3>{{topic.title}}</h3>
+      <span class="latest-topic__titleful">{{topic.title}}</span>
     </nuxt-link>
     <span class="latest-topic__time">{{topic.last_reply_at | timeAgo}}</span>
   </li>
@@ -59,12 +59,13 @@
     line-height: 30px
   }
 
-  h3 {
+  @include e(titleful) {
+    display: block;
     max-width: 80%;
     @include utils-ellipsis;
   }
 
-  span {
+  @include e(time) {
     font-size: 10px;
     color: #777;
   }

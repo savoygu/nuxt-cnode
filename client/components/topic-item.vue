@@ -68,6 +68,7 @@
     margin-right: 4px;
     padding: 2px 4px;
     font-size: 12px;
+    line-height: 1em;
     color: #999;
     background-color: #e5e5e5;
     border-radius: 3px;
@@ -102,7 +103,7 @@
     font-size: 16px;
     line-height: 30px;
     color: #333;
-    // @include utils-ellipsis;
+    @include utils-ellipsis;
 
     @include visited {
       color: #888;
