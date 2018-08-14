@@ -41,7 +41,7 @@
 <style lang="scss">
 @include b(noreply-topic) {
   @include e(list) {
-    margin-bottom: 10px;
+    margin: 0 0 10px;
   }
 
   @include e(item) {
