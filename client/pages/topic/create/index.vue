@@ -103,7 +103,7 @@ export default {
         return setErrorText('请选择要发布到的板块。')
       } else if (title.length < 10) {
         return setErrorText('标题字数要在 10 个字以上。')
-      } else if (!editor.value()) {
+      } else if (!editor.codemirror.getValue()) {
         return setErrorText('请输入要发布的内容。')
       }
       return true
@@ -114,7 +114,7 @@ export default {
       if (!this.validateTopicField()) {
         return
       }
-      this.$store.dispatch('CREATE_TOPIC', { tab, title, content: editor.value() })
+      this.$store.dispatch('CREATE_TOPIC', { tab, title, content: editor.codemirror.getValue() })
     }
   },
 

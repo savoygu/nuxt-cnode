@@ -60,7 +60,7 @@ export default {
         async () => {
           let item = await this.$axios.$get('/api/topic/' + id, {
             params: {
-              mdrender: mdrender,
+              mdrender,
               needAccessToken: state.user ? true : ''
             }
           })
