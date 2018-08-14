@@ -20,7 +20,9 @@
                 {{reply.ups.length}}
               </span>
             </span>
-            <a href="#reply-topic" @click="$emit('comment', reply)"><i class="cn-icon-share"></i></a>
+            <template v-if="user">
+              <a href="#reply-topic" @click="$emit('comment', reply)"><i class="cn-icon-share"></i></a>
+            </template>
           </div>
         </div>
         <div class="topic-comment__content" v-html="reply.content"></div>
@@ -54,9 +56,19 @@ export default {
     }
   },
 
+  computed: {
+    user () {
+      return this.$store.state.user
+    }
+  },
+
   methods: {
     starTopic (reply) {
-      if (this.checkAuth()) return
+      // if (this.checkAuth()) return
+      if (!this.user) {
+        this.$toast.show('请先登录，登录后即可点赞')
+        return
+      }
 
       this.$store.dispatch('STAR_TOPIC', { id: this.id, reply_id: reply.id })
     }
