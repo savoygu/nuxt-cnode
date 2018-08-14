@@ -17,7 +17,7 @@
           <span><nuxt-link to="/getstart">新手入门</nuxt-link></span>
           <span><nuxt-link to="/apiv1">API</nuxt-link></span>
           <span><nuxt-link to="/about">关于</nuxt-link></span>
-          <lazy-wrapper :loading="user && user.loading" height="40px">
+          <lazy-wrapper :loading="loading" height="40px">
             <span class="navbar__nossr">
               <template v-if="user">
                 <nuxt-link to="/setting">设置</nuxt-link>
@@ -48,6 +48,10 @@ export default {
   computed: {
     user () {
       return this.$store.state.user
+    },
+
+    loading () {
+      return this.$store.state.loading
     }
   }
 }

@@ -111,7 +111,7 @@ export default {
     async FETCH_ACCESSTOKEN ({ commit, state }, { accesstoken, from }) {
       let user
       try {
-        commit('SET_LOADING', { loading: true })
+        commit('SET_STATE', { loading: true })
         let res = await this.$axios.$post('/api/user/login', { accesstoken })
         user = res.data
       } catch (err) {
@@ -147,14 +147,20 @@ export default {
     },
 
     async CREATE_TOPIC ({ commit, state }, { tab, title, content }) {
-      commit('SET_LOADING', { loading: true })
-      await this.$axios.$post('/api/topics?needAccessToken=true', {
-        tab: 'dev', // 防止误操作😆
-        title,
-        content
-      })
-      commit('SET_LOADING', { loading: false })
-      this.$router.push('/')
+      try {
+        commit('SET_STATE', { loading: true })
+        await this.$axios.$post('/api/topics?needAccessToken=true', {
+          tab: 'dev', // 防止误操作😆
+          title,
+          content
+        })
+        this.$toast.success('创建话题成功')
+        setTimeout(_ => {
+          this.$router.push(`/${tab}`)
+        }, 1000)
+      } catch (err) { } finally {
+        commit('SET_STATE', { loading: false })
+      }
     },
 
     async UPDATE_TOPIC ({ commit, state }, { id, tab, title, content }) {
