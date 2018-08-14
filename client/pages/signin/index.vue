@@ -57,23 +57,16 @@
     },
 
     methods: {
-      async signin () {
+      signin () {
         const { accesstoken } = this
-
         if (!accesstoken) {
           this.errorText = '请输入您的 Access Token'
           this.visible = true
           return false
         }
-        await this.$store.dispatch('FETCH_ACCESSTOKEN', { accesstoken })
-        // 从哪来回哪去
-        let from = this.$route.query.from
-        if (from) {
-          // this.$router.push(from)
-          window.location.href = from
-        } else {
-          this.$router.push('/')
-        }
+
+        const from = this.$route.query.from
+        this.$store.dispatch('FETCH_ACCESSTOKEN', { accesstoken, from })
       }
     },
   }

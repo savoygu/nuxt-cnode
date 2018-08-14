@@ -48,9 +48,7 @@ export default {
     nuxtServerInit({ commit }, { req }) {
       if (req.session.user) {
         const user = req.session.user
-        commit('SET_ACCESSTOKEN', { accesstoken: user.accesstoken, item: user })
-      } else {
-        commit('SET_ACCESSTOKEN', { accesstoken: '', item: null })
+        commit('SET_STATE', { user })
       }
     },
 
@@ -110,14 +108,28 @@ export default {
       )
     },
 
-    FETCH_ACCESSTOKEN ({ commit, state }, { accesstoken }) {
-      return lazy(
-        item => commit('SET_ACCESSTOKEN', { item }),
-        () => this.$axios.$post('/api/user/login', {
-          accesstoken
-        }),
-        Object.assign({ loading: true }, state.user)
-      )
+    async FETCH_ACCESSTOKEN ({ commit, state }, { accesstoken, from }) {
+      let user
+      try {
+        commit('SET_LOADING', { loading: true })
+        let res = await this.$axios.$post('/api/user/login', { accesstoken })
+        user = res.data
+      } catch (err) {
+        user = null
+      } finally {
+        commit('SET_STATE', {
+          user,
+          loading: false
+        })
+
+        if (user) {
+          if (from) {
+            window.location.href = from
+          } else {
+            this.$router.push('/')
+          }
+        }
+      }
     },
 
     async LOGOUT ({ commit }) {
@@ -275,6 +287,20 @@ export default {
         }
         return v
       })
+    },
+
+    SET_STATE: (state, data) => {
+      if (Array.isArray(data)) {
+        data.forEach(item => {
+          Vue.set(state, item.type, item.value)
+        })
+      } else if (data.type && data.value){
+        Vue.set(state, data.type, data.value)
+      } else {
+        Object.keys(data).forEach(key => {
+          Vue.set(state, key, data[key])
+        })
+      }
     }
   }
 }

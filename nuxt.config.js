@@ -50,8 +50,12 @@ module.exports = {
     'nuxt-sass-resources-loader',
     // '@nuxtjs/pwa',
     // '@nuxtjs/component-cache',
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/toast'
   ],
+  toast: {
+    position: 'top-center'
+  },
   sassResources: [
     'sass-bem/_bem.scss',
     '~/assets/theme/common/var.scss',
@@ -68,6 +72,7 @@ module.exports = {
   //   }
   // },
   plugins: [
+    '~/plugins/axios',
     '~/plugins/filters.js',
     '~/plugins/packages.js',
     // { src: '~/static/editor/editor.js', ssr: false },

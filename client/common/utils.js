@@ -13,7 +13,7 @@ export const lazy = (commit, task, optimistic, enabled) => {
   Promise.resolve(task(optimistic))
     .then(res => res.data)
     .then(commit)
-    .catch(console.error)
+    .catch(err => err.data)
 
   // Commit optimistic value and resolve
   return Promise.resolve(commit(optimistic))
