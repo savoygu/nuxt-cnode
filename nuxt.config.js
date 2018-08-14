@@ -41,8 +41,6 @@ module.exports = {
     },
     vendor: [
       '~/assets/prettify/prettify.js',
-      // '~/static/editor/editor.js',
-      // '~/static/editor/marked.js',
       'axios',
     ]
   },
@@ -76,8 +74,6 @@ module.exports = {
     '~/plugins/axios',
     '~/plugins/filters.js',
     '~/plugins/packages.js',
-    // { src: '~/static/editor/editor.js', ssr: false },
-    // { src: '~/static/editor/marked.js', ssr: false },
     { src: '~/assets/prettify/prettify.js', ssr: false },
     { src: '~/plugins/localStorage.js', ssr: false }
   ],
