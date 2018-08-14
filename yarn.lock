@@ -257,6 +257,12 @@
     "@nuxtjs/meta" "^2.2.1"
     "@nuxtjs/workbox" "^2.2.0"
 
+"@nuxtjs/toast@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/@nuxtjs/toast/-/toast-3.0.1.tgz#20ea4eeb15dbac12d9967e85b809ca49c8a14cf5"
+  dependencies:
+    vue-toasted "^1.1.24"
+
 "@nuxtjs/workbox@^2.2.0":
   version "2.2.0"
   resolved "http://registry.npm.taobao.org/@nuxtjs/workbox/download/@nuxtjs/workbox-2.2.0.tgz#c8f0df77afe029ded7783806b77ec950f792d3c3"
@@ -7971,6 +7977,10 @@ vue-template-compiler@^2.5.13:
 vue-template-es2015-compiler@^1.6.0:
   version "1.6.0"
   resolved "http://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
+
+vue-toasted@^1.1.24:
+  version "1.1.24"
+  resolved "https://registry.npmjs.org/vue-toasted/-/vue-toasted-1.1.24.tgz#715a371dfa490cc710ffedaaeae61fd8a8c4f7ad"
 
 vue@^2.5.13:
   version "2.5.16"
