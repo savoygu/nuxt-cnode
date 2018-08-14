@@ -264,6 +264,15 @@ export default {
 
 }
 
+@media screen and (max-width: $--break-middle) {
+  .topic-article__changes {
+    flex-direction: column;
+  }
+  .topic-article__collection {
+    margin-top: 10px;
+  }
+}
+
 @include b(topic-reply) {
   padding: 10px;
   border-top: 1px solid #e5e5e5;
