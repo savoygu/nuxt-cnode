@@ -67,8 +67,13 @@
         }
         await this.$store.dispatch('FETCH_ACCESSTOKEN', { accesstoken })
         // 从哪来回哪去
-        // this.$router.push(this.$route.query.from)
-        window.location.href = this.$route.query.from
+        let from = this.$route.query.from
+        if (from) {
+          // this.$router.push(from)
+          window.location.href = from
+        } else {
+          this.$router.push('/')
+        }
       }
     },
   }
