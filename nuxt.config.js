@@ -54,7 +54,8 @@ module.exports = {
     '@nuxtjs/toast'
   ],
   toast: {
-    position: 'top-center'
+    position: 'top-center',
+    duration: 800
   },
   sassResources: [
     'sass-bem/_bem.scss',
