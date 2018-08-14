@@ -5,9 +5,9 @@
         <div class="main__panel">
           <div class="topic topic-article">
             <div class="topic-article__header">
-              <h3 class="topic-article__title"><span>{{item.top ? '置顶' : item.good ? '精品' : item.tab && tabs[item.tab].name}}</span>
+              <span class="topic-article__title"><span>{{item.top ? '置顶' : item.good ? '精品' : item.tab && tabs[item.tab].name}}</span>
                 {{item.title}}
-              </h3>
+              </span>
               <div class="topic-article__changes">
                 <div>
                   <span>
@@ -204,6 +204,7 @@ export default {
   }
 
   @include e(title) {
+    display: inline-block;
     width: 75%;
     margin: 8px 0;
     font-size: 22px;

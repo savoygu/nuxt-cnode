@@ -98,7 +98,6 @@ export default {
     margin-left: -20px;
     padding: 3px 20px;
     height: 40px;
-    line-height: 40px;
     color: #ccc;
     font-weight: 700;
   }
