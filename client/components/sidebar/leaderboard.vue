@@ -44,6 +44,7 @@
 @include b(leaderboard) {
   @include e(list) {
     margin: 4px 0;
+    list-style: none;
   }
 
   @include e(score) {
