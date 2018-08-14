@@ -65,10 +65,6 @@ export default {
 
           await dispatch('FETCH_USER', { name: item.data.author.loginname })
 
-          // let name = item.data.author.loginname
-          // let user = await this.$axios.$get('/api/user/' + name)
-          // commit('SET_USER', { name, user: user.data })
-
           return item
         },
         Object.assign({ id, loading: true, replies: [] }, state.items[id])
@@ -133,9 +129,14 @@ export default {
     },
 
     async LOGOUT ({ commit }) {
-      await this.$axios.$get('/api/user/logout')
-      commit('SET_ACCESSTOKEN', { item: null })
-      this.$router.push('/')
+      try {
+        await this.$axios.$get('/api/user/logout')
+        commit('SET_STATE', { user: null })
+        this.$toast.success('退出登录成功')
+        setTimeout(_ => {
+          this.$router.push('/')
+        }, 1000)
+      } catch (err) {}
     },
 
     FETCH_USER ({ commit, state }, { name }) {
@@ -164,28 +165,32 @@ export default {
     },
 
     async UPDATE_TOPIC ({ commit, state }, { id, tab, title, content }) {
-      commit('SET_LOADING', { loading: true })
-      await this.$axios.$post('/api/topics/update?needAccessToken=true', {
-        topic_id: id,
-        tab: 'dev', // 防止误操作😆
-        title,
-        content
-      })
-      commit('SET_LOADING', { loading: false })
-      this.$router.push('/')
+      try {
+        commit('SET_STATE', { loading: true })
+        await this.$axios.$post('/api/topics/update?needAccessToken=true', {
+          topic_id: id,
+          tab: 'dev', // 防止误操作😆
+          title,
+          content
+        })
+        this.$toast.success('更新话题成功')
+        setTimeout(_ => {
+          this.$router.push(`/${tab}`)
+        }, 1000)
+      } catch (err) {} finally {
+        commit('SET_STATE', { loading: false })
+      }
     },
 
     async COLLECT_TOPIC ({ commit, state }, { id, cancel }) {
       try {
-        commit('SET_LOADING', { loading: true })
+        commit('SET_STATE', { loading: true })
         await this.$axios.$post(`/api/topic_collect/${cancel ? 'de_collect' : 'collect'}?needAccessToken=true`, {
           topic_id: id
         })
         commit('SET_ITEM', { item: Object.assign({}, state.items[id], { is_collect: !cancel }) })
-      } catch (err) {
-        console.log(err)
-      } finally {
-        commit('SET_LOADING', { loading: false })
+      } catch (err) { } finally {
+        commit('SET_STATE', { loading: false })
       }
     },
 
@@ -210,19 +215,23 @@ export default {
       if (reply_id) {
         data.reply_id = reply_id
       }
-      await this.$axios.$post(`/api/topic/${id}/replies?needAccessToken=true`, data)
-      dispatch('FETCH_ITEM', { id })
+      try {
+        let res = await this.$axios.$post(`/api/topic/${id}/replies?needAccessToken=true`, data)
+        if (res.success) {
+          this.$toast.success('回复话题成功')
+          dispatch('FETCH_ITEM', { id })
+        }
+      } catch (err) {}
     },
 
     async STAR_TOPIC ({ commit, state }, { id, reply_id }) {
       try {
         let res = await this.$axios.$post(`/api/reply/${reply_id}/ups?needAccessToken=true`)
         if (res.success) {
+          this.$toast.success(`${res.action === 'up' ? '' : '取消'}点赞成功`)
           commit('UPDATE_TOPIC_STAR', { id, reply_id, data: res })
         }
-      } catch(err) {
-        console.log(err.message)
-      }
+      } catch(err) {}
     }
   },
   // =================================================
@@ -247,10 +256,6 @@ export default {
       })
     },
 
-    SET_ACCESSTOKEN: (state, { item }) => {
-      Vue.set(state, 'user', item)
-    },
-
     SET_USER: (state, { name, user }) => {
       Vue.set(state.users, name, user || false) /* false means user not found */
       if (
@@ -262,17 +267,9 @@ export default {
       }
     },
 
-    SET_LOADING: (state, { loading }) => {
-      Vue.set(state, 'loading', loading)
-    },
-
     SET_COLLECT: (state, { name, collections }) => {
       Vue.set(state, 'loading', !!collections.loading)
       Vue.set(state.collections, name, collections)
-    },
-
-    SET_PAGE: (state, { page }) => {
-      Vue.set(state, 'page', page)
     },
 
     SET_MESSAGE: (state, { data }) => {

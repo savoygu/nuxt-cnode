@@ -6,7 +6,7 @@ function handleError (error, app, store, redirect, route) {
         break
       case 403:
         app.$toast.error('登录过期，请重新登录')
-        store.commit('SET_ACCESSTOKEN', { item: null })
+        store.commit('SET_STATE', { user: null })
         setTimeout(_ => {
           redirect(`/signin?from=${route.fullPath}`)
         }, 1000)
