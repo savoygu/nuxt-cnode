@@ -1,12 +1,12 @@
 <template>
   <div class="cn-breadcrumb__item">
     <span class="cn-breadcrumb__inner">
-      <nuxt-link v-if="to"
+      <nuxt-link v-show="to"
         :to="to"
         :replace="replace">
         <slot></slot>
       </nuxt-link>
-      <slot v-else></slot>
+      <slot v-show="!to"></slot>
     </span>
     <i v-if="separatorClass" class="cn-breadcrumb__separator" :class="separatorClass"></i>
     <span class="cn-breadcrumb__separator" :class="separatorClass">{{separator}}</span>
