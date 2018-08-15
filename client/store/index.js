@@ -113,7 +113,7 @@ export default {
     async FETCH_ACCESSTOKEN ({ commit, state }, { accesstoken, from }) {
       let user
       try {
-        commit('SET_STATE', { loading: true })
+        // commit('SET_STATE', { loading: true })
         let res = await this.$axios.$post('/api/user/login', { accesstoken })
         user = res.data
       } catch (err) {
@@ -121,7 +121,7 @@ export default {
       } finally {
         commit('SET_STATE', {
           user,
-          loading: false
+          // loading: false
         })
 
         if (user) {

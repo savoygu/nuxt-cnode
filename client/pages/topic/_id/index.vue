@@ -13,7 +13,7 @@
                   <span>
                     发布于 {{ item.create_at | timeAgo }}
                   </span>
-                  <span v-if="item.author">
+                  <span v-show="item.author">
                     作者 {{item.author.loginname}}
                   </span>
                   <span>
@@ -31,7 +31,7 @@
                   <button class="topic-article__collection" :class="item.is_collect ? 'button--white' : 'button--green'" @click="collectTopic">{{ item.is_collect ? '取消收藏': '收藏' }}</button>
                 </div>
               </div>
-              <div class="topic-article__manage" v-if="currentUser.loginname === user.loginname">
+              <div class="topic-article__manage" v-show="currentUser.loginname === user.loginname">
                 <a :href="`/topic/${item.id}/edit`"><i class="cn-icon-edit"></i></a>
               </div>
             </div>
@@ -52,9 +52,11 @@
           添加回复
         </div>
         <div class="topic topic-reply">
-          <div class="topic-reply__inner">
-            <textarea rows="8" style="display: none;" class="reply-0"></textarea>
-          </div>
+          <no-ssr>
+            <div class="topic-reply__inner">
+              <textarea rows="8" style="display: none;" class="reply-0"></textarea>
+            </div>
+          </no-ssr>
           <button class="button--blue" @click="replyTopic">回复</button>
           <alert type="error" v-model="visible" :text="errorText"></alert>
         </div>
@@ -170,8 +172,8 @@ export default {
   },
 
   updated () {
-    var toolbar = document.querySelector('.editor-toolbar')
     this.$nextTick(_ => {
+      var toolbar = document.querySelector('.editor-toolbar')
       if (!toolbar) {
         this.editor = new Editor({
           element: document.querySelector('.reply-0'),
@@ -183,8 +185,8 @@ export default {
   },
 
   mounted () {
-    prettyPrint()
     this.$nextTick(_ => {
+      prettyPrint()
       this.editor = new Editor({
         element: document.querySelector('.reply-0'),
         status: false

@@ -9,7 +9,7 @@
           </breadcrumb>
         </div>
         <div class="topic-create__content">
-          <div class="topic-create__alert" v-if="visible"><alert type="error" v-model="visible" :text="errorText"></alert></div>
+          <div class="topic-create__alert" v-show="visible"><alert type="error" v-model="visible" :text="errorText"></alert></div>
           <div class="topic-create__plate">
             <span>选择板块：</span>
             <select name="plate" id="plate" v-model="tab">
@@ -23,16 +23,13 @@
           <div class="topic-create__title">
             <input type="text" v-model="title" placeholder="标题字数 10 字以上">
           </div>
-          <div class="topic-create__text">
-            <div id="editormd">
-              <textarea ref="content" style="display:none;" v-model="content">### Hello Editor.md !</textarea>
+          <no-ssr>
+            <div class="topic-create__text">
+              <div id="editormd">
+                <textarea ref="content" style="display:none;" v-model="content">### Hello Editor.md !</textarea>
+              </div>
             </div>
-          </div>
-          <div class="topic-create__statusbar">
-            <div class="topic-create__lines"></div>
-            <div class="topic-create__words"></div>
-            <div class="topic-create__cursor"></div>
-          </div>
+          </no-ssr>
           <div class="topic-create__submit">
             <button class="button--blue" @click="createTopic">提交</button>
             <span class="topic-create__lazy-wrapper"><lazy-wrapper :loading="loading"></lazy-wrapper></span>
@@ -129,14 +126,16 @@ export default {
   },
 
   mounted () {
-    this.editor = new Editor()
-    this.editor.render()
+    this.$nextTick(_ => {
+      this.editor = new Editor()
+      this.editor.render()
 
-    const { tab, content, text, title } = this.item
-    this.tab = tab
-    this.title = title
-    this.content = content
-    this.editor.codemirror.getDoc().setValue(text)
+      const { tab, content, text, title } = this.item
+      this.tab = tab
+      this.title = title
+      this.content = content
+      this.editor.codemirror.getDoc().setValue(text)
+    })
   }
 }
 </script>

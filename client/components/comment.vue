@@ -20,9 +20,7 @@
                 {{reply.ups.length}}
               </span>
             </span>
-            <template v-if="user">
-              <a href="#reply-topic" @click="$emit('comment', reply)"><i class="cn-icon-share"></i></a>
-            </template>
+            <a v-show="user" href="#reply-topic" @click="$emit('comment', reply)"><i class="cn-icon-share"></i></a>
           </div>
         </div>
         <div class="topic-comment__content" v-html="reply.content"></div>
