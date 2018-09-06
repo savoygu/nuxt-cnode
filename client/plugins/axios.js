@@ -28,7 +28,7 @@ export default function ({ $axios, app, store, redirect, route }) {
       return config
     },
     error => {
-      return Promise.error(error)
+      return Promise.reject(error)
     }
   )
 
