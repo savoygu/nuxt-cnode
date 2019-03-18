@@ -4,7 +4,7 @@
       <div class="navbar__container">
         <div class="navbar__site">
           <nuxt-link class="navbar__brand" to="/">
-            <img src="//o4j806krb.qnssl.com/public/images/cnodejs_light.svg" alt="Cnode 中文社区">
+            <img src="//static2.cnodejs.org/public/images/cnodejs_light.svg" alt="Cnode 中文社区">
           </nuxt-link>
           <form class="navbar__search" action="/search">
             <!-- <i class="cn-icon-search"></i> -->
@@ -12,11 +12,21 @@
           </form>
         </div>
         <div class="navbar__nav">
-          <span><nuxt-link to="/">首页</nuxt-link></span>
-          <span v-if="user"><nuxt-link to="/my/messages">未读消息</nuxt-link></span>
-          <span><nuxt-link to="/getstart">新手入门</nuxt-link></span>
-          <span><nuxt-link to="/apiv1">API</nuxt-link></span>
-          <span><nuxt-link to="/about">关于</nuxt-link></span>
+          <span>
+            <nuxt-link to="/">首页</nuxt-link>
+          </span>
+          <span v-if="user">
+            <nuxt-link to="/my/messages">未读消息</nuxt-link>
+          </span>
+          <span>
+            <nuxt-link to="/getstart">新手入门</nuxt-link>
+          </span>
+          <span>
+            <nuxt-link to="/apiv1">API</nuxt-link>
+          </span>
+          <span>
+            <nuxt-link to="/about">关于</nuxt-link>
+          </span>
           <span class="navbar__nossr">
             <template v-if="user">
               <nuxt-link to="/setting">设置</nuxt-link>
@@ -38,7 +48,7 @@
                 <nuxt-link to="/signin">登录</nuxt-link>
               </template>
             </span>
-          </lazy-wrapper> -->
+          </lazy-wrapper>-->
         </div>
       </div>
     </div>
@@ -68,7 +78,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 @include b(navbar) {
   position: relative;
   z-index: 9;
@@ -131,16 +140,18 @@ export default {
       font-weight: 400;
       line-height: 1;
       color: #666;
-      background: url(https://o4j806krb.qnssl.com/public/images/search.e53b380a.hashed.png) 4px 4px no-repeat #888;
+      background: url(//static2.cnodejs.org/public/images/search.e53b380a.hashed.png)
+        4px 4px no-repeat #888;
       border: 0;
       border-radius: 15px;
-      transition: all .5s;
+      transition: all 0.5s;
 
       &:focus {
         background-color: #fff;
-        border-color: rgba(82,168,236,.8);
+        border-color: rgba(82, 168, 236, 0.8);
         outline: 0;
-        box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+          0 0 8px rgba(82, 168, 236, 0.6);
       }
     }
   }
@@ -149,7 +160,8 @@ export default {
     display: flex;
     align-items: center;
 
-    a, .navbar__logout {
+    a,
+    .navbar__logout {
       display: block;
       padding: 10px 15px;
       line-height: 20px;
@@ -162,7 +174,8 @@ export default {
     }
 
     .navbar__nossr {
-      a, span {
+      a,
+      span {
         display: inline-block;
       }
     }
@@ -192,12 +205,12 @@ export default {
 }
 
 @media screen and (max-width: $--break-mini) {
-    .navbar__nav {
-      justify-content: center;
+  .navbar__nav {
+    justify-content: center;
 
-      a {
-        padding: 10px;
-      }
+    a {
+      padding: 10px;
     }
+  }
 }
 </style>
