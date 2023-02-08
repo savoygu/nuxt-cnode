@@ -1,0 +1,22 @@
+{
+  "extends": [
+    "stylelint-config-standard-scss",
+    "stylelint-config-recommended-vue/scss",
+    "stylelint-config-idiomatic-order"
+  ],
+  "rules": {
+    "selector-id-pattern": null,
+    "selector-class-pattern": null,
+    "function-url-quotes": null,
+    "string-quotes": null,
+    "declaration-block-trailing-semicolon": null,
+    "font-family-no-missing-generic-family-keyword": [
+      true,
+      {
+        "ignoreFontFamilies": [
+          "iconfont"
+        ]
+      }
+    ]
+  }
+}

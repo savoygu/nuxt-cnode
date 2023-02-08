@@ -1,0 +1,68 @@
+// ===========================================================================
+// Markdown
+// ===========================================================================
+.markdown-text {
+  code,
+  pre {
+    border-radius: 3px;
+    color: #333;
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    font-size: 12px;
+  }
+
+  pre {
+    padding: 0 15px;
+    border: none;
+    border-width: 1px 0;
+    margin: 20px -10px;
+    background: #f7f7f7;
+    border-radius: 0;
+    font-size: 14px;
+    line-height: 22px;
+    tab-size: 4;
+
+    code {
+      background-color: transparent;
+      color: inherit;
+      white-space: pre-wrap;
+    }
+  }
+
+  >:first-child {
+    margin-top: 0;
+  }
+
+  >:last-child {
+    margin-bottom: 1em;
+  }
+
+  p {
+    overflow: auto;
+    margin: 1em 0;
+    font-size: 15px;
+    line-height: 1.7em;
+    white-space: pre-wrap;
+    word-break: break-all;
+    word-wrap: break-word;
+
+    code {
+      padding: 4px 6px;
+      background: 0 0;
+      background-color: #fcfafa;
+      color: #000;
+      white-space: pre-wrap;
+    }
+  }
+
+  a {
+    color: #08c;
+
+    @include hover {
+      text-decoration: underline;
+    }
+  }
+
+  img {
+    cursor: pointer;
+  }
+}

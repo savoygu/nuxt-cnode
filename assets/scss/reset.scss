@@ -1,0 +1,409 @@
+html {
+  font-size: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #e1e1e1;
+  color: #333;
+  font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+html,
+body,
+#__nuxt {
+  height: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+a {
+  color: #08c;
+  text-decoration: none;
+}
+
+a:focus,
+a:hover {
+  color: #005580;
+  text-decoration: underline;
+}
+
+a:focus {
+  outline: #333 dotted thin;
+  outline: -webkit-focus-ring-color auto 5px;
+  outline-offset: -2px;
+}
+
+a.dark,
+a.dark:active,
+a.dark:link,
+a.dark:visited {
+  color: #666;
+  text-decoration: none;
+}
+
+a.dark:hover {
+  color: #385f8a;
+}
+
+a:active,
+a:hover {
+  outline: 0;
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+img {
+  width: auto\9;
+  max-width: 100%;
+  height: auto;
+  border: 0;
+  vertical-align: middle;
+}
+
+// ===========================================================================
+// Header
+// ===========================================================================
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 10px 0;
+  color: inherit;
+  font-family: inherit;
+  font-weight: 700;
+  line-height: 20px;
+  text-rendering: optimizelegibility;
+}
+
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small {
+  color: #999;
+  font-weight: 400;
+  line-height: 1;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 40px;
+}
+
+h1 {
+  font-size: 38.5px;
+}
+
+h2 {
+  font-size: 31.5px;
+}
+
+h1 small,
+h3 {
+  font-size: 24.5px;
+}
+
+h2 small,
+h4 {
+  font-size: 17.5px;
+}
+
+h3 small,
+h4 small,
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  font-size: 11.9px;
+}
+
+// ===========================================================================
+// Order List & Unordered List
+// ===========================================================================
+
+ol,
+ul {
+  padding: 0;
+  margin: 0 0 10px 25px;
+  list-style-type: disc;
+
+  ul {
+    list-style-type: circle;
+  }
+}
+
+ol.inline,
+ol.unstyled,
+ul.inline,
+ul.unstyled {
+  margin-left: 0;
+  list-style: none;
+}
+
+dt {
+  font-weight: 700;
+}
+
+dd {
+  margin-left: 10px;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #fff;
+  margin: 20px 0;
+}
+
+legend small {
+  color: #999;
+  font-size: 15px;
+}
+
+// ===========================================================================
+// Editor
+// ===========================================================================
+
+blockquote {
+  padding: 0 0 0 15px;
+  border-left: 5px solid #eee;
+  margin: 0 0 20px;
+}
+
+blockquote p {
+  font-size: 17.5px;
+  font-weight: 300;
+  line-height: 1.25;
+}
+
+blockquote small {
+  color: #999;
+}
+
+blockquote small::before {
+  content: "\2014 \00A0";
+}
+
+blockquote.pull-right {
+  padding-right: 15px;
+  padding-left: 0;
+  border-right: 5px solid #eee;
+  border-left: 0;
+  float: right;
+}
+
+blockquote.pull-right p,
+blockquote.pull-right small {
+  text-align: right;
+}
+
+blockquote.pull-right small::before {
+  content: "";
+}
+
+blockquote.pull-right small::after {
+  content: "\00A0 \2014";
+}
+
+blockquote::after,
+blockquote::before,
+q::after,
+q::before {
+  content: "";
+}
+
+code,
+pre {
+  padding: 0 3px 2px;
+  border-radius: 3px;
+  color: #333;
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+  font-size: 12px;
+}
+
+code {
+  padding: 2px 4px;
+  border: 1px solid #e1e1e8;
+  background-color: #f7f7f9;
+  color: #d14;
+  white-space: nowrap;
+}
+
+pre {
+  padding: 9.5px;
+  border: 1px solid #ccc;
+  border: 1px solid rgb(0 0 0 / 15%);
+  margin: 0 0 10px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  font-size: 13px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+fieldset,
+legend,
+pre code {
+  padding: 0;
+  border: 0;
+}
+
+pre code {
+  background-color: transparent;
+  color: inherit;
+  white-space: pre-wrap;
+}
+
+// ===========================================================================
+// Form
+// ===========================================================================
+
+form {
+  margin: 0 0 20px;
+}
+
+fieldset {
+  margin: 0;
+}
+
+legend {
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid #e5e5e5;
+  color: #333;
+  font-size: 21px;
+  line-height: 40px;
+}
+
+button,
+input,
+label,
+select,
+textarea {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 4px 0 0;
+  margin-top: 1px\9;
+  line-height: normal;
+}
+
+input[type="button"],
+input[type="reset"],
+input[type="file"],
+input[type="image"],
+input[type="submit"],
+input[type="radio"],
+input[type="checkbox"] {
+  width: auto;
+}
+
+input[type="file"],
+select {
+  height: 30px;
+  line-height: 30px;
+}
+
+select {
+  width: 220px;
+  border: 1px solid #ccc;
+}
+
+select[multiple],
+select[size] {
+  height: auto;
+}
+
+input[type="file"]:focus,
+input[type="radio"]:focus,
+input[type="checkbox"]:focus,
+select:focus {
+  outline: #333 dotted thin;
+  outline: -webkit-focus-ring-color auto 5px;
+  outline-offset: -2px;
+}
+
+input:placeholder,
+textarea:placeholder {
+  color: #999;
+}
+
+.checkbox,
+.radio {
+  min-height: 20px;
+  padding-left: 20px;
+}
+
+.checkbox input[type="checkbox"],
+.radio input[type="radio"] {
+  margin-left: -20px;
+  float: left;
+}
+
+.checkbox.inline,
+.radio.inline {
+  display: inline-block;
+  padding-top: 5px;
+  margin-bottom: 0;
+  vertical-align: middle;
+}
+
+.checkbox.inline + .checkbox.inline,
+.radio.inline + .radio.inline {
+  margin-left: 10px;
+}
+
+input[disabled],
+input[readonly],
+select[disabled],
+select[readonly],
+textarea[disabled],
+textarea[readonly] {
+  background-color: #eee;
+  cursor: not-allowed;
+}
+
+input[type="radio"][disabled],
+input[type="radio"][readonly],
+input[type="checkbox"][disabled],
+input[type="checkbox"][readonly] {
+  background-color: transparent;
+}
