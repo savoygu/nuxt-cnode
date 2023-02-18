@@ -1,6 +1,151 @@
-POST https://cnodejs.org/api/v1/accesstoken HTTP/1.1
-content-type: application/json
+@baseURL=https://cnodejs.org/api/v1
+@contentType=application/json
+// 需要安装 REST Client 插件，并提供环境变量配置：accessToken（取自 cnodejs 社区个人主页）
+
+### 用户
+
+### 用户详情
+# @name accesstoken
+POST {{baseURL}}/accesstoken HTTP/1.1
+Content-Type:  {{contentType}}
 
 {
-  "accesstoken": "123"
+  "accesstoken": {{accessToken}}
+}
+
+
+### 验证 accessToken 的正确性
+@loginname={{accesstoken.response.body.$.loginname}}
+GET {{baseURL}}/user/{{loginname}}
+Content-Type: {{contentType}}
+
+
+### 消息通知
+
+### 获取未读消息数
+GET {{baseURL}}/message/count
+Content-Type: {{contentType}}
+
+{
+  "accesstoken": {{accessToken}}
+}
+
+
+### 获取已读和未读消息
+GET {{baseURL}}/messages
+Content-Type: {{contentType}}
+
+{
+  "accesstoken": {{accessToken}},
+  "mdrender": "true"
+}
+
+### 标记全部已读
+POST {{baseURL}}/message/mark_all
+Content-Type: {{contentType}}
+
+{
+  "accesstoken": {{accessToken}},
+}
+
+### 标记单个消息为已读
+POST {{baseURL}}/message/mark_one/5b765ef7a210553a0cde29e5
+# POST {{baseURL}}/message/mark_one/:msg_id
+Content-Type: {{contentType}}
+
+{
+  "accesstoken": {{accessToken}},
+}
+
+
+### 评论
+
+### 新建评论
+POST {{baseURL}}/topic/:topic_id/replies
+Content-Type: {{contentType}}
+
+{
+  "accesstoken": {{accessToken}},
+  "content": "",
+  "reply_id": ""
+}
+
+### 为评论点赞
+POST {{baseURL}}/reply/:reply_id/ups
+Content-Type: {{contentType}}
+
+{
+  "accesstoken": {{accessToken}},
+}
+
+
+### 主题收藏
+
+### 收藏主题
+POST {{baseURL}}/topic_collect/collect
+Content-Type: {{contentType}}
+
+{
+  "accesstoken": {{accessToken}},
+  "topic_id": "5a71a6c7ce45d44045146572"
+}
+
+### 取消主题
+POST {{baseURL}}/topic_collect/de_collect
+Content-Type: {{contentType}}
+
+{
+  "accesstoken": {{accessToken}},
+  "topic_id": "5a71a6c7ce45d44045146572"
+}
+
+### 用户所收藏的主题
+GET {{baseURL}}/topic_collect/{{loginname}}
+
+
+### 主题
+
+### 主题首页
+# @name topics
+GET {{baseURL}}/topics
+Content-Type: {{contentType}}
+
+{
+  "page": 1,
+  "tab": "dev",
+  "limit": 10,
+  "mdrender": "false"
+}
+
+### 主题详情
+@topicId={{topics.response.body.$.data[0].id}}
+GET {{baseURL}}/topic/{{topicId}}
+Content-Type: {{contentType}}
+
+{
+  "mdrender": "true",
+  "accesstoken": {{accessToken}}
+}
+
+### 新建主题
+POST {{baseURL}}/topics
+Content-Type: {{contentType}}
+
+{
+  "accesstoken": {{accessToken}},
+  "title": "测试主题发布",
+  "tab": "dev",
+  "content": "如题，测试主题发布！",
+}
+
+### 编辑主题
+POST {{baseURL}}/topics/update
+Content-Type: {{contentType}}
+
+{
+  "accesstoken": {{accessToken}},
+  "topic_id": "5b7298d2b71aedfe4c12698c",
+  "title": "测试测试！！！",
+  "tab": "dev",
+  "content": "如题如题！！！",
 }
