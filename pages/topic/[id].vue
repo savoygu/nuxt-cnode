@@ -55,7 +55,7 @@ const handleCommentTopic = () => {}
       <div class="topic-article__content" v-html="topic.content"></div>
     </Panel>
     <Comment v-if="topic && topic.replies.length > 0" :topic="topic" @comment="handleCommentTopic"></Comment>
-    <Panel v-if="currentUser" id="reply-topic" header="添加回复" bordered>
+    <Panel v-if="currentUser" id="reply-topic" title="添加回复" bordered>
       <div class="topic-reply">
         <div class="topic-reply__inner">
           <textarea rows="8" style="display: none" class="reply-0"></textarea>

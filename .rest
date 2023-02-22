@@ -4,7 +4,7 @@
 
 ### 用户
 
-### 用户详情
+### 验证 accessToken 的正确性
 # @name accesstoken
 POST {{baseURL}}/accesstoken HTTP/1.1
 Content-Type:  {{contentType}}
@@ -14,7 +14,7 @@ Content-Type:  {{contentType}}
 }
 
 
-### 验证 accessToken 的正确性
+### 用户详情
 @loginname={{accesstoken.response.body.$.loginname}}
 GET {{baseURL}}/user/{{loginname}}
 Content-Type: {{contentType}}

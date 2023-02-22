@@ -72,7 +72,7 @@ export async function fetchTopics(query: TopicQuery) {
 
 export async function fetchTopic(id: string, mdrender = true) {
   const state = useStore()
-  const { data, refresh } = await useFetch<Topic>(`/api/topic/${id}`, {
+  const { data, refresh } = await useFetch<Topic>(`/api/topics/${id}`, {
     params: {
       // id,
       mdrender,

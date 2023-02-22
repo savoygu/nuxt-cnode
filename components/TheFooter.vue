@@ -4,9 +4,9 @@
   <div class="footer">
     <div class="footer__main">
       <div class="footer__links">
-        <a class="is-dark" href="https://cnodejs.org/rss">RSS</a>
+        <a href="https://cnodejs.org/rss">RSS</a>
         |
-        <a class="is-dark" href="https://github.com/savoygu/nuxt-cnode">源码地址</a>
+        <a href="https://github.com/savoygu/nuxt-cnode">源码地址</a>
       </div>
       <div class="footer__aim">
         <p>CNode 社区为国内最专业的 Node.js 开源技术社区，致力于 Node.js 的技术研究。</p>

@@ -49,12 +49,18 @@ export type ResponseErr = {
   error_msg: string
 }
 
-export type User = {
+export type Token = {
   success: boolean
   id: string
   loginname: string
   avatar_url: string
-  accesstoken: string
-  replies?: []
-  topics?: []
+}
+
+export type User = {
+  loginname: string
+  avatar_url: string
+  githubUsername: string
+  score: number
+  recent_topics: Topic[]
+  recent_replies: []
 }

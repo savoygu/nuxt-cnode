@@ -1,9 +1,12 @@
 <script setup lang="ts">
 // hooks
+const state = useStore()
 const route = useRoute()
 const router = useRouter()
 const tab = computed(() => route.query.tab as string)
 const page = computed(() => route.query.page as string)
+
+const user = computed(() => state.value.user)
 
 // reactive
 const currentTab = ref(tab.value || 'all')
@@ -11,10 +14,13 @@ const currentPage = ref(Number(page.value) || 1)
 // const transition = ref('slide-right')
 
 // fetch
-const { data: topics, refresh } = await fetchTopics({
-  currentTab,
-  currentPage
-})
+const [{ data: topics, refresh }] = await Promise.all([
+  fetchTopics({
+    currentTab,
+    currentPage
+  }),
+  fetchUser(user.value.loginname)
+])
 
 // watch
 watch(tab, newTab => {
@@ -71,6 +77,8 @@ const handlePageChange = (page: number) => {
       </div>
     </Panel>
     <template #sidebar>
+      <SidebarPersonalInformation v-if="user" />
+      <SidebarPublishTopic no-header />
       <SidebarUnansweredTopic />
       <SidebarRanking />
       <SidebarFriendlyCommunity />

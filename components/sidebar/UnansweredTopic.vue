@@ -5,7 +5,7 @@ const { data: topics } = await useFetch<Topic[]>('/api/topics/unanswered')
 </script>
 
 <template>
-  <Panel header="无人回复的话题">
+  <Panel title="无人回复的话题">
     <ul class="unanswered-topic__list unstyled">
       <li v-for="topic in topics" :key="topic.id" class="unanswered-topic__item">
         <a class="dark" :href="`https://cnodejs.org/topic/${topic.id}`" :title="topic.title">{{ topic.title }}</a>

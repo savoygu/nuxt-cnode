@@ -31,7 +31,7 @@ const handleReplyTopic = (reply: Reply) => {
 </script>
 
 <template>
-  <Panel :header="`${topic.reply_count} 回复`" no-padding>
+  <Panel :title="`${topic.reply_count} 回复`" no-padding>
     <div class="comment__list">
       <div v-for="reply in topic.replies" :key="reply.id" class="comment__item">
         <div class="comment__author">

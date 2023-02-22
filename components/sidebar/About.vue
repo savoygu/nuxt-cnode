@@ -1,5 +1,5 @@
 <template>
-  <Panel header="关于">
+  <Panel title="关于">
     <p class="about__community">CNode：Node.js专业中文社区</p>
     <p class="about__here">在这里你可以：</p>
     <ul class="about__can-do">

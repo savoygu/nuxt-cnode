@@ -1,5 +1,5 @@
 <template>
-  <Panel header="客户端二维码">
+  <Panel title="客户端二维码">
     <div class="client-qr-code">
       <img
         width="200"
