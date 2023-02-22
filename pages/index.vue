@@ -6,7 +6,7 @@ const router = useRouter()
 const tab = computed(() => route.query.tab as string)
 const page = computed(() => route.query.page as string)
 
-const user = computed(() => state.value.user)
+const currentUser = computed(() => state.value.user)
 
 // reactive
 const currentTab = ref(tab.value || 'all')
@@ -19,7 +19,7 @@ const [{ data: topics, refresh }] = await Promise.all([
     currentTab,
     currentPage
   }),
-  fetchUser(user.value.loginname)
+  currentUser.value && fetchUser(currentUser.value.loginname)
 ])
 
 // watch
@@ -77,8 +77,10 @@ const handlePageChange = (page: number) => {
       </div>
     </Panel>
     <template #sidebar>
-      <SidebarPersonalInformation v-if="user" />
-      <SidebarPublishTopic no-header />
+      <template v-if="currentUser">
+        <SidebarPersonalInformation />
+        <SidebarPublishTopic no-header />
+      </template>
       <SidebarUnansweredTopic />
       <SidebarRanking />
       <SidebarFriendlyCommunity />

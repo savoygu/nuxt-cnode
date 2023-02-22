@@ -14,7 +14,7 @@ await fetchTopic(id)
 // computed
 const currentUser = computed(() => state.value.user)
 const topic = computed(() => state.value.topics[id])
-const user = computed(() => topic.value.author)
+const topicAuthor = computed(() => topic.value.author)
 
 // methods
 const handleCollectTopic = () => {}
@@ -48,7 +48,7 @@ const handleCommentTopic = () => {}
             </button>
           </div>
         </div>
-        <div v-if="currentUser && currentUser.loginname === user.loginname" class="topic-article__manage">
+        <div v-if="currentUser && currentUser.loginname === topicAuthor.loginname" class="topic-article__manage">
           <a :href="`/topic/${topic.id}/edit`"><i class="icon-edit"></i></a>
         </div>
       </template>

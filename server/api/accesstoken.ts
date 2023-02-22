@@ -1,5 +1,5 @@
 import { baseURL } from '~/server/constants'
-import { User } from '~/types'
+import { Token } from '~/types'
 
 export default defineEventHandler(async event => {
   const body = await useBody(event)
@@ -13,7 +13,7 @@ export default defineEventHandler(async event => {
   }
 
   try {
-    const response = await $fetch<User>('/accesstoken', {
+    const response = await $fetch<Token>('/accesstoken', {
       baseURL,
       method: 'POST',
       body: {

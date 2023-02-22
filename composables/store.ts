@@ -1,11 +1,11 @@
 import { Ref } from 'vue'
 import { H3Error } from 'h3'
-import { Response, ResponseErr, Topic, User } from '~/types'
+import { Response, ResponseErr, Token, Topic, User } from '~/types'
 
 export type RootState = {
   topics: Record<string, Topic>
   tabs: Record<string, Record<number, string[]>>
-  user: null | User
+  user: null | Token
   users: Record<string, User>
   isLogin: boolean
 }
@@ -103,12 +103,7 @@ export async function fetchTopic(id: string, mdrender = true) {
 
 export async function fetchUser(loginname) {
   const store = useStore()
-  const token = useToken()
   const { data } = await useFetch<User>(`/api/user/${loginname}`, {
-    method: 'POST',
-    body: {
-      accesstoken: token.value
-    },
     default: () => store.value.users[loginname]
   })
   store.value.users[loginname] = data.value
@@ -120,7 +115,7 @@ export async function fetchUser(loginname) {
 
 export async function fetchAccesstoken(accesstoken: string) {
   const state = useStore()
-  const { data, error } = await useFetch<User, Response<H3Error>>('/api/accesstoken', {
+  const { data, error } = await useFetch<Token, Response<H3Error>>('/api/accesstoken', {
     method: 'POST',
     body: {
       accesstoken
