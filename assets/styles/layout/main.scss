@@ -6,7 +6,7 @@
   width: 90%;
   min-width: 960px;
   max-width: 1400px;
-  min-height: 100vh;
+  min-height: calc(100vh - 166px);
   flex: 1;
   margin: 15px auto;
 
@@ -19,6 +19,14 @@
     flex: 0 0 290px;
     margin-bottom: 20px;
     font-size: 14px;
+
+    .panel {
+      font-size: 13px;
+
+      &__header {
+        color: #51585c;
+      }
+    }
   }
 
   @include e(panel) {

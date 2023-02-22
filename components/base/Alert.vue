@@ -1,5 +1,5 @@
 <template>
-  <div v-show="visible" class="alert" :class="type ? `alert--${type}` : ''">
+  <div v-show="visible" :class="alertClass">
     <i class="alert__close" @click="onClose">×</i>
     <strong class="alert__text">
       <slot>{{ title }}</slot>
@@ -13,17 +13,24 @@ type AlertProps = {
   type?: 'success' | 'info' | 'warning' | 'danger'
   title?: string
 }
-
+// Props
 const props = withDefaults(defineProps<AlertProps>(), {
   type: 'danger',
   title: ''
 })
 const { modelValue: visible, title, type } = toRefs(props)
 
+// Emits
 const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void
 }>()
 
+// Computed
+const alertClass = computed(() => {
+  return [type.value ? `alert--${type.value}` : '', 'alert']
+})
+
+// Methods
 const onClose = () => {
   emit('update:modelValue', false)
 }

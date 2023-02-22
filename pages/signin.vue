@@ -1,37 +1,3 @@
-<template>
-  <div class="main">
-    <div class="main__content">
-      <div class="main__panel">
-        <div class="signin">
-          <div class="signin__header">
-            <BaseBreadcrumb>
-              <BaseBreadcrumbItem to="/">主页</BaseBreadcrumbItem>
-              <BaseBreadcrumbItem>登录</BaseBreadcrumbItem>
-            </BaseBreadcrumb>
-          </div>
-          <div class="signin__content">
-            <BaseAlert v-model="alert.visible" :title="alert.title"></BaseAlert>
-            <div class="form-control">
-              <div class="form-control__group">
-                <span class="form-control__label" for="accesstoken">Access Token</span>
-                <div class="form-control__item">
-                  <input v-model="accesstoken" class="form-input--large" name="accesstoken" size="30" type="text" />
-                </div>
-              </div>
-            </div>
-            <div class="form-control__action">
-              <button class="button--blue" @click="signin">{{ loading ? '登录中...' : '登录' }}</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="main__sidebar sidebar">
-      <SidebarAbout />
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 definePageMeta({
   middleware: 'guest'
@@ -81,18 +47,39 @@ const signin = async () => {
 }
 </script>
 
-<style lang="scss">
-@include b(signin) {
-  @include e(header) {
-    padding: 10px;
-    background-color: #f6f6f6;
-    border-radius: 3px 3px 0 0;
-  }
+<template>
+  <TheMain>
+    <Panel>
+      <template #header>
+        <BaseBreadcrumb>
+          <BaseBreadcrumbItem to="/">主页</BaseBreadcrumbItem>
+          <BaseBreadcrumbItem>登录</BaseBreadcrumbItem>
+        </BaseBreadcrumb>
+      </template>
+      <BaseAlert v-model="alert.visible" :title="alert.title"></BaseAlert>
+      <div class="form">
+        <div class="form-control">
+          <div class="form-control__group">
+            <span class="form-control__label" for="accesstoken">Access Token</span>
+            <div class="form-control__item">
+              <input v-model="accesstoken" class="form-input--large" name="accesstoken" size="30" type="text" />
+            </div>
+          </div>
+        </div>
+        <div class="form-action">
+          <button class="button--blue" @click="signin">{{ loading ? '登录中...' : '登录' }}</button>
+        </div>
+      </div>
+    </Panel>
+    <template #sidebar>
+      <SidebarAbout />
+    </template>
+  </TheMain>
+</template>
 
-  @include e(content) {
-    padding: 10px;
-    border-radius: 0 0 3px 3px;
-  }
+<style lang="scss">
+@include b(form) {
+  margin-top: 40px;
 }
 
 @include b(form-input) {
@@ -102,8 +89,6 @@ const signin = async () => {
 }
 
 @include b(form-control) {
-  margin-top: 40px;
-
   @include e(group) {
     display: flex;
     align-items: center;
@@ -135,9 +120,11 @@ const signin = async () => {
       }
     }
   }
+}
 
-  @include e(action) {
-    padding: 20px 20px 20px 180px;
-  }
+@include b(form-action) {
+  padding: 20px 20px 20px 180px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 </style>

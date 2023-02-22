@@ -1,25 +1,31 @@
 <script setup lang="ts">
-type SidebarPanelProps = {
+type PanelProps = {
   header?: string
+  noPadding?: boolean
+  bordered?: boolean
 }
-const { header } = withDefaults(defineProps<SidebarPanelProps>(), {
-  header: ''
+const { header } = withDefaults(defineProps<PanelProps>(), {
+  header: '',
+  noPadding: false,
+  bordered: false
 })
 </script>
 
 <template>
-  <div class="sidebar-panel">
-    <div class="sidebar-panel__header">
-      <slot name="header">{{ header }}</slot>
+  <div class="panel">
+    <div class="panel__header">
+      <slot name="header">
+        <span class="panel__title">{{ header }}</span>
+      </slot>
     </div>
-    <div class="sidebar-panel__content">
+    <div class="panel__content" :class="{ 'no-padding': noPadding, 'is-border': bordered }">
       <slot></slot>
     </div>
   </div>
 </template>
 
 <style lang="scss">
-@include b(sidebar-panel) {
+@include b(panel) {
   margin-bottom: 13px;
   font-size: 13px;
 
@@ -27,9 +33,8 @@ const { header } = withDefaults(defineProps<SidebarPanelProps>(), {
     padding: 10px;
     background-color: #f6f6f6;
     border-radius: 3px 3px 0 0;
-    color: #51585c;
 
-    a {
+    a.dark {
       color: #666;
 
       @include p(':active', ':link', ':visited') {
@@ -43,20 +48,32 @@ const { header } = withDefaults(defineProps<SidebarPanelProps>(), {
     }
   }
 
+  @include e(title) {
+    color: #444;
+  }
+
   @include e(content) {
     padding: 10px;
     background-color: #fff;
     border-radius: 0 0 3px 3px;
     line-height: 2em;
 
-    a {
-      color: #778087;
-    }
-
     ol {
       margin: 4px 0;
       list-style: none;
     }
+
+    &.no-padding {
+      padding: 0;
+    }
+
+    &.is-border {
+      border-top: 1px solid #e5e5e5;
+    }
+  }
+
+  @include e(link) {
+    color: #778087;
   }
 }
 </style>

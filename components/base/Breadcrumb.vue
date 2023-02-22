@@ -1,5 +1,5 @@
 <template>
-  <div ref="breadcrumb" class="breadcrumb" aria-label="Breadcrumb" role="navigation">
+  <div class="breadcrumb">
     <slot></slot>
   </div>
 </template>
@@ -9,21 +9,13 @@ type BreadcrumbProps = {
   separator?: string
   separatorClass?: string
 }
+// Props
 const props = withDefaults(defineProps<BreadcrumbProps>(), {
   separator: '/',
   separatorClass: ''
 })
 
-const breadcrumb = ref(null)
-
-provide('breadcrumb', props)
-
-onMounted(() => {
-  const items = breadcrumb.value!.querySelectorAll('.breadcrumb__item')
-  if (items.length) {
-    items[items.length - 1].setAttribute('aria-current', 'page')
-  }
-})
+provide('BreadcrumbContext', props)
 </script>
 
 <style lang="scss">
@@ -56,8 +48,7 @@ onMounted(() => {
 
   @include e(separator) {
     margin: 0 5px;
-    color: #ccc;
-    font-weight: bold;
+    color: #ccc !important;
 
     &[class*='icon'] {
       margin: 0 3px;

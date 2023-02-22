@@ -4,7 +4,9 @@ import { Reply, Topic } from '~/types'
 type CommentItemProps = {
   topic: Topic
 }
-const props = defineProps<CommentItemProps>()
+const props = withDefaults(defineProps<CommentItemProps>(), {
+  topic: () => ({} as Topic)
+})
 const { topic } = toRefs(props)
 
 const emit = defineEmits<{ (e: 'comment', reply: Reply): void }>()
@@ -29,45 +31,35 @@ const handleReplyTopic = (reply: Reply) => {
 </script>
 
 <template>
-  <div class="topic topic-comment">
-    <div class="topic-comment__header">
-      <span>{{ topic.reply_count }} 回复</span>
-    </div>
-    <div class="topic-comment__list">
-      <div v-for="reply in topic.replies" :key="reply.id" class="topic-comment__item">
-        <div class="topic-comment__author">
-          <div class="topic-comment__user">
-            <a class="topic-comment__avatar" :href="`/user/${reply.author.loginname}`">
+  <Panel :header="`${topic.reply_count} 回复`" no-padding>
+    <div class="comment__list">
+      <div v-for="reply in topic.replies" :key="reply.id" class="comment__item">
+        <div class="comment__author">
+          <div class="comment__user">
+            <a class="comment__avatar" :href="`/user/${reply.author.loginname}`">
               <img :src="reply.author.avatar_url" :alt="reply.author.loginname" />
             </a>
-            <a class="topic-comment__name">{{ reply.author.loginname }}</a>
-            <a class="topic-comment__time" :href="`#${reply.id}`">1楼•{{ timeAgo(reply.create_at) }}</a>
+            <a class="comment__name">{{ reply.author.loginname }}</a>
+            <a class="comment__time" :href="`#${reply.id}`">1楼•{{ timeAgo(reply.create_at) }}</a>
           </div>
-          <div class="topic-comment__action">
+          <div class="comment__action">
             <span :class="{ 'is-uped': reply.is_uped }" @click="handleStarReply(reply)">
               <i class="icon-star"></i>
-              <span class="topic-comment__count">
+              <span class="comment__count">
                 {{ reply.ups.length }}
               </span>
             </span>
             <a v-if="user" href="#reply-topic" @click="handleReplyTopic(reply)"><i class="icon-share"></i></a>
           </div>
         </div>
-        <div class="topic-comment__content" v-html="reply.content"></div>
+        <div class="comment__content" v-html="reply.content"></div>
       </div>
     </div>
-  </div>
+  </Panel>
 </template>
 
 <style lang="scss">
-@include b(topic-comment) {
-  @include e(header) {
-    padding: 10px;
-    background-color: #f6f6f6;
-    border-radius: 3px 3px 0 0;
-    color: #444;
-  }
-
+@include b(comment) {
   @include e(item) {
     padding: 10px;
     border-top: 1px solid #f0f0f0;

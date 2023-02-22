@@ -5,7 +5,7 @@ import { Response, ResponseErr, Topic, User } from '~/types'
 export type RootState = {
   topics: Record<string, Topic>
   tabs: Record<string, Record<number, string[]>>
-  user: User | null
+  user: null | User
   users: Record<string, User>
   isLogin: boolean
 }
@@ -109,7 +109,7 @@ export async function fetchUser(loginname) {
     body: {
       accesstoken: token.value
     },
-    default: () => store.value.user[loginname]
+    default: () => store.value.users[loginname]
   })
   store.value.users[loginname] = data.value
 }

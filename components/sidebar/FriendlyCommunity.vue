@@ -7,7 +7,7 @@ const communities = [
 </script>
 
 <template>
-  <SidebarPanel header="友情社区">
+  <Panel header="友情社区">
     <ol class="friendly-community">
       <li v-for="item in communities" :key="item.website">
         <a :href="item.website" target="_blank">
@@ -15,7 +15,7 @@ const communities = [
         </a>
       </li>
     </ol>
-  </SidebarPanel>
+  </Panel>
 </template>
 
 <style lang="scss">

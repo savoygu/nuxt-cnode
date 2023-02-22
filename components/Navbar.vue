@@ -31,12 +31,12 @@ const logout = () => {
             <NuxtLink to="/getstart">新手入门</NuxtLink>
           </span>
           <span>
-            <NuxtLink to="/apiv1">API</NuxtLink>
+            <NuxtLink to="/api">API</NuxtLink>
           </span>
           <span>
             <NuxtLink to="/about">关于</NuxtLink>
           </span>
-          <span class="navbar__nossr">
+          <span class="navbar__no-ssr">
             <template v-if="user">
               <NuxtLink to="/setting">设置</NuxtLink>
               <span class="navbar__logout" @click="logout">退出</span>
@@ -152,7 +152,7 @@ const logout = () => {
       text-decoration: none;
     }
 
-    .navbar__nossr {
+    .navbar__no-ssr {
       a,
       span {
         display: inline-block;

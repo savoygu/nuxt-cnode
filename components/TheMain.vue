@@ -3,7 +3,7 @@
     <div class="main__content">
       <slot />
     </div>
-    <div class="main__sidebar sidebar">
+    <div class="main__sidebar">
       <slot name="sidebar"></slot>
     </div>
   </div>

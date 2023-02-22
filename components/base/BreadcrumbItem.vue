@@ -18,11 +18,13 @@ type BreadcrumbItemProps = {
   to?: string | RouteLocationRaw
   replace?: boolean
 }
+
+// Props
 const { to, replace } = withDefaults(defineProps<BreadcrumbItemProps>(), {
   to: '',
   replace: false
 })
 
-const breadcrumbContext = inject('breadcrumb', undefined)!
+const breadcrumbContext = inject('BreadcrumbContext', undefined)!
 const { separator, separatorClass } = toRefs(breadcrumbContext)
 </script>

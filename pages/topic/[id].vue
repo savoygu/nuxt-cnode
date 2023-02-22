@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { Reply } from '~/types'
-
+// hooks
 const route = useRoute()
 const state = useStore()
 
+// reactive
 const visible = ref(false)
 const errorText = ref('')
 
@@ -11,74 +11,69 @@ const errorText = ref('')
 const id = route.params.id as string
 await fetchTopic(id)
 
+// computed
 const currentUser = computed(() => state.value.user)
 const topic = computed(() => state.value.topics[id])
-const user = computed(() => topic.value?.author)
+const user = computed(() => topic.value.author)
 
+// methods
 const handleCollectTopic = () => {}
 const handleReplyTopic = () => {}
-const handleCommentTopic = (reply: Reply) => {}
+const handleCommentTopic = () => {}
 </script>
 
 <template>
-  <Main>
-    <div class="main__panel">
-      <div v-if="topic" class="topic topic-article">
-        <div class="topic-article__header">
-          <span class="topic-article__title">
-            <span>{{ topic.top ? '置顶' : topic.good ? '精品' : topic.tab && tabsInfo[topic.tab].name }}</span>
-            {{ topic.title }}
-          </span>
-          <div class="topic-article__changes">
-            <div>
-              <span> 发布于 {{ timeAgo(topic.create_at) }} </span>
-              <span v-show="topic.author"> 作者 {{ topic.author.loginname }} </span>
-              <span> {{ topic.visit_count }} 次预览 </span>
-              <span> 最后一次回复是 {{ timeAgo(topic.last_reply_at) }} </span>
-              <span> 来自 {{ tabsInfo[topic.tab] && tabsInfo[topic.tab].name }} </span>
-            </div>
-            <div style="display: flex">
-              <!-- <div class="topic-article__lazy-wrapper"><lazy-wrapper :loading="loading"></lazy-wrapper></div> -->
-              <button
-                class="topic-article__collection"
-                :class="topic.is_collect ? 'button--white' : 'button--green'"
-                @click="handleCollectTopic"
-              >
-                {{ topic.is_collect ? '取消收藏' : '收藏' }}
-              </button>
-            </div>
+  <TheMain>
+    <Panel v-if="topic" class="topic-article" bordered>
+      <template #header>
+        <span class="topic-article__title">
+          <span>{{ topic.top ? '置顶' : topic.good ? '精品' : topic.tab && tabsInfo[topic.tab].name }}</span>
+          {{ topic.title }}
+        </span>
+        <div class="topic-article__changes">
+          <div>
+            <span> 发布于 {{ timeAgo(topic.create_at) }} </span>
+            <span v-show="topic.author"> 作者 {{ topic.author.loginname }} </span>
+            <span> {{ topic.visit_count }} 次预览 </span>
+            <span> 最后一次回复是 {{ timeAgo(topic.last_reply_at) }} </span>
+            <span> 来自 {{ tabsInfo[topic.tab] && tabsInfo[topic.tab].name }} </span>
           </div>
-          <div v-show="currentUser.loginname === user.loginname" class="topic-article__manage">
-            <a :href="`/topic/${topic.id}/edit`"><i class="icon-edit"></i></a>
+          <div style="display: flex">
+            <button
+              class="topic-article__collection"
+              :class="topic.is_collect ? 'button--white' : 'button--green'"
+              @click="handleCollectTopic"
+            >
+              {{ topic.is_collect ? '取消收藏' : '收藏' }}
+            </button>
           </div>
         </div>
-        <div class="topic-article__content">
-          <div class="topic-article__markdown" v-html="topic.content"></div>
+        <div v-if="currentUser && currentUser.loginname === user.loginname" class="topic-article__manage">
+          <a :href="`/topic/${topic.id}/edit`"><i class="icon-edit"></i></a>
         </div>
-      </div>
-    </div>
-    <div class="main__panel">
-      <CommentItem :topic="topic" @comment="handleCommentTopic"></CommentItem>
-    </div>
-    <div id="reply-topic" class="main__panel">
-      <div class="main__header">添加回复</div>
-      <div class="topic topic-reply">
+      </template>
+      <div class="topic-article__content" v-html="topic.content"></div>
+    </Panel>
+    <Comment v-if="topic && topic.replies.length > 0" :topic="topic" @comment="handleCommentTopic"></Comment>
+    <Panel v-if="currentUser" id="reply-topic" header="添加回复" bordered>
+      <div class="topic-reply">
         <div class="topic-reply__inner">
           <textarea rows="8" style="display: none" class="reply-0"></textarea>
         </div>
         <button class="button--blue" @click="handleReplyTopic">回复</button>
         <BaseAlert v-model="visible" type="danger" :title="errorText"></BaseAlert>
       </div>
-    </div>
-    <template #sidebar></template>
-  </Main>
+    </Panel>
+    <template #sidebar>
+      <SidebarUnansweredTopic />
+    </template>
+  </TheMain>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @include b(topic-article) {
-  @include e(header) {
-    padding: 10px;
-    border-radius: 3px 3px 0 0;
+  .panel__header {
+    background-color: #fff;
   }
 
   @include e(title) {
@@ -125,19 +120,7 @@ const handleCommentTopic = (reply: Reply) => {}
   }
 
   @include e(content) {
-    padding: 10px;
-    border-top: 1px solid #e5e5e5;
-    border-radius: 0 0 3px 3px;
-  }
-
-  @include e(markdown) {
     margin: 0 10px;
-  }
-
-  @include e(lazy-wrapper) {
-    display: inline-block;
-    height: 34px;
-    margin-top: -5px;
   }
 }
 
@@ -152,9 +135,6 @@ const handleCommentTopic = (reply: Reply) => {}
 }
 
 @include b(topic-reply) {
-  padding: 10px;
-  border-top: 1px solid #e5e5e5;
-
   textarea {
     width: 98%;
     height: 200px;
