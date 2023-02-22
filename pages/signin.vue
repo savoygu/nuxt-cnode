@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="main__sidebar sidebar">
-      <SidebarPanelAbort />
+      <SidebarAbout />
     </div>
   </div>
 </template>
