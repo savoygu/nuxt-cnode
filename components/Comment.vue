@@ -14,18 +14,18 @@ const emit = defineEmits<{ (e: 'comment', reply: Reply): void }>()
 
 // hooks
 const store = useStore()
-const user = computed(() => store.value.user)
+const currentUser = computed(() => store.value.user)
 
 // methods
 const handleStarReply = async (reply: Reply) => {
-  if (!user.value) {
-    // 请先登录，登录后即可点赞
-    return
-  }
+  // if (!currentUser.value) {
+  //   // 请先登录，登录后即可点赞
+  //   return
+  // }
 
   const { data } = await starReply({ topicId: topic.value.id, replyId: reply.id })
-  if (data.value.success) {
-    // 点赞成功
+  if (data.value && data.value.success) {
+    // TODO 点赞成功
   }
 }
 const handleReplyTopic = (reply: Reply) => {
@@ -45,14 +45,14 @@ const handleReplyTopic = (reply: Reply) => {
             <a class="comment__name">{{ reply.author.loginname }}</a>
             <a class="comment__time" :href="`#${reply.id}`">1楼•{{ timeAgo(reply.create_at) }}</a>
           </div>
-          <div class="comment__action">
+          <div v-if="currentUser" class="comment__action">
             <span :class="{ 'is-uped': reply.is_uped }" @click="handleStarReply(reply)">
               <i class="icon-star"></i>
               <span class="comment__count">
                 {{ reply.ups.length }}
               </span>
             </span>
-            <a v-if="user" href="#reply-topic" @click="handleReplyTopic(reply)"><i class="icon-share"></i></a>
+            <a href="#reply-topic" @click="handleReplyTopic(reply)"><i class="icon-share"></i></a>
           </div>
         </div>
         <div class="comment__content" v-html="reply.content"></div>

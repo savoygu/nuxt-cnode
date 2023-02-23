@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { Tab } from '../composables/api'
 
+definePageMeta({
+  middleware: 'tab'
+})
+
 // hooks
 const state = useStore()
 const route = useRoute()
@@ -35,7 +39,7 @@ watch(
   tab,
   newTab => {
     useHead({
-      title: newTab === 'all' ? '' : tabsInfo[newTab].title
+      title: newTab !== 'all' ? tabsInfo[newTab ?? 'all'].title : ''
     })
   },
   {
