@@ -1,6 +1,6 @@
 <template>
   <Panel title="客户端二维码">
-    <div class="client-qr-code">
+    <div class="client-qrcode">
       <img
         width="200"
         src="https://qr.api.cli.im/qr?data=https%253A%252F%252Fgithub.com%252Fsavoygu%252Fnuxt-cnode&level=H&transparent=false&bgcolor=%23ffffff&forecolor=%23000000&blockpixel=12&marginblock=1&logourl=&size=280&kid=cliim&key=a845e4d36efea2d425645e9ad2ce3108"
@@ -14,7 +14,7 @@
 </template>
 
 <style lang="scss">
-@include b(client-qr-code) {
+@include b(client-qrcode) {
   text-align: center;
 
   img {

@@ -6,18 +6,22 @@ type PaginationProps = {
   edgePages?: number
 }
 
+// props
 const props = withDefaults(defineProps<PaginationProps>(), {
   pageRange: 5,
   edgePages: 1
 })
 
+// emits
 const emit = defineEmits<{ (e: 'change', page: number): void }>()
 
+// reactive
 const quicknextIconName = ref('icon-more')
 const quickprevIconName = ref('icon-more')
 const showPrevMoreRef = ref(false)
 const showNextMoreRef = ref(false)
 
+// computed
 const pagers = computed(() => {
   const { currentPage, totalPage, pageRange, edgePages } = props
   const pagerCount = pageRange + edgePages * 2
@@ -57,7 +61,6 @@ const pagers = computed(() => {
   showNextMoreRef.value = showNextMore
   return pagers
 })
-
 const leftPagers = computed(() => {
   const { totalPage, edgePages } = props
   const pagers = []
@@ -72,7 +75,6 @@ const leftPagers = computed(() => {
   }
   return pagers
 })
-
 const rightPagers = computed(() => {
   const { totalPage, edgePages } = props
   const pagers = []
@@ -88,18 +90,19 @@ const rightPagers = computed(() => {
   return pagers
 })
 
+// watch
 watch(showPrevMoreRef, val => {
   if (!val) {
     quickprevIconName.value = 'icon-more'
   }
 })
-
 watch(showNextMoreRef, val => {
   if (!val) {
     quicknextIconName.value = 'icon-more'
   }
 })
 
+// methods
 const setCurrentPage = (pager: 'prev' | 'next' | 'prevMore' | 'nextMore' | number) => {
   const { currentPage, totalPage, pageRange } = props
   let page = currentPage

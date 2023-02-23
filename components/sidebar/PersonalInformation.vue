@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// hooks
 const state = useStore()
 const currentUser = computed(() => state.value.user)
 const user = computed(() => state.value.users[currentUser.value.loginname])

@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
   <div class="footer">
     <div class="footer__main">

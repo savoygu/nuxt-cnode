@@ -19,7 +19,7 @@ type BreadcrumbItemProps = {
   replace?: boolean
 }
 
-// Props
+// props
 const { to, replace } = withDefaults(defineProps<BreadcrumbItemProps>(), {
   to: '',
   replace: false

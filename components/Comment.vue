@@ -1,19 +1,24 @@
 <script setup lang="ts">
 import { Reply, Topic } from '~/types'
 
-type CommentItemProps = {
+type CommentProps = {
   topic: Topic
 }
-const props = withDefaults(defineProps<CommentItemProps>(), {
+
+// props
+const props = withDefaults(defineProps<CommentProps>(), {
   topic: () => ({} as Topic)
 })
 const { topic } = toRefs(props)
 
+// emits
 const emit = defineEmits<{ (e: 'comment', reply: Reply): void }>()
 
+// hooks
 const store = useStore()
 const user = computed(() => store.value.user)
 
+// methods
 const handleStarReply = async (reply: Reply) => {
   if (!user.value) {
     // 请先登录，登录后即可点赞

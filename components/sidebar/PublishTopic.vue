@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
   <Panel>
     <NuxtLink to="/topic/create">
@@ -7,5 +5,3 @@
     </NuxtLink>
   </Panel>
 </template>
-
-<style lang="scss"></style>

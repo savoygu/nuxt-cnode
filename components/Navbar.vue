@@ -1,7 +1,9 @@
 <script setup lang="ts">
+// hooks
 const store = useStore()
 const user = computed(() => store.value.user)
 
+// methods
 const logout = () => {
   removeAccesstoken()
   return navigateTo('/')

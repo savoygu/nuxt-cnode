@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
   <Panel title="Markdown 语法参考">
     <ol>
@@ -13,5 +11,3 @@
     <span><a class="panel__link" href="https://segmentfault.com/markdown" target="_blank">Markdown 文档</a></span>
   </Panel>
 </template>
-
-<style scoped></style>

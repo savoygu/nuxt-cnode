@@ -13,24 +13,24 @@ type AlertProps = {
   type?: 'success' | 'info' | 'warning' | 'danger'
   title?: string
 }
-// Props
+// props
 const props = withDefaults(defineProps<AlertProps>(), {
   type: 'danger',
   title: ''
 })
 const { modelValue: visible, title, type } = toRefs(props)
 
-// Emits
+// emits
 const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void
 }>()
 
-// Computed
+// computed
 const alertClass = computed(() => {
   return [type.value ? `alert--${type.value}` : '', 'alert']
 })
 
-// Methods
+// methods
 const onClose = () => {
   emit('update:modelValue', false)
 }

@@ -9,7 +9,7 @@ type BreadcrumbProps = {
   separator?: string
   separatorClass?: string
 }
-// Props
+// props
 const props = withDefaults(defineProps<BreadcrumbProps>(), {
   separator: '/',
   separatorClass: ''

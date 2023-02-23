@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
   <Panel title="话题发布指南">
     <ol>
@@ -8,5 +6,3 @@
     </ol>
   </Panel>
 </template>
-
-<style lang="scss"></style>
