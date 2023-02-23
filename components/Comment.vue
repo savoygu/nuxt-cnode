@@ -47,12 +47,12 @@ const handleReplyTopic = (reply: Reply) => {
           </div>
           <div v-if="currentUser" class="comment__action">
             <span :class="{ 'is-uped': reply.is_uped }" @click="handleStarReply(reply)">
-              <i class="icon-star"></i>
+              <i class="iconfont icon-star"></i>
               <span class="comment__count">
                 {{ reply.ups.length }}
               </span>
             </span>
-            <a href="#reply-topic" @click="handleReplyTopic(reply)"><i class="icon-share"></i></a>
+            <a href="#reply-topic" @click="handleReplyTopic(reply)"><i class="iconfont icon-share"></i></a>
           </div>
         </div>
         <div class="comment__content" v-html="reply.content"></div>

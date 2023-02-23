@@ -1,13 +1,12 @@
 @font-face {
   font-family: iconfont; /* Project id 769982 */
   src:
-    url('../fonts/iconfont.woff2?t=1661046270785') format('woff2'),
+    /*  */ url('../fonts/iconfont.woff2?t=1661046270785') format('woff2'),
     url('../fonts/iconfont.woff?t=1661046270785') format('woff'),
     url('../fonts/iconfont.ttf?t=1661046270785') format('truetype');
 }
 
-.iconfont,
-[class*="icon-"] {
+.iconfont {
   font-family: iconfont !important;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
@@ -16,45 +15,45 @@
 }
 
 .icon-zoom-in::before {
-  content: "\e617";
+  content: '\e617';
 }
 
 .icon-remove::before {
-  content: "\e600";
+  content: '\e600';
 }
 
 .icon-edit::before {
-  content: "\e616";
+  content: '\e616';
 }
 
 .icon-search::before {
-  content: "\e601";
+  content: '\e601';
 }
 
 .icon-db-arrow_left::before {
-  content: "\e62c";
+  content: '\e62c';
 }
 
 .icon-db-arrow_right::before {
-  content: "\e62d";
+  content: '\e62d';
 }
 
 .icon-star::before {
-  content: "\e60d";
+  content: '\e60d';
 }
 
 .icon-arrow_right::before {
-  content: "\e61f";
+  content: '\e61f';
 }
 
 .icon-arrow_left::before {
-  content: "\e620";
+  content: '\e620';
 }
 
 .icon-more::before {
-  content: "\e69b";
+  content: '\e69b';
 }
 
 .icon-share::before {
-  content: "\e610";
+  content: '\e610';
 }

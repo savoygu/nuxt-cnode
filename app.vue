@@ -20,6 +20,20 @@ useHead({
       rel: 'icon',
       type: 'image/x-icon',
       href: '//static2.cnodejs.org/public/images/cnode_icon_32.png'
+    },
+    {
+      rel: 'stylesheet',
+      href: '//cdn.jsdelivr.net/editor/0.1.0/editor.css'
+    }
+  ],
+  script: [
+    {
+      src: '//cdn.jsdelivr.net/editor/0.1.0/editor.js',
+      defer: 'true'
+    },
+    {
+      src: '//cdn.jsdelivr.net/editor/0.1.0/marked.js',
+      defer: 'true'
     }
   ]
 })

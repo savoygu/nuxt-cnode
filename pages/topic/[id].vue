@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Reply } from '~/types'
+
 // hooks
 const route = useRoute()
 const state = useStore()
@@ -6,6 +8,8 @@ const state = useStore()
 // reactive
 const visible = ref(false)
 const errorText = ref('')
+let editor: any
+let currentReply: Reply
 
 // fetch
 const id = route.params.id as string
@@ -23,7 +27,25 @@ await fetchUser(currentAuthor.value.loginname)
 // methods
 const handleCollectTopic = () => {}
 const handleReplyTopic = () => {}
-const handleCommentTopic = () => {}
+const handleCommentTopic = (reply: Reply) => {
+  if (editor) {
+    currentReply = reply
+    nextTick(() => {
+      editor.codemirror.getDoc().setValue(`@${reply.author.loginname} `)
+      editor.codemirror.cursor()
+      console.log(editor.codemirror)
+    })
+  }
+}
+
+// lifecycle
+onMounted(() => {
+  editor = new window.Editor({
+    element: document.querySelector('.reply-0'),
+    status: false
+  })
+  editor.render()
+})
 </script>
 
 <template>
@@ -37,11 +59,11 @@ const handleCommentTopic = () => {}
           </span>
           <div class="topic-article__changes">
             <div>
-              <span> 发布于 {{ timeAgo(topic.create_at) }} </span>
-              <span v-show="topic.author"> 作者 {{ topic.author.loginname }} </span>
-              <span> {{ topic.visit_count }} 次预览 </span>
-              <span> 最后一次回复是 {{ timeAgo(topic.last_reply_at) }} </span>
-              <span> 来自 {{ tabsInfo[topic.tab] && tabsInfo[topic.tab].name }} </span>
+              <span>&nbsp;发布于 {{ timeAgo(topic.create_at) }}&nbsp;</span>
+              <span v-show="topic.author">&nbsp;作者 {{ topic.author.loginname }}&nbsp;</span>
+              <span>&nbsp;{{ topic.visit_count }} 次预览&nbsp;</span>
+              <span>&nbsp;最后一次回复是 {{ timeAgo(topic.last_reply_at) }}&nbsp;</span>
+              <span>&nbsp;来自 {{ tabsInfo[topic.tab] && tabsInfo[topic.tab].name }}&nbsp;</span>
             </div>
             <div style="display: flex">
               <button
@@ -54,7 +76,7 @@ const handleCommentTopic = () => {}
             </div>
           </div>
           <div v-if="currentUser && currentUser.loginname === currentAuthor.loginname" class="topic-article__manage">
-            <a :href="`/topic/${topic.id}/edit`"><i class="icon-edit"></i></a>
+            <a :href="`/topic/${topic.id}/edit`"><i class="iconfont icon-edit"></i></a>
           </div>
         </template>
         <div class="topic-article__content" v-html="topic.content"></div>

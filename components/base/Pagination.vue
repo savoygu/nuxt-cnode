@@ -140,7 +140,7 @@ const setCurrentPage = (pager: 'prev' | 'next' | 'prevMore' | 'nextMore' | numbe
   <ul class="pagination">
     <li class="pagination__item" :class="{ 'is-disabled': 1 === currentPage }" @click="setCurrentPage('prev')">
       <slot name="prev">
-        <i class="icon-arrow_left" />
+        <i class="iconfont icon-arrow_left" />
       </slot>
     </li>
     <li
@@ -159,7 +159,7 @@ const setCurrentPage = (pager: 'prev' | 'next' | 'prevMore' | 'nextMore' | numbe
       @mouseleave="quickprevIconName = 'icon-more'"
       @click="setCurrentPage('prevMore')"
     >
-      <i class="pagination__icon" :class="quickprevIconName" />
+      <i class="pagination__icon iconfont" :class="quickprevIconName" />
     </li>
     <li
       v-for="pager in pagers"
@@ -177,7 +177,7 @@ const setCurrentPage = (pager: 'prev' | 'next' | 'prevMore' | 'nextMore' | numbe
       @mouseleave="quicknextIconName = 'icon-more'"
       @click="setCurrentPage('nextMore')"
     >
-      <i class="pagination__icon" :class="quicknextIconName" />
+      <i class="pagination__icon iconfont" :class="quicknextIconName" />
     </li>
     <li
       v-for="pager in rightPagers"
@@ -190,7 +190,7 @@ const setCurrentPage = (pager: 'prev' | 'next' | 'prevMore' | 'nextMore' | numbe
     </li>
     <li class="pagination__item" :class="{ 'is-disabled': totalPage === currentPage }" @click="setCurrentPage('next')">
       <slot name="next">
-        <i class="icon-arrow_right" />
+        <i class="iconfont icon-arrow_right" />
       </slot>
     </li>
   </ul>
