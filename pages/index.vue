@@ -1,13 +1,15 @@
 <script setup lang="ts">
+import { Tab } from '../composables/api'
+
 // hooks
 const state = useStore()
 const route = useRoute()
 const router = useRouter()
-const tab = computed(() => route.query.tab as string)
+const tab = computed(() => route.query.tab as Tab)
 const page = computed(() => route.query.page as string)
 
 const currentUser = computed(() => state.value.user)
-const user = computed(() => state.value.users[currentUser.value.loginname])
+const user = computed(() => currentUser.value && state.value.users[currentUser.value.loginname])
 
 // reactive
 const currentTab = ref(tab.value || 'all')
@@ -61,7 +63,7 @@ const handlePageChange = (page: number) => {
         </NuxtLink>
       </template>
       <div v-if="!pending" class="home__topic">
-        <template v-if="topics.length > 0">
+        <template v-if="topics && topics.length > 0">
           <div :key="currentPage" class="home__topic-list">
             <ul>
               <TopicItem v-for="topic in topics" :key="topic.id" :item="topic" />
@@ -87,7 +89,7 @@ const handlePageChange = (page: number) => {
       <Skeleton v-else />
     </Panel>
     <template #sidebar>
-      <template v-if="currentUser">
+      <template v-if="user">
         <SidebarPersonalInformation :key="user.loginname" :user="user" />
         <SidebarPublishTopic no-header />
       </template>

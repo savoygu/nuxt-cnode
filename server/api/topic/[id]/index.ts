@@ -3,9 +3,9 @@ import { baseURL } from '~/server/constants'
 import { Response, Topic } from '~/types'
 
 export default defineEventHandler(async event => {
-  const query = useQuery(event)
+  const query = getQuery(event)
   const { mdrender = true, accesstoken } = query
-  const id = event.context.params.id
+  const id = event.context.params?.id
   const response = await $fetch<Response<Topic>>(`${baseURL}/topic/${id}`, {
     params: {
       mdrender,

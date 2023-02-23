@@ -1,12 +1,12 @@
 import { baseURL } from '~/server/constants'
 
-import { validTabs } from '~/composables/api'
+import { Tab, validTabs } from '~/composables/api'
 import { Response, Topic } from '~/types'
 
 export default defineEventHandler(event => {
-  const query = useQuery(event)
+  const query = getQuery(event)
   const { tab = 'all', page = '1' } = query as {
-    tab: string
+    tab: Tab
     page: string
   }
 

@@ -2,7 +2,7 @@
 import { User } from '~/types'
 
 type PersonalInformationProps = {
-  title: string
+  title?: string
   user: User
 }
 

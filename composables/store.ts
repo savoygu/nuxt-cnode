@@ -1,11 +1,10 @@
 import { Ref } from 'vue'
-import { H3Error } from 'h3'
-import { Response, ResponseErr, Token, Topic, User } from '~/types'
+import { ResponseErr, Token, Topic, User } from '~/types'
 
 export type RootState = {
   topics: Record<string, Topic>
   tabs: Record<string, Record<number, string[]>>
-  user: null | Token
+  user: undefined | Token
   users: Record<string, User>
   isLogin: boolean
 }
@@ -23,7 +22,7 @@ export const useStore = () =>
     topics: {},
     tabs: Object.fromEntries(validTabs.map(tab => [tab, {}])),
     isLogin: false,
-    user: null, // INITIAL_USER
+    user: undefined, // INITIAL_USER
     users: {}
   }))
 
@@ -57,15 +56,17 @@ export async function fetchTopics(query: TopicQuery) {
   )
 
   // update state
-  const ids = data.value.map(topic => topic.id)
-  state.value.tabs[currentTab.value][currentPage.value] = ids
-  data.value.filter(Boolean).forEach(topic => {
-    if (state.value.topics[topic.id]) {
-      Object.assign(state.value.topics[topic.id], topic)
-    } else {
-      state.value.topics[topic.id] = topic
-    }
-  })
+  if (data.value) {
+    const ids = data.value.map(topic => topic.id)
+    state.value.tabs[currentTab.value][currentPage.value] = ids
+    data.value.filter(Boolean).forEach(topic => {
+      if (state.value.topics[topic.id]) {
+        Object.assign(state.value.topics[topic.id], topic)
+      } else {
+        state.value.topics[topic.id] = topic
+      }
+    })
+  }
 
   return {
     data,
@@ -78,7 +79,7 @@ export async function fetchTopics(query: TopicQuery) {
 export async function fetchTopic(id: string, mdrender = true) {
   const state = useStore()
   const token = useToken()
-  const { data, refresh } = await useFetch<Topic>(`/api/topic/${id}`, {
+  const { data, refresh } = await useFetch(`/api/topic/${id}`, {
     params: {
       mdrender,
       accesstoken: state.value.isLogin && mdrender ? token.value : ''
@@ -86,15 +87,9 @@ export async function fetchTopic(id: string, mdrender = true) {
     default: () => state.value.topics[id]
   })
 
-  if (mdrender) {
-    await fetchUser(data.value.author.loginname)
-  } else {
-    // 保存到 text 上??
-    data.value.text = data.value.content
-    // update state
+  if (data.value) {
+    state.value.topics[id] = data.value
   }
-
-  state.value.topics[id] = data.value
 
   return {
     data,
@@ -106,12 +101,12 @@ export async function fetchTopic(id: string, mdrender = true) {
 // User
 // ===========================================================================
 
-export async function fetchUser(loginname) {
-  const store = useStore()
-  const { data } = await useFetch<User>(`/api/user/${loginname}`, {
-    default: () => store.value.users[loginname]
+export async function fetchUser(loginname: string) {
+  const state = useStore()
+  const { data } = await useFetch(`/api/user/${loginname}`, {
+    default: () => state.value.users[loginname]
   })
-  store.value.users[loginname] = data.value
+  if (data.value) state.value.users[loginname] = data.value
 }
 
 // ===========================================================================
@@ -120,7 +115,7 @@ export async function fetchUser(loginname) {
 
 export async function fetchAccesstoken(accesstoken: string) {
   const state = useStore()
-  const { data, error } = await useFetch<Token, Response<H3Error>>('/api/accesstoken', {
+  const { data, error } = await useFetch('/api/accesstoken', {
     method: 'POST',
     body: {
       accesstoken
@@ -132,15 +127,18 @@ export async function fetchAccesstoken(accesstoken: string) {
       throw new TypeError((data as ResponseErr).error_msg)
     }
   }
-  state.value.isLogin = data.value.success
-  state.value.user = data.value
+
+  if (data.value) {
+    state.value.isLogin = data.value.success
+    state.value.user = data.value
+  }
 }
 
 export function removeAccesstoken() {
   const store = useStore()
   store.value.isLogin = false
-  store.value.user = null // INITIAL_USER
-  useToken().value = null
+  store.value.user = undefined // INITIAL_USER
+  useToken().value = ''
 }
 
 // ===========================================================================
@@ -153,19 +151,21 @@ export async function starReply({ topicId, replyId }: { topicId: string; replyId
     method: 'POST',
     body: {
       accesstoken: token.value
-    },
-    initialCache: false // ? crazy
+    }
   })
-  if (data.value.success) {
-    const store = useStore()
-    const topic = store.value.topics[topicId]
+  if (data.value && data.value.success) {
+    const user = useStore().value.user
+    const topics = useStore().value.topics
+    const topic = topics[topicId]
     topic.replies = topic.replies.map(reply => {
       if (reply.id === replyId) {
-        reply.is_uped = data.value.action === 'up'
-        if (reply.is_uped) {
-          reply.ups.push(store.value.user.id)
-        } else {
-          reply.ups.splice(reply.ups.indexOf(store.value.user.id), 1)
+        reply.is_uped = data.value!.action === 'up'
+        if (user) {
+          if (reply.is_uped) {
+            reply.ups.push(user.id)
+          } else {
+            reply.ups.splice(reply.ups.indexOf(user.id), 1)
+          }
         }
       }
       return reply

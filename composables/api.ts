@@ -7,4 +7,6 @@ export const tabsInfo = {
   dev: { title: '客户端测试 - CNode技术社区', name: '客户端测试', total: 153 }
 }
 
-export const validTabs = Object.keys(tabsInfo)
+export type Tab = keyof typeof tabsInfo
+
+export const validTabs = Object.keys(tabsInfo) as Tab[]

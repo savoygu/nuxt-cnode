@@ -4,4 +4,6 @@
   <div class="user">User</div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+// TODO
+</style>

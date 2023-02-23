@@ -6,10 +6,10 @@ type Response = {
 }
 
 export default defineEventHandler(async event => {
-  const body = await useBody(event)
+  const body = await readBody(event)
   const accesstoken = body.accesstoken
 
-  const replyId = event.context.params.reply_id
+  const replyId = event.context.params?.reply_id
   const response = await $fetch<Response>(`/reply/${replyId}/ups`, {
     baseURL,
     method: 'POST',

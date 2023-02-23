@@ -1,13 +1,4 @@
-export function host(url) {
-  const host = url.replace(/^https?:\/\//, '').replace(/\/.*$/, '')
-  const parts = host.split('.').slice(-3)
-  if (parts[0] === 'www') {
-    parts.shift()
-  }
-  return parts.join('.')
-}
-
-export function timeAgo(time) {
+export function timeAgo(time: ConstructorParameters<typeof Date>[number]) {
   const between = (Date.now() - +new Date(time)) / 1000
   if (between < 3600) {
     return pluralize(~~(between / 60), ' 分钟前')
@@ -22,6 +13,6 @@ export function timeAgo(time) {
   }
 }
 
-function pluralize(time, label) {
+function pluralize(time: number, label: string) {
   return time + label
 }

@@ -16,6 +16,7 @@ const currentUser = computed(() => state.value.user)
 const topic = computed(() => state.value.topics[id])
 const currentAuthor = computed(() => topic.value.author)
 const author = computed(() => state.value.users[currentAuthor.value.loginname])
+const recentTopics = computed(() => author.value.recent_topics.filter(topic => topic.id !== id))
 
 await fetchUser(currentAuthor.value.loginname)
 
@@ -71,7 +72,7 @@ const handleCommentTopic = () => {}
     </template>
     <template #sidebar>
       <SidebarPersonalInformation :key="author.loginname" title="作者" :user="author" />
-      <SidebarRecentTopics :topics="author.recent_topics" />
+      <SidebarRecentTopics :topics="recentTopics" />
       <SidebarUnansweredTopic />
     </template>
   </TheMain>

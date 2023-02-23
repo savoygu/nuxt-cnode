@@ -1,3 +1,5 @@
+import { Tab } from '~/composables/api'
+
 export type Author = {
   loginname: string
   avatar_url: string
@@ -23,7 +25,7 @@ export type Reply = {
 export type Topic = {
   id: string
   author_id: string
-  tab: string
+  tab: Tab
   content: string
   text?: string
   title: string
@@ -62,5 +64,5 @@ export type User = {
   githubUsername: string
   score: number
   recent_topics: Topic[]
-  recent_replies: []
+  recent_replies: Reply[]
 }

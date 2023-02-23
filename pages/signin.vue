@@ -39,7 +39,7 @@ const signin = async () => {
     } else {
       return navigateTo('/')
     }
-  } catch (err) {
+  } catch (err: any) {
     setAlert(err.message, true)
   } finally {
     loading.value = false

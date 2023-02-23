@@ -2,7 +2,7 @@ import { baseURL } from '~/server/constants'
 import { Token } from '~/types'
 
 export default defineEventHandler(async event => {
-  const body = await useBody(event)
+  const body = await readBody(event)
   const accesstoken = body.accesstoken
 
   if (!accesstoken) {
@@ -29,8 +29,8 @@ export default defineEventHandler(async event => {
     }
     setCookie(event, 'token', accesstoken)
     return response
-  } catch (err) {
-    setCookie(event, 'token', null)
+  } catch (err: any) {
+    setCookie(event, 'token', '')
     // 401: Unauthorized
     throw createError({
       statusCode: 401,
