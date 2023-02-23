@@ -49,9 +49,12 @@ export async function fetchTopics(query: TopicQuery) {
   const state = useStore()
   const { currentTab, currentPage } = query
 
-  const { data, refresh } = await useFetch(() => `/api/topics?tab=${currentTab.value}&page=${currentPage.value}`, {
-    default: () => getTopics(state.value, query)
-  })
+  const { data, pending, refresh, error } = await useFetch(
+    () => `/api/topics?tab=${currentTab.value}&page=${currentPage.value}`,
+    {
+      default: () => getTopics(state.value, query)
+    }
+  )
 
   // update state
   const ids = data.value.map(topic => topic.id)
@@ -66,7 +69,9 @@ export async function fetchTopics(query: TopicQuery) {
 
   return {
     data,
-    refresh
+    pending,
+    refresh,
+    error
   }
 }
 

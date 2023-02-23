@@ -14,7 +14,7 @@ const currentPage = ref(Number(page.value) || 1)
 // const transition = ref('slide-right')
 
 // fetch
-const [{ data: topics, refresh }] = await Promise.all([
+const [{ data: topics, refresh, pending }] = await Promise.all([
   fetchTopics({
     currentTab,
     currentPage

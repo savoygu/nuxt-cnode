@@ -2,9 +2,9 @@
 
 <template>
   <Panel>
-    <a href="/topic/create">
+    <NuxtLink to="/topic/create">
       <span class="button--green">发布话题</span>
-    </a>
+    </NuxtLink>
   </Panel>
 </template>
 
