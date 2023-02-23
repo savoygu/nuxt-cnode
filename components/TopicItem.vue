@@ -23,7 +23,7 @@ const { item } = defineProps<{
       {{ item.title }}
     </a>
     <a class="topic-item__last" :href="`/topic/${item.id}`">
-      <!-- <img class="topic-item__user" src="https://avatars1.githubusercontent.com/u/39525221?v=4&s=120" /> -->
+      <!-- <img class="topic-item__user" :src="item.replies?.at(-1).author.avatar_url" /> -->
       <span class="topic-item__time">{{ timeAgo(item.last_reply_at) }}</span>
     </a>
   </li>
@@ -88,6 +88,7 @@ const { item } = defineProps<{
 
   @include e(title) {
     flex: 1;
+    max-width: 70%;
     color: #333;
     font-size: 16px;
     line-height: 30px;
@@ -102,6 +103,7 @@ const { item } = defineProps<{
   @include e(last) {
     display: block;
     flex: 0 0 80px;
+    margin-left: auto;
     color: #778087;
     font-size: 11px;
     text-align: right;

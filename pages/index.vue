@@ -31,6 +31,7 @@ watch(tab, newTab => {
 watch(page, newPage => {
   currentPage.value = Number(newPage) || 1
   refresh()
+  window.scrollTo(0, 0)
 })
 
 // methods
@@ -58,23 +59,28 @@ const handlePageChange = (page: number) => {
           {{ tabsInfo[item].name }}
         </NuxtLink>
       </template>
-      <div class="home__topic">
+      <div v-if="!pending" class="home__topic">
         <div :key="currentPage" class="home__topic-list">
           <ul>
             <TopicItem v-for="topic in topics" :key="topic.id" :item="topic" />
           </ul>
         </div>
-        <!-- <transition :name="transition" mode="out-in">
-            <div :key="currentPage" class="topic-list">
-              <transition-group tag="ul" name="item">
-                <topic-item v-for="topic in topics" :key="topic.id" :item="topic" />
-              </transition-group>
-            </div>
-          </transition> -->
+        <!-- <Transition :name="transition" mode="out-in">
+          <div :key="currentPage" class="home__topic-list">
+            <TransitionGroup tag="ul" name="item">
+              <TopicItem v-for="topic in topics" :key="topic.id" :item="topic" />
+            </TransitionGroup>
+          </div>
+        </Transition> -->
         <div class="main__pagination">
-          <BasePagination :total-page="100" :current-page="currentPage" @change="handlePageChange" />
+          <BasePagination
+            :total-page="tabsInfo[currentTab].total"
+            :current-page="currentPage"
+            @change="handlePageChange"
+          />
         </div>
       </div>
+      <Skeleton v-else />
     </Panel>
     <template #sidebar>
       <template v-if="currentUser">

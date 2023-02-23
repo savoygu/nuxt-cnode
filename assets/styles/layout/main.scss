@@ -2,7 +2,7 @@
 // Main
 // ===========================================================================
 @include b(main) {
-  display: flex;
+  // display: flex;
   width: 90%;
   min-width: 960px;
   max-width: 1400px;
@@ -11,13 +11,16 @@
   margin: 15px auto;
 
   @include e(content) {
-    flex: 1;
-    margin-right: 15px;
+    // flex: 1;
+    // margin-right: 15px;
+    margin-right: 305px;
   }
 
   @include e(sidebar) {
-    flex: 0 0 290px;
+    // flex: 0 0 290px;
+    width: 290px;
     margin-bottom: 20px;
+    float: right;
     font-size: 14px;
 
     .panel {
