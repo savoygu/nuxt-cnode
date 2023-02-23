@@ -77,5 +77,24 @@ const { title, noHeader, noPadding, bordered } = withDefaults(defineProps<PanelP
   @include e(link) {
     color: #778087;
   }
+
+  @include e(unstyled) {
+    margin: 0 0 10px;
+    list-style: none;
+
+    li {
+      line-height: 2em;
+
+      a {
+        display: inline-block;
+        max-width: 270px;
+        font-size: 14px;
+        line-height: 30px;
+        vertical-align: middle;
+
+        @include utils-ellipsis;
+      }
+    }
+  }
 }
 </style>

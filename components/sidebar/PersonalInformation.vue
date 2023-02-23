@@ -1,12 +1,19 @@
 <script setup lang="ts">
-// hooks
-const state = useStore()
-const currentUser = computed(() => state.value.user)
-const user = computed(() => state.value.users[currentUser.value.loginname])
+import { User } from '~/types'
+
+type PersonalInformationProps = {
+  title: string
+  user: User
+}
+
+const props = withDefaults(defineProps<PersonalInformationProps>(), {
+  title: '个人信息'
+})
+const { title, user } = toRefs(props)
 </script>
 
 <template>
-  <Panel v-if="user" title="个人信息">
+  <Panel v-if="user" :title="title">
     <div class="personal">
       <div class="personal__user">
         <nuxt-link class="personal__user-avatar" :to="`/user/${user.loginname}`">
@@ -28,8 +35,10 @@ const user = computed(() => state.value.users[currentUser.value.loginname])
     display: flex;
     align-items: center;
   }
+
   @include e(user-avatar) {
     margin-right: 0.5em;
+
     img {
       display: block;
       width: 48px;
@@ -37,13 +46,16 @@ const user = computed(() => state.value.users[currentUser.value.loginname])
       border-radius: 3px;
     }
   }
+
   @include e(user-name) {
     font-size: 16px;
   }
+
   @include e(board) {
     margin-top: 10px;
     font-size: 14px;
   }
+
   @include e(signature) {
     font-style: italic;
   }

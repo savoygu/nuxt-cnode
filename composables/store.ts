@@ -77,11 +77,11 @@ export async function fetchTopics(query: TopicQuery) {
 
 export async function fetchTopic(id: string, mdrender = true) {
   const state = useStore()
-  const { data, refresh } = await useFetch<Topic>(`/api/topics/${id}`, {
+  const token = useToken()
+  const { data, refresh } = await useFetch<Topic>(`/api/topic/${id}`, {
     params: {
-      // id,
       mdrender,
-      needAccessToken: state.value.isLogin && mdrender
+      accesstoken: state.value.isLogin && mdrender ? token.value : ''
     },
     default: () => state.value.topics[id]
   })

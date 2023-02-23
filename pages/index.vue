@@ -7,6 +7,7 @@ const tab = computed(() => route.query.tab as string)
 const page = computed(() => route.query.page as string)
 
 const currentUser = computed(() => state.value.user)
+const user = computed(() => state.value.users[currentUser.value.loginname])
 
 // reactive
 const currentTab = ref(tab.value || 'all')
@@ -81,13 +82,13 @@ const handlePageChange = (page: number) => {
             />
           </div>
         </template>
-        <div class="main__empty">暂无数据</div>
+        <div v-else class="main__empty">暂无数据</div>
       </div>
       <Skeleton v-else />
     </Panel>
     <template #sidebar>
       <template v-if="currentUser">
-        <SidebarPersonalInformation />
+        <SidebarPersonalInformation :key="user.loginname" :user="user" />
         <SidebarPublishTopic no-header />
       </template>
       <SidebarUnansweredTopic />
