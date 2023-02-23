@@ -60,25 +60,28 @@ const handlePageChange = (page: number) => {
         </NuxtLink>
       </template>
       <div v-if="!pending" class="home__topic">
-        <div :key="currentPage" class="home__topic-list">
-          <ul>
-            <TopicItem v-for="topic in topics" :key="topic.id" :item="topic" />
-          </ul>
-        </div>
-        <!-- <Transition :name="transition" mode="out-in">
+        <template v-if="topics.length > 0">
+          <div :key="currentPage" class="home__topic-list">
+            <ul>
+              <TopicItem v-for="topic in topics" :key="topic.id" :item="topic" />
+            </ul>
+          </div>
+          <!-- <Transition :name="transition" mode="out-in">
           <div :key="currentPage" class="home__topic-list">
             <TransitionGroup tag="ul" name="item">
               <TopicItem v-for="topic in topics" :key="topic.id" :item="topic" />
             </TransitionGroup>
           </div>
         </Transition> -->
-        <div class="main__pagination">
-          <BasePagination
-            :total-page="tabsInfo[currentTab].total"
-            :current-page="currentPage"
-            @change="handlePageChange"
-          />
-        </div>
+          <div class="main__pagination">
+            <BasePagination
+              :total-page="tabsInfo[currentTab].total"
+              :current-page="currentPage"
+              @change="handlePageChange"
+            />
+          </div>
+        </template>
+        <div class="main__empty">暂无数据</div>
       </div>
       <Skeleton v-else />
     </Panel>
