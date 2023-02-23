@@ -18,13 +18,13 @@
 
   @include e(item) {
     padding-bottom: 21px;
-    margin-bottom: 21px;
     border-bottom: 1px solid #f3f3f3;
+    margin-bottom: 21px;
 
     &:last-child {
       padding: 0;
-      margin: 0;
       border: none;
+      margin: 0;
     }
   }
 
@@ -35,8 +35,8 @@
 
   @include e(line) {
     width: 100%;
-    margin-bottom: 16px;
     height: 14px;
+    margin-bottom: 16px;
 
     &:first-child {
       width: 40%;
@@ -55,9 +55,9 @@
 
   @include m(animated) {
     @include p('e:avatar', 'e:line') {
-      background: linear-gradient(90deg, #e4e6eb, rgba(228, 230, 235, 0.5), #e4e6eb);
-      background-size: 480px 480px;
       animation: skeleton-keyframes 0.6s linear infinite;
+      background: linear-gradient(90deg, #e4e6eb, rgb(228 230 235 / 50%), #e4e6eb);
+      background-size: 480px 480px;
     }
   }
 }
@@ -66,6 +66,7 @@
   0% {
     background-position: 0 0;
   }
+
   100% {
     background-position: 480px 0;
   }

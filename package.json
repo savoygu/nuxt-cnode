@@ -5,7 +5,10 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "format": "prettier --config .prettierrc './**/*.{vue,ts,tsx}' --write"
+    "typecheck": "nuxt typecheck",
+    "format": "prettier --config .prettierrc './**/*.{vue,ts,tsx}' --write",
+    "style": "stylelint ./**/*.{css,scss,vue}",
+    "style:fix": "npm run style -- --fix"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config-typescript": "^10.0.0",
@@ -22,6 +25,7 @@
     "stylelint-config-idiomatic-order": "^8.1.0",
     "stylelint-config-recommended-vue": "^1.4.0",
     "stylelint-config-standard-scss": "^4.0.0",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "vue-tsc": "^1.1.7"
   }
 }

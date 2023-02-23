@@ -87,8 +87,8 @@ const { item } = defineProps<{
   }
 
   @include e(title) {
-    flex: 1;
     max-width: 70%;
+    flex: 1;
     color: #333;
     font-size: 16px;
     line-height: 30px;

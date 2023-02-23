@@ -1,11 +1,11 @@
 <script setup lang="ts">
 useHead({
   titleTemplate: titleChunk => {
-    return titleChunk ? titleChunk + ' - CNode 技术社区' : 'CNode：Node.js专业中文社区'
+    return titleChunk ? titleChunk + ' - Nuxt3 CNode 技术社区' : 'Nuxt3 CNode：Node.js专业中文社区'
   },
-  viewport: 'width=device-width, initial-scale=1',
-  charset: 'utf-8',
   meta: [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { name: 'description', content: '基于 Nuxt3 构建 CNode 社区' },
     { name: 'keywords', content: 'CNode, Node.js, Node, Nuxt3' }
   ],

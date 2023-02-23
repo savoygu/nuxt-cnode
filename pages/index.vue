@@ -31,6 +31,17 @@ watch(tab, newTab => {
   currentPage.value = 1
   refresh()
 })
+watch(
+  tab,
+  newTab => {
+    useHead({
+      title: newTab === 'all' ? '' : tabsInfo[newTab].title
+    })
+  },
+  {
+    immediate: true
+  }
+)
 watch(page, newPage => {
   currentPage.value = Number(newPage) || 1
   refresh()
