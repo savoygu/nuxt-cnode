@@ -26,14 +26,14 @@ const showReplies = ref<boolean[]>(Array(topic.value.replies.length).fill(false)
 const handleReplyStar = async (reply: Reply) => {
   const { data, error } = await starReply({ topicId: topic.value.id, replyId: reply.id })
   if (data.value?.success) {
-    $toast().add({
+    $toast.add({
       severity: 'success',
       detail: data.value.action === 'up' ? '点赞成功' : '取消点赞成功',
       life: 3000
     })
   } else if (error.value) {
     const { data } = error.value.data
-    $toast().add({ severity: 'error', detail: data.error_msg, life: 3000 })
+    $toast.add({ severity: 'error', detail: data.error_msg, life: 3000 })
   }
 }
 const onTopicReply = (reply: Reply, index: number) => {

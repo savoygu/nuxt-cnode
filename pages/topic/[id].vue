@@ -2,6 +2,7 @@
 import { Reply, ResponseReply } from '~/types'
 
 // hooks
+const { $toast } = useNuxtApp()
 const route = useRoute()
 const state = useStore()
 
@@ -20,7 +21,24 @@ if (currentAuthor.value) {
 }
 
 // methods
-const handleTopicCollect = () => {}
+const handleTopicCollect = async () => {
+  if (!topic.value) return
+
+  const isCollect = topic.value.is_collect
+  const { data, error } = await collectTopic(id, isCollect)
+  if (data.value?.success) {
+    refresh().then(() => {
+      $toast.add({
+        severity: 'success',
+        detail: !isCollect ? '收藏成功' : '取消收藏成功',
+        life: 3000
+      })
+    })
+  } else if (error.value) {
+    const { data } = error.value.data
+    $toast.add({ severity: 'error', detail: data.error_msg, life: 3000 })
+  }
+}
 const handleTopicReply = ({ reply, data }: { reply: Reply | null; data: ResponseReply }) => {
   refresh().then(() => {
     reply?.id && navigateTo({ path: route.path, replace: true, hash: `#${data?.reply_id}` })

@@ -195,3 +195,19 @@ export async function replyTopic(topicId: string, content: string, replyId: stri
     error
   }
 }
+
+export async function collectTopic(topicId: string, isCollect: boolean) {
+  const token = useToken()
+  const { data, pending, error } = await useFetch(`/api/topic_collect/${isCollect ? 'de_collect' : 'collect'}`, {
+    method: 'POST',
+    body: {
+      accesstoken: token.value,
+      topic_id: topicId
+    }
+  })
+  return {
+    data,
+    pending,
+    error
+  }
+}
