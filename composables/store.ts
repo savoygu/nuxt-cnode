@@ -149,7 +149,7 @@ export function removeAccesstoken() {
 
 export async function starReply({ topicId, replyId }: { topicId: string; replyId: string }) {
   const token = useToken()
-  const { data } = await useFetch(`/api/reply/${replyId}/ups`, {
+  const { data, error } = await useFetch(`/api/reply/${replyId}/ups`, {
     method: 'POST',
     body: {
       accesstoken: token.value
@@ -174,7 +174,8 @@ export async function starReply({ topicId, replyId }: { topicId: string; replyId
     })
   }
   return {
-    data
+    data,
+    error
   }
 }
 

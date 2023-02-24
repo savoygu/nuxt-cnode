@@ -1,16 +1,12 @@
 import { baseURL } from '~/server/constants'
-
-type Response = {
-  success: boolean
-  action: 'up' | 'down'
-}
+import { ResponseStar } from '~/types'
 
 export default defineEventHandler(async event => {
   const body = await readBody(event)
   const accesstoken = body.accesstoken
-
   const replyId = event.context.params?.reply_id
-  const response = await $fetch<Response>(`/reply/${replyId}/ups`, {
+
+  const response = await $fetch<ResponseStar>(`/reply/${replyId}/ups`, {
     baseURL,
     method: 'POST',
     body: {
@@ -20,7 +16,8 @@ export default defineEventHandler(async event => {
   if (!response.success) {
     throw createError({
       statusCode: 500,
-      statusMessage: 'Internal Server Error'
+      statusMessage: 'Internal Server Error',
+      data: response
     })
   }
   return response

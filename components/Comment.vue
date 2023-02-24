@@ -14,6 +14,7 @@ const { topic } = toRefs(props)
 const emit = defineEmits<{ (e: 'reply', value: { reply: Reply | null; data: ResponseReply }): void }>()
 
 // hooks
+const { $toast } = useNuxtApp()
 const store = useStore()
 const currentUser = computed(() => store.value.user)
 
@@ -23,9 +24,16 @@ const showReplies = ref<boolean[]>(Array(topic.value.replies.length).fill(false)
 
 // methods
 const handleReplyStar = async (reply: Reply) => {
-  const { data } = await starReply({ topicId: topic.value.id, replyId: reply.id })
+  const { data, error } = await starReply({ topicId: topic.value.id, replyId: reply.id })
   if (data.value?.success) {
-    // TODO 点赞成功
+    $toast().add({
+      severity: 'success',
+      detail: data.value.action === 'up' ? '点赞成功' : '取消点赞成功',
+      life: 3000
+    })
+  } else if (error.value) {
+    const { data } = error.value.data
+    $toast().add({ severity: 'error', detail: data.error_msg, life: 3000 })
   }
 }
 const onTopicReply = (reply: Reply, index: number) => {
@@ -47,6 +55,7 @@ const onTopicReply = (reply: Reply, index: number) => {
 </script>
 
 <template>
+  <ClientOnly><Toast position="top-center" /></ClientOnly>
   <Panel v-if="topic" :title="`${topic.reply_count} 回复`" no-padding>
     <div class="comment__list">
       <div v-for="(item, index) in topic.replies" :id="item.id" :key="item.id" class="comment__item">

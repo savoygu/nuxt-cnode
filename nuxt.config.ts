@@ -2,7 +2,12 @@ import { defineNuxtConfig } from 'nuxt/config'
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
-  css: ['@/assets/styles/index.scss'],
+  css: [
+    'primevue/resources/themes/saga-blue/theme.css',
+    'primevue/resources/primevue.css',
+    'primeicons/primeicons.css',
+    '@/assets/styles/index.scss'
+  ],
   vite: {
     css: {
       preprocessorOptions: {
@@ -12,5 +17,8 @@ export default defineNuxtConfig({
         }
       }
     }
+  },
+  build: {
+    transpile: ['primevue']
   }
 })
