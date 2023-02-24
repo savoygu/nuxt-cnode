@@ -23,16 +23,16 @@ useHead({
     },
     {
       rel: 'stylesheet',
-      href: '//cdn.jsdelivr.net/editor/0.1.0/editor.css'
+      href: '//lab.lepture.com/editor/editor.css'
     }
   ],
   script: [
     {
-      src: '//cdn.jsdelivr.net/editor/0.1.0/editor.js',
+      src: '//lab.lepture.com/editor/editor.js',
       defer: 'true'
     },
     {
-      src: '//cdn.jsdelivr.net/editor/0.1.0/marked.js',
+      src: '//lab.lepture.com/editor/marked.js',
       defer: 'true'
     }
   ]
@@ -40,7 +40,7 @@ useHead({
 
 const nuxtApp = useNuxtApp()
 nuxtApp.hook('page:finish', () => {
-  window.scrollTo(0, 0)
+  // window.scrollTo(0, 0)
 })
 
 await useUser()

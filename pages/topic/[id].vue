@@ -1,51 +1,31 @@
 <script setup lang="ts">
-import { Reply } from '~/types'
+import { Reply, ResponseReply } from '~/types'
 
 // hooks
 const route = useRoute()
 const state = useStore()
 
-// reactive
-const visible = ref(false)
-const errorText = ref('')
-let editor: any
-let currentReply: Reply
-
 // fetch
 const id = route.params.id as string
-await fetchTopic(id)
+const { data: topic, refresh } = await fetchTopic(id)
 
 // computed
 const currentUser = computed(() => state.value.user)
-const topic = computed(() => state.value.topics[id])
-const currentAuthor = computed(() => topic.value.author)
-const author = computed(() => state.value.users[currentAuthor.value.loginname])
-const recentTopics = computed(() => author.value.recent_topics.filter(topic => topic.id !== id))
+const currentAuthor = computed(() => topic.value?.author)
+const author = computed(() => state.value.users[currentAuthor.value?.loginname ?? ''] ?? {})
+const recentTopics = computed(() => author.value?.recent_topics.filter(topic => topic.id !== id) ?? [])
 
-await fetchUser(currentAuthor.value.loginname)
-
-// methods
-const handleCollectTopic = () => {}
-const handleReplyTopic = () => {}
-const handleCommentTopic = (reply: Reply) => {
-  if (editor) {
-    currentReply = reply
-    nextTick(() => {
-      editor.codemirror.getDoc().setValue(`@${reply.author.loginname} `)
-      editor.codemirror.cursor()
-      console.log(editor.codemirror)
-    })
-  }
+if (currentAuthor.value) {
+  await fetchUser(currentAuthor.value.loginname)
 }
 
-// lifecycle
-onMounted(() => {
-  editor = new window.Editor({
-    element: document.querySelector('.reply-0'),
-    status: false
+// methods
+const handleTopicCollect = () => {}
+const handleTopicReply = ({ reply, data }: { reply: Reply | null; data: ResponseReply }) => {
+  refresh().then(() => {
+    reply?.id && navigateTo({ path: route.path, replace: true, hash: `#${data?.reply_id}` })
   })
-  editor.render()
-})
+}
 </script>
 
 <template>
@@ -69,27 +49,21 @@ onMounted(() => {
               <button
                 class="topic-article__collection"
                 :class="topic.is_collect ? 'button--white' : 'button--green'"
-                @click="handleCollectTopic"
+                @click="handleTopicCollect"
               >
                 {{ topic.is_collect ? '取消收藏' : '收藏' }}
               </button>
             </div>
           </div>
-          <div v-if="currentUser && currentUser.loginname === currentAuthor.loginname" class="topic-article__manage">
+          <div v-if="currentUser && currentUser?.loginname === currentAuthor?.loginname" class="topic-article__manage">
             <a :href="`/topic/${topic.id}/edit`"><i class="iconfont icon-edit"></i></a>
           </div>
         </template>
         <div class="topic-article__content" v-html="topic.content"></div>
       </Panel>
-      <Comment v-if="topic.replies.length > 0" :topic="topic" @comment="handleCommentTopic"></Comment>
+      <Comment v-if="topic.replies.length > 0" :topic="topic" @reply="handleTopicReply"></Comment>
       <Panel v-if="currentUser" id="reply-topic" title="添加回复" bordered>
-        <div class="topic-reply">
-          <div class="topic-reply__inner">
-            <textarea rows="8" style="display: none" class="reply-0"></textarea>
-          </div>
-          <button class="button--blue" @click="handleReplyTopic">回复</button>
-          <BaseAlert v-model="visible" type="danger" :title="errorText"></BaseAlert>
-        </div>
+        <TopicReply :topic="topic" @reply="handleTopicReply" />
       </Panel>
     </template>
     <template #sidebar>
@@ -161,25 +135,6 @@ onMounted(() => {
 
   .topic-article__collection {
     margin-top: 10px;
-  }
-}
-
-@include b(topic-reply) {
-  textarea {
-    width: 98%;
-    height: 200px;
-    padding: 0.5em;
-    font-size: 15px;
-    line-height: 2em;
-    resize: vertical;
-  }
-
-  .CodeMirror {
-    height: 160px;
-  }
-
-  button {
-    margin: 10px 0;
   }
 }
 </style>

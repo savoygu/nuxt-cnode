@@ -1,5 +1,5 @@
 import { Ref } from 'vue'
-import { ResponseErr, Token, Topic, User } from '~/types'
+import { ResponseError, Token, Topic, User } from '~/types'
 
 export type RootState = {
   topics: Record<string, Topic>
@@ -79,7 +79,7 @@ export async function fetchTopics(query: TopicQuery) {
 export async function fetchTopic(id: string, mdrender = true) {
   const state = useStore()
   const token = useToken()
-  const { data, refresh } = await useFetch(`/api/topic/${id}`, {
+  const { data, pending, refresh, error } = await useFetch(`/api/topic/${id}`, {
     params: {
       mdrender,
       accesstoken: state.value.isLogin && mdrender ? token.value : ''
@@ -93,7 +93,9 @@ export async function fetchTopic(id: string, mdrender = true) {
 
   return {
     data,
-    refresh
+    pending,
+    refresh,
+    error
   }
 }
 
@@ -124,7 +126,7 @@ export async function fetchAccesstoken(accesstoken: string) {
   if (error.value) {
     if (typeof error.value !== 'boolean') {
       const { data } = error.value.data
-      throw new TypeError((data as ResponseErr).error_msg)
+      throw new TypeError((data as ResponseError).error_msg)
     }
   }
 
@@ -153,7 +155,7 @@ export async function starReply({ topicId, replyId }: { topicId: string; replyId
       accesstoken: token.value
     }
   })
-  if (data.value && data.value.success) {
+  if (data.value?.success) {
     const user = useStore().value.user
     const topics = useStore().value.topics
     const topic = topics[topicId]
@@ -176,4 +178,19 @@ export async function starReply({ topicId, replyId }: { topicId: string; replyId
   }
 }
 
-// export async function createReply() }
+export async function replyTopic(topicId: string, content: string, replyId: string) {
+  const token = useToken()
+  const { data, pending, error } = await useFetch(`/api/topic/${topicId}/replies`, {
+    method: 'POST',
+    body: {
+      accesstoken: token.value,
+      content,
+      reply_id: replyId
+    }
+  })
+  return {
+    data,
+    pending,
+    error
+  }
+}

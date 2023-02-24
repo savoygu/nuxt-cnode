@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Reply, Topic } from '~/types'
+import { Reply, ResponseReply, Topic } from '~/types'
+import { TopicReply } from '#components'
 
 type CommentProps = {
   topic: Topic
@@ -10,52 +11,76 @@ const props = defineProps<CommentProps>()
 const { topic } = toRefs(props)
 
 // emits
-const emit = defineEmits<{ (e: 'comment', reply: Reply): void }>()
+const emit = defineEmits<{ (e: 'reply', value: { reply: Reply | null; data: ResponseReply }): void }>()
 
 // hooks
 const store = useStore()
 const currentUser = computed(() => store.value.user)
 
-// methods
-const handleStarReply = async (reply: Reply) => {
-  // if (!currentUser.value) {
-  //   // 请先登录，登录后即可点赞
-  //   return
-  // }
+// reactive
+const replyRef = ref<InstanceType<typeof TopicReply>[]>()
+const showReplies = ref<boolean[]>(Array(topic.value.replies.length).fill(false))
 
+// methods
+const handleReplyStar = async (reply: Reply) => {
   const { data } = await starReply({ topicId: topic.value.id, replyId: reply.id })
-  if (data.value && data.value.success) {
+  if (data.value?.success) {
     // TODO 点赞成功
   }
 }
-const handleReplyTopic = (reply: Reply) => {
-  emit('comment', reply)
+const onTopicReply = (reply: Reply, index: number) => {
+  showReplies.value[index] = !showReplies.value[index]
+
+  nextTick(() => {
+    if (showReplies.value[index] && replyRef.value?.at(-1)) {
+      const loginname = reply.author.loginname
+      const editor = replyRef.value.at(-1)!.editor
+      const cm = editor.codemirror
+      cm.focus()
+      if (!cm.getValue().includes(`@${loginname}`)) {
+        editor.value(`@${loginname} `)
+        cm.setCursor({ line: 1 }) // set cursor to right position
+      }
+    }
+  })
 }
 </script>
 
 <template>
   <Panel v-if="topic" :title="`${topic.reply_count} 回复`" no-padding>
     <div class="comment__list">
-      <div v-for="reply in topic.replies" :key="reply.id" class="comment__item">
+      <div v-for="(item, index) in topic.replies" :id="item.id" :key="item.id" class="comment__item">
         <div class="comment__author">
           <div class="comment__user">
-            <a class="comment__avatar" :href="`/user/${reply.author.loginname}`">
-              <img :src="reply.author.avatar_url" :alt="reply.author.loginname" />
+            <a class="comment__avatar" :href="`/user/${item.author.loginname}`">
+              <img :src="item.author.avatar_url" :alt="item.author.loginname" />
             </a>
-            <a class="comment__name">{{ reply.author.loginname }}</a>
-            <a class="comment__time" :href="`#${reply.id}`">1楼•{{ timeAgo(reply.create_at) }}</a>
+            <a class="comment__name">{{ item.author.loginname }}</a>
+            <a class="comment__time" :href="`#${item.id}`">1楼•{{ timeAgo(item.create_at) }}</a>
           </div>
           <div v-if="currentUser" class="comment__action">
-            <span :class="{ 'is-uped': reply.is_uped }" @click="handleStarReply(reply)">
+            <span :class="{ 'is-uped': item.is_uped }" @click="handleReplyStar(item)">
               <i class="iconfont icon-star"></i>
               <span class="comment__count">
-                {{ reply.ups.length }}
+                {{ item.ups.length }}
               </span>
             </span>
-            <a href="#reply-topic" @click="handleReplyTopic(reply)"><i class="iconfont icon-share"></i></a>
+            <span @click="onTopicReply(item, index)"><i class="iconfont icon-share"></i></span>
           </div>
         </div>
-        <div class="comment__content" v-html="reply.content"></div>
+        <div class="comment__content" v-html="item.content"></div>
+        <TopicReply
+          v-if="currentUser && showReplies[index]"
+          ref="replyRef"
+          :topic="topic"
+          :reply="item"
+          @reply="
+            value => {
+              showReplies[index] = !showReplies[index]
+              emit('reply', value)
+            }
+          "
+        />
       </div>
     </div>
   </Panel>

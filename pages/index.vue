@@ -8,12 +8,11 @@ definePageMeta({
 // hooks
 const state = useStore()
 const route = useRoute()
-const router = useRouter()
 const tab = computed(() => route.query.tab as Tab)
 const page = computed(() => route.query.page as string)
 
 const currentUser = computed(() => state.value.user)
-const user = computed(() => currentUser.value && state.value.users[currentUser.value.loginname])
+const user = computed(() => state.value.users[currentUser.value?.loginname ?? ''])
 
 // reactive
 const currentTab = ref(tab.value || 'all')
@@ -21,7 +20,7 @@ const currentPage = ref(Number(page.value) || 1)
 // const transition = ref('slide-right')
 
 // fetch
-const [{ data: topics, refresh, pending }] = await Promise.all([
+const [{ data: topics, pending }] = await Promise.all([
   fetchTopics({
     currentTab,
     currentPage
@@ -33,7 +32,6 @@ const [{ data: topics, refresh, pending }] = await Promise.all([
 watch(tab, newTab => {
   currentTab.value = newTab || 'all'
   currentPage.value = 1
-  refresh()
 })
 watch(
   tab,
@@ -48,13 +46,12 @@ watch(
 )
 watch(page, newPage => {
   currentPage.value = Number(newPage) || 1
-  refresh()
   window.scrollTo(0, 0)
 })
 
 // methods
 const handlePageChange = (page: number) => {
-  router.push({
+  navigateTo({
     query: {
       tab: currentTab.value,
       page

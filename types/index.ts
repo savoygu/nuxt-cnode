@@ -46,9 +46,14 @@ export type Response<T> = {
   data: T
 }
 
-export type ResponseErr = {
+export type ResponseError = {
   success: boolean
   error_msg: string
+}
+
+export type ResponseReply = {
+  success: boolean
+  reply_id: string
 }
 
 export type Token = {
