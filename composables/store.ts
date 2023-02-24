@@ -1,5 +1,5 @@
 import { Ref } from 'vue'
-import { ResponseError, Token, Topic, User } from '~/types'
+import { ResponseError, ResponseTopic, Token, Topic, User } from '~/types'
 
 export type RootState = {
   topics: Record<string, Topic>
@@ -207,6 +207,23 @@ export async function collectTopic(topicId: string, isCollect: boolean) {
   })
   return {
     data,
+    pending,
+    error
+  }
+}
+
+export async function createTopic(form: Pick<Topic, 'title' | 'content' | 'tab'>) {
+  const token = useToken()
+  const { data, pending, error } = await useFetch(`/api/topics`, {
+    method: 'POST',
+    body: {
+      accesstoken: token.value,
+      ...form
+    }
+  })
+
+  return {
+    data: data as Ref<ResponseTopic | null>,
     pending,
     error
   }

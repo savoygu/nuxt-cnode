@@ -61,6 +61,11 @@ export type ResponseStar = {
   action: 'up' | 'down'
 }
 
+export type ResponseTopic = {
+  success: boolean
+  topic_id: string
+}
+
 export type Token = {
   success: boolean
   id: string
