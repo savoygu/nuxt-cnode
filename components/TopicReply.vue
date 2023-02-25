@@ -39,7 +39,6 @@ const handleTopicReply = async () => {
 
   const content = editor.value.codemirror.getValue()
   const { data, error } = await replyTopic(topic.value!.id, content, reply.value?.id ?? '')
-
   loading.value = false
 
   if (data.value?.success) {

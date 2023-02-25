@@ -228,3 +228,21 @@ export async function createTopic(form: Pick<Topic, 'title' | 'content' | 'tab'>
     error
   }
 }
+
+export async function updateTopic(topicId: string, form: Pick<Topic, 'title' | 'content' | 'tab'>) {
+  const token = useToken()
+  const { data, pending, error } = await useFetch(`/api/topics/update`, {
+    method: 'POST',
+    body: {
+      accesstoken: token.value,
+      topic_id: topicId,
+      ...form
+    }
+  })
+
+  return {
+    data: data as Ref<ResponseTopic | null>,
+    pending,
+    error
+  }
+}

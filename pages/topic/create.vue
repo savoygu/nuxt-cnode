@@ -37,8 +37,8 @@ const handleTopicSubmit = async () => {
     return setAlert('请选择发布的板块', true)
   }
 
-  if (!form.title) {
-    return setAlert('话题标题不能为空', true)
+  if (form.title.length < 10) {
+    return setAlert('话题标题字数不能小于 10 个', true)
   }
 
   form.content = editor.value.value()
@@ -103,7 +103,9 @@ const handleTopicSubmit = async () => {
           </div>
         </div>
         <div class="topic-create__submit">
-          <button :disabled="loading" class="button--blue" @click="handleTopicSubmit">提交</button>
+          <button :disabled="loading" class="button--blue" @click="handleTopicSubmit">
+            {{ loading ? '提交中..' : '提交' }}
+          </button>
         </div>
       </div>
     </Panel>
@@ -113,66 +115,3 @@ const handleTopicSubmit = async () => {
     </template>
   </TheMain>
 </template>
-
-<style lang="scss">
-@include b(topic-create) {
-  padding: 10px;
-  border-top: 1px solid #e5e5e5;
-
-  .CodeMirror,
-  .editormd-preview {
-    height: 450px;
-  }
-
-  @include e(alert) {
-    margin-bottom: 20px;
-  }
-
-  @include e(plate) {
-    height: 30px;
-    line-height: 30px;
-
-    select {
-      width: 220px;
-      height: 30px;
-      color: #555;
-      font-size: 14px;
-    }
-  }
-
-  @include e(title) {
-    margin: 10px 0 14px;
-
-    input {
-      width: 98%;
-      height: 28px;
-      padding: 4px 6px;
-      border: none;
-      border-radius: 4px;
-      box-shadow: 0 0 2px rgb(60 60 60 / 50%);
-      color: #555;
-      outline: none;
-    }
-  }
-
-  @include e(editor) {
-    width: 98%;
-    height: 400px;
-    padding: 0.5em;
-    border: none;
-    box-shadow: 0 0 2px rgb(60 60 60 / 50%);
-    font-size: 15px;
-    line-height: 2em;
-    resize: vertical;
-  }
-
-  @include e(submit) {
-    display: flex;
-  }
-
-  @include e(lazy-wrapper) {
-    height: 34px;
-    margin-top: -5px;
-  }
-}
-</style>
