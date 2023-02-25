@@ -269,3 +269,25 @@ export async function updateTopic(topicId: string, form: Pick<Topic, 'title' | '
     error
   }
 }
+
+// ===========================================================================
+// Message
+// ===========================================================================
+
+export async function fetchMessages(mdrender = true) {
+  const state = useStore()
+  const token = useToken()
+  const { data, pending, refresh, error } = await useFetch('/api/messages', {
+    params: {
+      mdrender,
+      accesstoken: state.value.isLogin && mdrender ? token.value : ''
+    }
+  })
+
+  return {
+    data,
+    pending,
+    refresh,
+    error
+  }
+}

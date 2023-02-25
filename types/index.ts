@@ -82,3 +82,12 @@ export type User = {
   recent_topics: Topic[]
   recent_replies: Topic[]
 }
+
+export type Message = {
+  id: string
+  type: string
+  has_read: boolean
+  author: Author
+  topic: Topic
+  reply: Reply
+}
