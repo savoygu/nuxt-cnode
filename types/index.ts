@@ -77,7 +77,8 @@ export type User = {
   loginname: string
   avatar_url: string
   githubUsername: string
+  create_at: string
   score: number
   recent_topics: Topic[]
-  recent_replies: Reply[]
+  recent_replies: Topic[]
 }

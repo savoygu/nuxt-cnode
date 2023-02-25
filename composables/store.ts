@@ -108,7 +108,12 @@ export async function fetchUser(loginname: string) {
   const { data } = await useFetch(`/api/user/${loginname}`, {
     default: () => state.value.users[loginname]
   })
+
   if (data.value) state.value.users[loginname] = data.value
+
+  return {
+    data
+  }
 }
 
 // ===========================================================================
@@ -196,6 +201,10 @@ export async function replyTopic(topicId: string, content: string, replyId: stri
   }
 }
 
+// ===========================================================================
+// Collect
+// ===========================================================================
+
 export async function collectTopic(topicId: string, isCollect: boolean) {
   const token = useToken()
   const { data, pending, error } = await useFetch(`/api/topic_collect/${isCollect ? 'de_collect' : 'collect'}`, {
@@ -211,6 +220,20 @@ export async function collectTopic(topicId: string, isCollect: boolean) {
     error
   }
 }
+
+export async function fetchCollections(loginname: string) {
+  const { data } = await useFetch(`/api/topic_collect/${loginname}`, {
+    default: () => []
+  })
+
+  return {
+    data: data as Ref<Topic[]>
+  }
+}
+
+// ===========================================================================
+// Topic
+// ===========================================================================
 
 export async function createTopic(form: Pick<Topic, 'title' | 'content' | 'tab'>) {
   const token = useToken()
