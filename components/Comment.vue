@@ -15,8 +15,8 @@ const emit = defineEmits<{ (e: 'reply', value: { reply: Reply | null; data: Resp
 
 // hooks
 const { $toast } = useNuxtApp()
-const store = useStore()
-const currentUser = computed(() => store.value.user)
+const state = useStore()
+const currentUser = computed(() => state.value.user)
 
 // reactive
 const replyRef = ref<InstanceType<typeof TopicReply>[]>()
@@ -56,7 +56,7 @@ const onTopicReply = (reply: Reply, index: number) => {
 
 <template>
   <ClientOnly><Toast position="top-center" /></ClientOnly>
-  <Panel v-if="topic" :title="`${topic.reply_count} 回复`" no-padding>
+  <Panel v-if="topic" :title="`${topic.reply_count} 回复`" :content-padding="false">
     <div class="comment__list">
       <div v-for="(item, index) in topic.replies" :id="item.id" :key="item.id" class="comment__item">
         <div class="comment__author">

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // hooks
-const store = useStore()
-const user = computed(() => store.value.user)
+const state = useStore()
+const user = computed(() => state.value.user)
 
 // methods
 const logout = () => {

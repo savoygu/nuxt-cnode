@@ -1,26 +1,26 @@
 <script setup lang="ts">
 type PanelProps = {
   title?: string
-  noHeader?: boolean
-  noPadding?: boolean
+  header?: boolean
+  contentPadding?: boolean
   bordered?: boolean
 }
-const { title, noHeader, noPadding, bordered } = withDefaults(defineProps<PanelProps>(), {
+const { title, header, contentPadding, bordered } = withDefaults(defineProps<PanelProps>(), {
   title: '',
-  noHeader: false,
-  noPadding: false,
+  header: true,
+  contentPadding: true,
   bordered: false
 })
 </script>
 
 <template>
   <div class="panel">
-    <div v-if="!noHeader" class="panel__header">
+    <div v-if="header" class="panel__header">
       <slot name="header">
         <span class="panel__title">{{ title }}</span>
       </slot>
     </div>
-    <div class="panel__content" :class="{ 'no-padding': noPadding, 'is-border': bordered }">
+    <div class="panel__content" :class="{ 'no-padding': !contentPadding, 'is-border': bordered }">
       <slot></slot>
     </div>
   </div>

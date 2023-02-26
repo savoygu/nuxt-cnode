@@ -105,14 +105,18 @@ export async function fetchTopic(id: string, mdrender = true) {
 
 export async function fetchUser(loginname: string) {
   const state = useStore()
-  const { data } = await useFetch(`/api/user/${loginname}`, {
+  const { data, error } = await useFetch(`/api/user/${loginname}`, {
     default: () => state.value.users[loginname]
   })
+  if (error.value) {
+    console.error('[fetchUser]', error)
+  }
 
   if (data.value) state.value.users[loginname] = data.value
 
   return {
-    data
+    data,
+    error
   }
 }
 
@@ -139,12 +143,16 @@ export async function fetchAccesstoken(accesstoken: string) {
     state.value.isLogin = data.value.success
     state.value.user = data.value
   }
+
+  return {
+    data
+  }
 }
 
 export function removeAccesstoken() {
-  const store = useStore()
-  store.value.isLogin = false
-  store.value.user = undefined // INITIAL_USER
+  const state = useStore()
+  state.value.isLogin = false
+  state.value.user = undefined // INITIAL_USER
   useToken().value = ''
 }
 

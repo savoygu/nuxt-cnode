@@ -27,7 +27,7 @@ const emit = defineEmits<{
 
 // computed
 const alertClass = computed(() => {
-  return [type.value ? `alert--${type.value}` : '', 'alert']
+  return ['alert', type.value ? `alert--${type.value}` : '']
 })
 
 // methods

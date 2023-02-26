@@ -1,30 +1,30 @@
 <script setup lang="ts">
 import { Topic } from '~/types'
 
-type LatestTopicProps = {
+type TopicLatestProps = {
   topics: Topic[]
 }
 
-const props = defineProps<LatestTopicProps>()
+const props = defineProps<TopicLatestProps>()
 const { topics } = toRefs(props)
 </script>
 
 <template>
-  <div class="latest-topic">
-    <div v-for="topic in topics" :key="topic.id" class="latest-topic__item">
+  <div class="topic-latest">
+    <div v-for="topic in topics" :key="topic.id" class="topic-latest__item">
       <nuxt-link :to="`/user/${topic.author.loginname}`">
         <img :src="topic.author.avatar_url" :alt="topic.author.loginname" />
       </nuxt-link>
-      <nuxt-link class="latest-topic__title" :to="`/topic/${topic.id}`">
-        <span class="latest-topic__fulltitle">{{ topic.title }}</span>
+      <nuxt-link class="topic-latest__title" :to="`/topic/${topic.id}`">
+        <span class="topic-latest__fulltitle">{{ topic.title }}</span>
       </nuxt-link>
-      <span class="latest-topic__time">{{ timeAgo(topic.last_reply_at) }}</span>
+      <span class="topic-latest__time">{{ timeAgo(topic.last_reply_at) }}</span>
     </div>
   </div>
 </template>
 
 <style lang="scss">
-@include b(latest-topic) {
+@include b(topic-latest) {
   @include e(item) {
     display: flex;
     align-items: center;

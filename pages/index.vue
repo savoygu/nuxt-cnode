@@ -10,14 +10,12 @@ const state = useStore()
 const route = useRoute()
 const tab = computed(() => route.query.tab as Tab)
 const page = computed(() => route.query.page as string)
-
 const currentUser = computed(() => state.value.user)
 const user = computed(() => state.value.users[currentUser.value?.loginname ?? ''])
 
 // reactive
 const currentTab = ref(tab.value || 'all')
 const currentPage = ref(Number(page.value) || 1)
-// const transition = ref('slide-right')
 
 // fetch
 const [{ data: topics, pending }] = await Promise.all([
@@ -62,7 +60,7 @@ const handlePageChange = (page: number) => {
 
 <template>
   <TheMain>
-    <Panel no-padding>
+    <Panel :content-padding="false">
       <template #header>
         <NuxtLink
           v-for="item in validTabs"
@@ -76,25 +74,13 @@ const handlePageChange = (page: number) => {
       </template>
       <div v-if="!pending" class="home__topic">
         <template v-if="topics && topics.length > 0">
-          <div :key="currentPage" class="home__topic-list">
-            <ul>
-              <TopicItem v-for="topic in topics" :key="topic.id" :item="topic" />
-            </ul>
-          </div>
-          <!-- <Transition :name="transition" mode="out-in">
-          <div :key="currentPage" class="home__topic-list">
-            <TransitionGroup tag="ul" name="item">
-              <TopicItem v-for="topic in topics" :key="topic.id" :item="topic" />
-            </TransitionGroup>
-          </div>
-        </Transition> -->
-          <div class="main__pagination">
-            <BasePagination
-              :total-page="tabsInfo[currentTab].total"
-              :current-page="currentPage"
-              @change="handlePageChange"
-            />
-          </div>
+          <TopicList :topics="topics" />
+          <BasePagination
+            class="main__pagination"
+            :total-page="tabsInfo[currentTab].total"
+            :current-page="currentPage"
+            @change="handlePageChange"
+          />
         </template>
         <div v-else class="main__empty">暂无数据</div>
       </div>
@@ -103,7 +89,7 @@ const handlePageChange = (page: number) => {
     <template #sidebar>
       <template v-if="user">
         <SidebarPersonalInformation :key="user.loginname" :user="user" />
-        <SidebarPublishTopic no-header />
+        <SidebarPublishTopic />
       </template>
       <SidebarUnansweredTopic />
       <SidebarRanking />
@@ -135,14 +121,6 @@ const handlePageChange = (page: number) => {
   @include e(topic) {
     background-color: #fff;
     border-radius: 0 0 3px 3px;
-  }
-
-  @include e(topic-list) {
-    transition: all 0.3s cubic-bezier(0.55, 0, 0.1, 1);
-
-    ul {
-      margin: 0;
-    }
   }
 }
 

@@ -13,7 +13,7 @@ const { title, user } = toRefs(props)
 </script>
 
 <template>
-  <Panel v-if="user" :title="title">
+  <Panel :title="title">
     <div class="personal">
       <div class="personal__user">
         <nuxt-link class="personal__user-avatar" :to="`/user/${user.loginname}`">

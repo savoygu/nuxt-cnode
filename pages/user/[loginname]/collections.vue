@@ -17,14 +17,14 @@ const [{ data: user }, { data: collections }] = await Promise.all([fetchUser(log
       </template>
       <div class="collect-topic">
         <template v-if="collections.length">
-          <topic-item v-for="item in collections" :key="item.id" :item="item"></topic-item>
+          <TopicItem v-for="item in collections" :key="item.id" :item="item"></TopicItem>
         </template>
         <p v-else class="collect-topic__none">暂无话题</p>
       </div>
     </Panel>
     <template #sidebar>
       <SidebarPersonalInformation :user="user" />
-      <SidebarPublishTopic no-header />
+      <SidebarPublishTopic />
       <SidebarFriendlyCommunity />
       <SidebarClientQRCode />
     </template>

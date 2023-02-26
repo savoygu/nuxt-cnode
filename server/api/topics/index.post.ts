@@ -3,7 +3,7 @@ import { ResponseTopic } from '~/types'
 
 export default defineEventHandler(async event => {
   const body = await readBody(event)
-  const response = await $fetch<ResponseTopic>(`/topics`, {
+  const response = await $fetch<ResponseTopic>('/topics', {
     baseURL,
     method: 'POST',
     body

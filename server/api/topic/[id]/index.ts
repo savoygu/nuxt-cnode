@@ -6,7 +6,8 @@ export default defineEventHandler(async event => {
   const query = getQuery(event)
   const { mdrender = true, accesstoken } = query
   const id = event.context.params?.id
-  const response = await $fetch<Response<Topic>>(`${baseURL}/topic/${id}`, {
+  const response = await $fetch<Response<Topic>>(`/topic/${id}`, {
+    baseURL,
     params: {
       mdrender,
       accesstoken

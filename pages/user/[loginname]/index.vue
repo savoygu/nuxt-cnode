@@ -30,14 +30,14 @@ const { data: user } = await fetchUser(loginname)
       </div>
     </Panel>
     <Panel title="最近创建的话题">
-      <LatestTopic :topics="user.recent_topics"></LatestTopic>
+      <TopicLatest :topics="user.recent_topics"></TopicLatest>
     </Panel>
     <Panel title=" 最近参与的话题">
-      <LatestTopic :topics="user.recent_replies"></LatestTopic>
+      <TopicLatest :topics="user.recent_replies"></TopicLatest>
     </Panel>
     <template #sidebar>
       <SidebarPersonalInformation :user="user" />
-      <SidebarPublishTopic no-header />
+      <SidebarPublishTopic />
       <SidebarFriendlyCommunity />
       <SidebarClientQRCode />
     </template>

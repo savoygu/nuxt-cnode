@@ -200,6 +200,8 @@ const setCurrentPage = (pager: 'prev' | 'next' | 'prevMore' | 'nextMore' | numbe
 @include b(pagination) {
   display: inline-flex;
   flex-wrap: wrap;
+  margin: 0;
+  border-radius: 4px;
 
   @include e(item) {
     display: flex;

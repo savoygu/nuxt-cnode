@@ -25,20 +25,14 @@ const signin = async () => {
     setAlert('请输入 Access Token', true)
     return false
   }
-
   setAlert('', false)
 
   loading.value = true
-
   try {
     await fetchAccesstoken(accesstoken.value)
 
-    const from = route.query.from as string
-    if (from) {
-      window.location.href = from
-    } else {
-      return navigateTo('/')
-    }
+    const fallback = route.query.fallback as string
+    return navigateTo(fallback ?? '/')
   } catch (err: any) {
     setAlert(err.message, true)
   } finally {

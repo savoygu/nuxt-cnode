@@ -21,7 +21,8 @@ export default defineEventHandler(event => {
 })
 
 async function fetchTopics(tab: string, page = '1') {
-  const response = await $fetch<Response<Topic[]>>(`${baseURL}/topics`, {
+  const response = await $fetch<Response<Topic[]>>('/topics', {
+    baseURL,
     params: {
       tab,
       page,
