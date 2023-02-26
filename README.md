@@ -1,10 +1,10 @@
-# Nuxt 3 Minimal Starter
+# 基于 Nuxt3 构建 CNode 社区
 
-Look at the [nuxt 3 documentation](https://v3.nuxtjs.org) to learn more.
+[线上地址](https://nuxt-cnode.gusaifei.com)
 
-## Setup
+## 设置
 
-Make sure to install the dependencies:
+确保安装依赖项:
 
 ```bash
 # yarn
@@ -17,26 +17,51 @@ npm install
 pnpm install --shamefully-hoist
 ```
 
-## Development Server
+## 开发服务器
 
-Start the development server on http://localhost:3000
+在 http://localhost:3000 上启动开发服务器
 
 ```bash
 npm run dev
 ```
 
-## Production
+## 生产环境
 
-Build the application for production:
+构建用于生产的应用程序:
 
 ```bash
 npm run build
 ```
 
-Locally preview production build:
+本地预览生产版本:
 
 ```bash
 npm run preview
 ```
 
-Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/presets) for more information.
+## 功能概览
+
+- [x] 主题
+  - [x] 主题首页
+  - [x] 主题详情
+  - [x] 新建主题
+  - [x] 编辑主题
+- [x] 主题收藏
+  - [x] 收藏主题
+  - [x] 取消主题
+  - [x] 用户所收藏的主题
+- [x] 评论
+  - [x] 新建评论
+  - [x] 为评论点赞
+- [x] 用户
+  - [x] Access Token 登录
+  - [x] 用户详情
+- [x] 消息通知
+  - [x] 获取已读和未读消息
+  - [ ] 获取未读消息数
+  - [ ] 标记全部已读
+  - [ ] 标记单个消息为已读
+
+## 项目部署
+
+[Vercel](https://vercel.com/dashboard)
