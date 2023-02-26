@@ -48,6 +48,7 @@ await useUser()
 
 <template>
   <NuxtLayout>
+    <NuxtLoadingIndicator color="#80bd01" />
     <NuxtPage />
   </NuxtLayout>
 </template>
