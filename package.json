@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@nuxtjs/eslint-config-typescript": "^10.0.0",
+    "@types/codemirror": "^5.60.7",
     "@types/node": "^18.14.0",
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",

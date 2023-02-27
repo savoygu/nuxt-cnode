@@ -19,13 +19,13 @@ const form = reactive({
   content: topic.value?.content ?? '',
   tab: topic.value?.tab as Tab
 })
-const editorRef = ref<HTMLTextAreaElement | null>(null)
-const editor = ref()
+const editorRef = ref<HTMLTextAreaElement>()
+const editor = ref<Editor>()
 
 // lifecycle
 onMounted(() => {
-  editor.value = new window.Editor({
-    element: editorRef.value
+  editor.value = new Editor({
+    element: editorRef.value!
   })
   editor.value.render()
 })
@@ -45,7 +45,7 @@ const handleTopicSubmit = async () => {
     return setAlert('话题标题字数不能小于 10 个', true)
   }
 
-  form.content = editor.value.value()
+  form.content = editor.value?.value()
   if (!form.content) {
     return setAlert('话题内容不能为空', true)
   }

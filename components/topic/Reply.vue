@@ -26,8 +26,8 @@ const emit = defineEmits<{
 const visible = ref(false)
 const loading = ref(false)
 const errorText = ref('')
-const editorRef = ref<HTMLTextAreaElement | null>(null)
-const editor = ref<any>()
+const editorRef = ref<HTMLTextAreaElement>()
+const editor = ref<Editor>()
 
 // computed
 const replyId = computed(() => `reply-${reply.value?.id ?? '0'}`)
@@ -37,12 +37,12 @@ const handleTopicReply = async () => {
   if (loading.value) return
   loading.value = true
 
-  const content = editor.value.codemirror.getValue()
+  const content = editor.value?.codemirror.getValue() ?? ''
   const { data, error } = await replyTopic(topic.value!.id, content, reply.value?.id ?? '')
   loading.value = false
 
   if (data.value?.success) {
-    editor.value.codemirror.getDoc().setValue('') // 清空回复
+    editor.value?.codemirror.getDoc().setValue('') // 清空回复
     emit('reply', { reply: reply.value, data: data.value })
   } else {
     errorText.value = error.value?.message ?? '回复失败'
@@ -51,8 +51,8 @@ const handleTopicReply = async () => {
 
 // lifecycle
 onMounted(() => {
-  editor.value = new window.Editor({
-    element: editorRef.value,
+  editor.value = new Editor({
+    element: editorRef.value!,
     status: false
   })
   editor.value.render()

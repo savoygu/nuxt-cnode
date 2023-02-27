@@ -42,11 +42,12 @@ const onTopicReply = (reply: Reply, index: number) => {
   nextTick(() => {
     if (showReplies.value[index] && replyRef.value?.at(-1)) {
       const loginname = reply.author.loginname
-      const editor = replyRef.value.at(-1)!.editor
+      const editor = replyRef.value.at(-1)!.editor!
       const cm = editor.codemirror
       cm.focus()
       if (!cm.getValue().includes(`@${loginname}`)) {
-        editor.value(`@${loginname} `)
+        editor!.value(`@${loginname} `)
+        // @ts-ignore
         cm.setCursor({ line: 1 }) // set cursor to right position
       }
     }

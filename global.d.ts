@@ -1,3 +1,3 @@
-declare interface Window {
-  Editor: any
-}
+// declare interface Window {
+//   Editor: any
+// }

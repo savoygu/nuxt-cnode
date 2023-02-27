@@ -5,6 +5,8 @@
     "prettier/prettier": "error",
     "vue/multi-word-component-names": "off",
     "vue/no-multiple-template-root": "off",
-    "vue/no-textarea-mustache": "off"
+    "vue/no-textarea-mustache": "off",
+    "no-redeclare": "off",
+    "no-use-before-define": "off"
   }
 }
