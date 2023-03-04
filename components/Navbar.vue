@@ -2,6 +2,10 @@
 // hooks
 const state = useStore()
 const user = computed(() => state.value.user)
+let messageCount = 0
+if (user.value) {
+  messageCount = (await fetchMessageCount()).data.value ?? 0
+}
 
 // methods
 const logout = () => {
@@ -27,7 +31,10 @@ const logout = () => {
             <NuxtLink to="/">首页</NuxtLink>
           </span>
           <span v-if="user?.loginname">
-            <NuxtLink to="/my/messages">未读消息</NuxtLink>
+            <NuxtLink to="/my/messages">
+              <span v-if="messageCount > 0" class="navbar__message-count">{{ messageCount }}</span>
+              未读消息
+            </NuxtLink>
           </span>
           <span>
             <NuxtLink to="/getstart">新手入门</NuxtLink>
@@ -160,6 +167,14 @@ const logout = () => {
         display: inline-block;
       }
     }
+  }
+
+  @include e(message-count) {
+    padding: 1px 5px;
+    margin-right: 0.5em;
+    background-color: #80bd01;
+    border-radius: 8px;
+    color: #fff;
   }
 }
 

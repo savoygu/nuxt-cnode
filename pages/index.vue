@@ -91,6 +91,9 @@ const handlePageChange = (page: number) => {
         <SidebarPersonalInformation :key="user.loginname" :user="user" />
         <SidebarPublishTopic />
       </template>
+      <template v-else>
+        <SidebarSigninCNode />
+      </template>
       <SidebarUnansweredTopic />
       <SidebarRanking />
       <SidebarFriendlyCommunity />

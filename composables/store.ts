@@ -283,12 +283,11 @@ export async function updateTopic(topicId: string, form: Pick<Topic, 'title' | '
 // ===========================================================================
 
 export async function fetchMessages(mdrender = true) {
-  const state = useStore()
   const token = useToken()
   const { data, pending, refresh, error } = await useFetch('/api/messages', {
     params: {
       mdrender,
-      accesstoken: state.value.isLogin && mdrender ? token.value : ''
+      accesstoken: token.value
     }
   })
 
@@ -297,5 +296,18 @@ export async function fetchMessages(mdrender = true) {
     pending,
     refresh,
     error
+  }
+}
+
+export async function fetchMessageCount() {
+  const token = useToken()
+  const { data } = await useFetch('/api/message/count', {
+    params: {
+      accesstoken: token.value
+    }
+  })
+
+  return {
+    data
   }
 }
