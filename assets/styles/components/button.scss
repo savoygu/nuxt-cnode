@@ -43,4 +43,16 @@
       color: white;
     }
   }
+
+  @include m(gray) {
+    @include button;
+
+    background-color: #e5e5e5;
+    color: #778087;
+
+    @include hover {
+      background-color: #909090;
+      color: #fff;
+    }
+  }
 }
