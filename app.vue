@@ -23,19 +23,19 @@ useHead({
     },
     {
       rel: 'stylesheet',
-      href: '/_nuxt/assets/libs/editor/editor.css'
+      href: '/libs/editor/editor.css'
       // href: '//lab.lepture.com/editor/editor.css'
     }
   ],
   script: [
     {
       // src: '//lab.lepture.com/editor/editor.js',
-      src: '/_nuxt/assets/libs/editor/editor.js',
+      src: '/libs/editor/editor.js',
       defer: 'true'
     },
     {
       // src: '//lab.lepture.com/editor/marked.js',
-      src: '/_nuxt/assets/libs/editor/marked.js',
+      src: '/libs/editor/marked.js',
       defer: 'true'
     }
   ]
