@@ -1,6 +1,5 @@
 import { baseURL } from '~/server/constants'
-
-import { Message, Response } from '~/types'
+import type { Message, Response } from '~/types'
 
 export default defineEventHandler(async event => {
   const query = getQuery(event)

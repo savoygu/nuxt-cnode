@@ -1,5 +1,5 @@
 import { baseURL } from '~/server/constants'
-import { Response, User } from '~/types'
+import type { Response, User } from '~/types'
 
 export default defineEventHandler(async event => {
   const loginname = event.context.params?.loginname

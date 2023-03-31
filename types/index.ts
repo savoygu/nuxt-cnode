@@ -1,4 +1,4 @@
-import { Tab } from '~/composables/api'
+import type { Tab } from '~/utils/tab'
 
 export type Author = {
   loginname: string

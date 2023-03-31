@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Ranking } from '~/types'
+import type { Ranking } from '~/types'
 
 const { data: ranking } = await useFetch<Ranking[]>('/api/ranking')
 </script>

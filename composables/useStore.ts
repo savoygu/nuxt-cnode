@@ -1,5 +1,4 @@
-import { Ref } from 'vue'
-import { ResponseError, ResponseTopic, Token, Topic, User } from '~/types'
+import type { ResponseError, ResponseTopic, Token, Topic, User } from '~/types'
 
 export type RootState = {
   topics: Record<string, Topic>

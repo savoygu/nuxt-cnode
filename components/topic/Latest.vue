@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Topic } from '~/types'
+import type { Topic } from '~/types'
 
 type TopicLatestProps = {
   topics: Topic[]

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Message } from '~/types'
+import type { Message } from '~/types'
 
 type MessageProps = {
   message: Message

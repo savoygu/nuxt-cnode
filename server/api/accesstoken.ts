@@ -1,5 +1,5 @@
 import { baseURL } from '~/server/constants'
-import { Token } from '~/types'
+import type { Token } from '~/types'
 
 export default defineEventHandler(async event => {
   const body = await readBody(event)

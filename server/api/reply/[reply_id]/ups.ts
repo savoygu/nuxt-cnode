@@ -1,5 +1,5 @@
 import { baseURL } from '~/server/constants'
-import { ResponseStar } from '~/types'
+import type { ResponseStar } from '~/types'
 
 export default defineEventHandler(async event => {
   const body = await readBody(event)

@@ -1,5 +1,5 @@
 import { baseURL } from '~/server/constants'
-import { ResponseTopic } from '~/types'
+import type { ResponseTopic } from '~/types'
 
 export default defineEventHandler(async event => {
   const body = await readBody(event)

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Reply, ResponseReply, Topic } from '~/types'
+import type { Reply, ResponseReply, Topic } from '~/types'
 import { TopicReply } from '#components'
 
 type CommentProps = {

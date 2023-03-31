@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Tab } from '~/composables/api'
+import type { Tab } from '~/utils/tab'
 
 // hooks
 const { $toast } = useNuxtApp()

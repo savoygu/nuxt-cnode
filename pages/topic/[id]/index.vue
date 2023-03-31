@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Reply, ResponseReply } from '~/types'
+import type { Reply, ResponseReply } from '~/types'
 
 // hooks
 const { $toast } = useNuxtApp()
