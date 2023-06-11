@@ -1,13 +1,14 @@
-import { useToast } from 'vue-toast-notification'
+import ToastPlugin from 'vue-toast-notification'
 
 // @ts-ignore
-export default defineNuxtPlugin(() => {
-  const toast = useToast({
+export default defineNuxtPlugin(nuxtApp => {
+  nuxtApp.vueApp.use(ToastPlugin, {
     position: 'top'
   })
+
   return {
     provide: {
-      toast
+      toast: nuxtApp.vueApp.config.globalProperties.$toast
     }
   }
 })
