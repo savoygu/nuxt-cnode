@@ -1,4 +1,4 @@
-import { Tab } from '~/composables/api'
+import { Tab } from '~/utils/tab'
 
 export default defineNuxtRouteMiddleware(from => {
   if (from.query.tab && !validTabs.includes(from.query.tab as Tab)) {
