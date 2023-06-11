@@ -29,7 +29,7 @@ const accesstoken = useToken()
   </TheMain>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @include b(setting) {
   padding: 10px;
   border-top: 1px solid #e5e5e5;

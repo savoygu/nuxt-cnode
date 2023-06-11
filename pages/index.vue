@@ -102,7 +102,7 @@ const handlePageChange = (page: number) => {
   </TheMain>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @include b(home) {
   @include e(tab) {
     margin: 0 10px;

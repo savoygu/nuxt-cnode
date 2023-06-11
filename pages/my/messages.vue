@@ -47,7 +47,7 @@ const [{ data: message }] = await Promise.all([
   </TheMain>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @include b(messages) {
   @include e(none) {
     padding: 10px;

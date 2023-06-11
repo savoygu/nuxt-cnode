@@ -89,7 +89,7 @@
   </TheMain>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @include b(getstart) {
   @include e(content) {
     margin: 0 10px;

@@ -71,7 +71,7 @@ const signin = async () => {
   </TheMain>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @include b(form) {
   margin-top: 40px;
 }

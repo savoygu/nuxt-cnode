@@ -31,7 +31,7 @@ const [{ data: user }, { data: collections }] = await Promise.all([fetchUser(log
   </TheMain>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @include b(collect-topic) {
   @include e(none) {
     padding: 10px 0 20px;

@@ -94,7 +94,7 @@ const handleTopicReply = ({ reply, data }: { reply: Reply | null; data: Response
   </TheMain>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @include b(topic-article) {
   .panel__header {
     background-color: #fff;
