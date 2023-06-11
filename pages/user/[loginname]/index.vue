@@ -65,7 +65,7 @@ if (!currentUser.value && loginUser.value) {
   </TheMain>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @include b(user) {
   @include e(info) {
     padding: 10px;
