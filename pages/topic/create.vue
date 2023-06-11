@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { Tab } from '~/utils/tab'
 
+useEditor()
+
 // hooks
 const { $toast } = useNuxtApp()
 

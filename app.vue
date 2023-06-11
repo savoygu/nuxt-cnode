@@ -20,23 +20,6 @@ useHead({
       rel: 'icon',
       type: 'image/x-icon',
       href: '//static2.cnodejs.org/public/images/cnode_icon_32.png'
-    },
-    {
-      rel: 'stylesheet',
-      href: '/libs/editor/editor.css'
-      // href: '//lab.lepture.com/editor/editor.css'
-    }
-  ],
-  script: [
-    {
-      // src: '//lab.lepture.com/editor/editor.js',
-      src: '/libs/editor/editor.js',
-      defer: 'true'
-    },
-    {
-      // src: '//lab.lepture.com/editor/marked.js',
-      src: '/libs/editor/marked.js',
-      defer: 'true'
     }
   ]
 })

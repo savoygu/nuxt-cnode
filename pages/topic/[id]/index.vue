@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { Reply, ResponseReply } from '~/types'
 
+useEditor()
+
 // hooks
 const { $toast } = useNuxtApp()
 const route = useRoute()
