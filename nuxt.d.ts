@@ -1,7 +1,7 @@
-import { ToastServiceMethods } from 'primevue/toastservice'
+import { ToastPluginApi } from 'vue-toast-notification'
 
 declare module '#app' {
   interface NuxtApp {
-    $toast: ToastServiceMethods
+    $toast: ToastPluginApi
   }
 }

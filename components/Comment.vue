@@ -26,14 +26,13 @@ const showReplies = ref<boolean[]>(Array(topic.value.replies.length).fill(false)
 const handleReplyStar = async (reply: Reply) => {
   const { data, error } = await starReply({ topicId: topic.value.id, replyId: reply.id })
   if (data.value?.success) {
-    $toast.add({
-      severity: 'success',
-      detail: data.value.action === 'up' ? '点赞成功' : '取消点赞成功',
-      life: 3000
+    $toast.open({
+      type: 'success',
+      message: data.value.action === 'up' ? '点赞成功' : '取消点赞成功'
     })
   } else if (error.value) {
     const { data } = error.value.data
-    $toast.add({ severity: 'error', detail: data.error_msg, life: 3000 })
+    $toast.open({ type: 'error', message: data.error_msg })
   }
 }
 const onTopicReply = (reply: Reply, index: number) => {
@@ -56,7 +55,6 @@ const onTopicReply = (reply: Reply, index: number) => {
 </script>
 
 <template>
-  <ClientOnly><Toast position="top-center" /></ClientOnly>
   <Panel v-if="topic" :title="`${topic.reply_count} 回复`" :content-padding="false">
     <div class="comment__list">
       <div v-for="(item, index) in topic.replies" :id="item.id" :key="item.id" class="comment__item">

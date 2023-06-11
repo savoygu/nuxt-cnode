@@ -30,15 +30,14 @@ const handleTopicCollect = async () => {
   const { data, error } = await collectTopic(id, isCollect)
   if (data.value?.success) {
     refresh().then(() => {
-      $toast.add({
-        severity: 'success',
-        detail: !isCollect ? '收藏成功' : '取消收藏成功',
-        life: 3000
+      $toast.open({
+        type: 'success',
+        message: !isCollect ? '收藏成功' : '取消收藏成功'
       })
     })
   } else if (error.value) {
     const { data } = error.value.data
-    $toast.add({ severity: 'error', detail: data.error_msg, life: 3000 })
+    $toast.open({ type: 'error', message: data.error_msg })
   }
 }
 const handleTopicReply = ({ reply, data }: { reply: Reply | null; data: ResponseReply }) => {

@@ -55,23 +55,19 @@ const handleTopicSubmit = async () => {
   loading.value = false
 
   if (data.value?.success) {
-    $toast.add({
-      severity: 'success',
-      detail: '创建话题成功',
-      life: 3000
+    $toast.open({
+      type: 'success',
+      message: '创建话题成功'
     })
     navigateTo({ path: '/', query: { tab: form.tab } })
   } else if (error.value) {
     const { data } = error.value.data
-    $toast.add({ severity: 'error', detail: data.error_msg, life: 3000 })
+    $toast.open({ type: 'error', message: data.error_msg })
   }
 }
 </script>
 
 <template>
-  <ClientOnly>
-    <Toast position="top-center" />
-  </ClientOnly>
   <TheMain>
     <Panel>
       <template #header>
