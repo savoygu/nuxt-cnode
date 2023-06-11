@@ -10,13 +10,13 @@ export const useEditor = () => {
     script: [
       {
         // src: '//lab.lepture.com/editor/editor.js',
-        src: 'https://static.gusaifei.com/editor/editor.js',
-        defer: 'true'
+        src: 'https://static.gusaifei.com/editor/editor.js'
+        // defer: 'true'
       },
       {
         // src: '//lab.lepture.com/editor/marked.js',
-        src: 'https://static.gusaifei.com//editor/marked.js',
-        defer: 'true'
+        src: 'https://static.gusaifei.com//editor/marked.js'
+        // defer: 'true'
       }
     ]
   })
