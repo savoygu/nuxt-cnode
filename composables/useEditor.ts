@@ -15,7 +15,7 @@ export const useEditor = () => {
       },
       {
         // src: '//lab.lepture.com/editor/marked.js',
-        src: 'https://static.gusaifei.com//editor/marked.js'
+        src: 'https://static.gusaifei.com/editor/marked.js'
         // defer: 'true'
       }
     ]
