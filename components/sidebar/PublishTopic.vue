@@ -1,7 +1,7 @@
 <template>
   <Panel :header="false">
-    <NuxtLink to="/topic/create">
+    <a href="/topic/create">
       <span class="button--green">发布话题</span>
-    </NuxtLink>
+    </a>
   </Panel>
 </template>
