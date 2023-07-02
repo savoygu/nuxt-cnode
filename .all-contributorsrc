@@ -3,11 +3,28 @@
   "projectOwner": "savoygu",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "files": ["README.md"],
+  "files": [
+    "README.md"
+  ],
   "imageSize": 50,
   "commit": true,
   "commitConvention": "none",
   "contributorsPerLine": 7,
   "skipCi": true,
-  "contributors": []
+  "contributors": [
+    {
+      "login": "savoygu",
+      "name": "huel129",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9302866?v=4",
+      "profile": "https://github.com/savoygu",
+      "contributions": [
+        "design",
+        "ideas",
+        "doc",
+        "code",
+        "bug"
+      ]
+    }
+  ],
+  "commitType": "docs"
 }
