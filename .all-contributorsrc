@@ -1,0 +1,13 @@
+{
+  "projectName": "nuxt-cnode",
+  "projectOwner": "savoygu",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": ["README.md"],
+  "imageSize": 50,
+  "commit": true,
+  "commitConvention": "none",
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "contributors": []
+}
