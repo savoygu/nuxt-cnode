@@ -1,6 +1,6 @@
 <p align="center">
   <img src="./assets/images/nuxt.png" width="30px" height="30px">
-  <img src="./assets/images/cnodejs.svg" width="120px" height="35px">
+  <img src="./assets/images/cnodejs-green.svg" width="120px" height="35px">
 </p>
 
 <p align="center">
