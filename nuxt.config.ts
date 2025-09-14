@@ -2,20 +2,9 @@
 export default defineNuxtConfig({
   modules: ['@nuxt/eslint', '@nuxtjs/stylelint-module', '@nuxtjs/tailwindcss', '@element-plus/nuxt'],
 
-  css: ['vue-toast-notification/dist/theme-default.css', '~/assets/css/element.css'],
+  css: ['vue-toast-notification/dist/theme-default.css', '~/assets/css/fonts.css', '~/assets/css/element.css'],
 
   compatibilityDate: '2025-08-17',
-
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData:
-            '@import "sass-bem-next"; @import "assets/styles/common/variables.scss"; @import "assets/styles/common/mixins.scss";',
-        },
-      },
-    },
-  },
 
   eslint: {
     config: {
