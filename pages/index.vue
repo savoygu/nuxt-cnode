@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import type { Tab } from '~/utils/tab'
-
 definePageMeta({
-  middleware: 'tab'
+  middleware: 'tab',
 })
 
 // hooks
@@ -21,39 +19,39 @@ const currentPage = ref(Number(page.value) || 1)
 const [{ data: topics, pending }] = await Promise.all([
   fetchTopics({
     currentTab,
-    currentPage
+    currentPage,
   }),
-  currentUser.value && fetchUser(currentUser.value.loginname)
+  currentUser.value && fetchUser(currentUser.value.loginname),
 ])
 
 // watch
-watch(tab, newTab => {
+watch(tab, (newTab) => {
   currentTab.value = newTab || 'all'
   currentPage.value = 1
 })
 watch(
   tab,
-  newTab => {
+  (newTab) => {
     useHead({
-      title: newTab !== 'all' ? tabsInfo[newTab ?? 'all'].title : ''
+      title: newTab !== 'all' ? tabsInfo[newTab ?? 'all'].title : '',
     })
   },
   {
-    immediate: true
-  }
+    immediate: true,
+  },
 )
-watch(page, newPage => {
+watch(page, (newPage) => {
   currentPage.value = Number(newPage) || 1
   window.scrollTo(0, 0)
 })
 
 // methods
-const handlePageChange = (page: number) => {
+function handlePageChange(page: number) {
   navigateTo({
     query: {
       tab: currentTab.value,
-      page
-    }
+      page,
+    },
   })
 }
 </script>
@@ -82,7 +80,9 @@ const handlePageChange = (page: number) => {
             @change="handlePageChange"
           />
         </template>
-        <div v-else class="main__empty">暂无数据</div>
+        <div v-else class="main__empty">
+          暂无数据
+        </div>
       </div>
       <Skeleton v-else />
     </Panel>

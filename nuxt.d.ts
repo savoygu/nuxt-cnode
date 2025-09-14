@@ -1,4 +1,4 @@
-import { ToastPluginApi } from 'vue-toast-notification'
+import type { ToastPluginApi } from 'vue-toast-notification'
 
 declare module '#app' {
   interface NuxtApp {

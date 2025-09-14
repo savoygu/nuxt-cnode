@@ -1,33 +1,32 @@
 {
+  "name": "nuxt-cnode",
+  "type": "module",
   "private": true,
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
     "typecheck": "nuxt typecheck",
-    "format": "prettier --config .prettierrc './**/*.{vue,ts,tsx}' --write",
-    "style": "stylelint ./**/*.{css,scss,vue}",
-    "style:fix": "npm run style -- --fix"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
-  "devDependencies": {
-    "@nuxtjs/eslint-config-typescript": "^10.0.0",
-    "@types/codemirror": "^5.60.7",
-    "@types/node": "^18.15.10",
-    "eslint": "^8.36.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "nuxt": "^3.5.3",
-    "postcss-html": "^1.5.0",
-    "prettier": "^2.8.7",
-    "sass": "^1.60.0",
+  "dependencies": {
+    "@antfu/eslint-config": "^5.2.1",
+    "@nuxt/eslint": "^1.9.0",
+    "@nuxtjs/stylelint-module": "^5.2.1",
+    "@types/codemirror": "^5.60.16",
+    "eslint": "^9.33.0",
+    "eslint-plugin-format": "^1.0.1",
+    "nuxt": "^4.0.3",
+    "sass": "^1.90.0",
     "sass-bem-next": "^3.1.1",
-    "stylelint": "^14.16.1",
-    "stylelint-config-idiomatic-order": "^8.1.0",
-    "stylelint-config-recommended-vue": "^1.4.0",
-    "stylelint-config-standard-scss": "^4.0.0",
-    "typescript": "^4.9.5",
-    "vue-toast-notification": "^3.1.1",
-    "vue-tsc": "^1.2.0"
+    "stylelint": "^16.24.0",
+    "stylelint-config-recommended-vue": "^1.6.1",
+    "typescript": "^5.9.2",
+    "vue": "^3.5.21",
+    "vue-router": "^4.5.1",
+    "vue-toast-notification": "^3.1.3"
   }
 }

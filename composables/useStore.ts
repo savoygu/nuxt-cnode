@@ -1,6 +1,6 @@
 import type { ResponseError, ResponseTopic, Token, Topic, User } from '~/types'
 
-export type RootState = {
+export interface RootState {
   topics: Record<string, Topic>
   tabs: Record<string, Record<number, string[]>>
   user: undefined | Token
@@ -13,19 +13,20 @@ export const INITIAL_USER = {
   id: '',
   loginname: '',
   avatar_url: '',
-  accesstoken: ''
+  accesstoken: '',
 }
 
-export const useStore = () =>
-  useState<RootState>('main', () => ({
+export function useStore() {
+  return useState<RootState>('main', () => ({
     topics: {},
     tabs: Object.fromEntries(validTabs.map(tab => [tab, {}])),
     isLogin: false,
     user: undefined, // INITIAL_USER
-    users: {}
+    users: {},
   }))
+}
 
-export type TopicQuery = {
+export interface TopicQuery {
   currentTab: Ref<string>
   currentPage: Ref<number>
 }
@@ -50,18 +51,19 @@ export async function fetchTopics(query: TopicQuery) {
   const { data, pending, refresh, error } = await useFetch(
     () => `/api/topics?tab=${currentTab.value}&page=${currentPage.value}`,
     {
-      default: () => getTopics(state.value, query)
-    }
+      default: () => getTopics(state.value, query),
+    },
   )
 
   // update state
   if (data.value) {
     const ids = data.value.map(topic => topic.id)
     state.value.tabs[currentTab.value][currentPage.value] = ids
-    data.value.filter(Boolean).forEach(topic => {
+    data.value.filter(Boolean).forEach((topic) => {
       if (state.value.topics[topic.id]) {
         Object.assign(state.value.topics[topic.id], topic)
-      } else {
+      }
+      else {
         state.value.topics[topic.id] = topic
       }
     })
@@ -71,7 +73,7 @@ export async function fetchTopics(query: TopicQuery) {
     data,
     pending,
     refresh,
-    error
+    error,
   }
 }
 
@@ -81,9 +83,9 @@ export async function fetchTopic(id: string, mdrender = true) {
   const { data, pending, refresh, error } = await useFetch(`/api/topic/${id}`, {
     params: {
       mdrender,
-      accesstoken: state.value.isLogin && mdrender ? token.value : ''
+      accesstoken: state.value.isLogin && mdrender ? token.value : '',
     },
-    default: () => state.value.topics[id]
+    default: () => state.value.topics[id],
   })
 
   if (data.value) {
@@ -94,7 +96,7 @@ export async function fetchTopic(id: string, mdrender = true) {
     data,
     pending,
     refresh,
-    error
+    error,
   }
 }
 
@@ -105,17 +107,18 @@ export async function fetchTopic(id: string, mdrender = true) {
 export async function fetchUser(loginname: string) {
   const state = useStore()
   const { data, error } = await useFetch(`/api/user/${loginname}`, {
-    default: () => state.value.users[loginname]
+    default: () => state.value.users[loginname],
   })
   if (error.value) {
     console.error('[fetchUser]', error)
   }
 
-  if (data.value) state.value.users[loginname] = data.value
+  if (data.value)
+    state.value.users[loginname] = data.value
 
   return {
     data,
-    error
+    error,
   }
 }
 
@@ -128,8 +131,8 @@ export async function fetchAccesstoken(accesstoken: string) {
   const { data, error } = await useFetch('/api/accesstoken', {
     method: 'POST',
     body: {
-      accesstoken
-    }
+      accesstoken,
+    },
   })
   if (error.value) {
     if (typeof error.value !== 'boolean') {
@@ -144,7 +147,7 @@ export async function fetchAccesstoken(accesstoken: string) {
   }
 
   return {
-    data
+    data,
   }
 }
 
@@ -159,25 +162,26 @@ export function removeAccesstoken() {
 // Reply
 // ===========================================================================
 
-export async function starReply({ topicId, replyId }: { topicId: string; replyId: string }) {
+export async function starReply({ topicId, replyId }: { topicId: string, replyId: string }) {
   const token = useToken()
   const { data, error } = await useFetch(`/api/reply/${replyId}/ups`, {
     method: 'POST',
     body: {
-      accesstoken: token.value
-    }
+      accesstoken: token.value,
+    },
   })
   if (data.value?.success) {
     const user = useStore().value.user
     const topics = useStore().value.topics
     const topic = topics[topicId]
-    topic.replies = topic.replies.map(reply => {
+    topic.replies = topic.replies.map((reply) => {
       if (reply.id === replyId) {
         reply.is_uped = data.value!.action === 'up'
         if (user) {
           if (reply.is_uped) {
             reply.ups.push(user.id)
-          } else {
+          }
+          else {
             reply.ups.splice(reply.ups.indexOf(user.id), 1)
           }
         }
@@ -187,7 +191,7 @@ export async function starReply({ topicId, replyId }: { topicId: string; replyId
   }
   return {
     data,
-    error
+    error,
   }
 }
 
@@ -198,13 +202,13 @@ export async function replyTopic(topicId: string, content: string, replyId: stri
     body: {
       accesstoken: token.value,
       content,
-      reply_id: replyId
-    }
+      reply_id: replyId,
+    },
   })
   return {
     data,
     pending,
-    error
+    error,
   }
 }
 
@@ -218,23 +222,23 @@ export async function collectTopic(topicId: string, isCollect: boolean) {
     method: 'POST',
     body: {
       accesstoken: token.value,
-      topic_id: topicId
-    }
+      topic_id: topicId,
+    },
   })
   return {
     data,
     pending,
-    error
+    error,
   }
 }
 
 export async function fetchCollections(loginname: string) {
   const { data } = await useFetch(`/api/topic_collect/${loginname}`, {
-    default: () => []
+    default: () => [],
   })
 
   return {
-    data: data as Ref<Topic[]>
+    data: data as Ref<Topic[]>,
   }
 }
 
@@ -248,14 +252,14 @@ export async function createTopic(form: Pick<Topic, 'title' | 'content' | 'tab'>
     method: 'POST',
     body: {
       accesstoken: token.value,
-      ...form
-    }
+      ...form,
+    },
   })
 
   return {
     data: data as Ref<ResponseTopic | null>,
     pending,
-    error
+    error,
   }
 }
 
@@ -266,14 +270,14 @@ export async function updateTopic(topicId: string, form: Pick<Topic, 'title' | '
     body: {
       accesstoken: token.value,
       topic_id: topicId,
-      ...form
-    }
+      ...form,
+    },
   })
 
   return {
     data: data as Ref<ResponseTopic | null>,
     pending,
-    error
+    error,
   }
 }
 
@@ -286,15 +290,15 @@ export async function fetchMessages(mdrender = true) {
   const { data, pending, refresh, error } = await useFetch('/api/messages', {
     params: {
       mdrender,
-      accesstoken: token.value
-    }
+      accesstoken: token.value,
+    },
   })
 
   return {
     data,
     pending,
     refresh,
-    error
+    error,
   }
 }
 
@@ -302,11 +306,11 @@ export async function fetchMessageCount() {
   const token = useToken()
   const { data } = await useFetch('/api/message/count', {
     params: {
-      accesstoken: token.value
-    }
+      accesstoken: token.value,
+    },
   })
 
   return {
-    data
+    data,
   }
 }

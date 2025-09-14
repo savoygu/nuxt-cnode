@@ -1,17 +1,15 @@
-import type { Tab } from '~/utils/tab'
-
-export type Author = {
+export interface Author {
   loginname: string
   avatar_url: string
 }
 
-export type Ranking = {
+export interface Ranking {
   user: string
   score: number
 }
 
 // 回复
-export type Reply = {
+export interface Reply {
   id: string
   author: Author
   content: string
@@ -22,7 +20,7 @@ export type Reply = {
 }
 
 // 话题
-export type Topic = {
+export interface Topic {
   id: string
   author_id: string
   tab: Tab
@@ -41,39 +39,39 @@ export type Topic = {
 }
 
 // Response
-export type Response<T> = {
+export interface Response<T> {
   success: boolean
   data: T
 }
 
-export type ResponseError = {
+export interface ResponseError {
   success: boolean
   error_msg: string
 }
 
-export type ResponseReply = {
+export interface ResponseReply {
   success: boolean
   reply_id: string
 }
 
-export type ResponseStar = {
+export interface ResponseStar {
   success: boolean
   action: 'up' | 'down'
 }
 
-export type ResponseTopic = {
+export interface ResponseTopic {
   success: boolean
   topic_id: string
 }
 
-export type Token = {
+export interface Token {
   success: boolean
   id: string
   loginname: string
   avatar_url: string
 }
 
-export type User = {
+export interface User {
   loginname: string
   avatar_url: string
   githubUsername: string
@@ -83,7 +81,7 @@ export type User = {
   recent_replies: Topic[]
 }
 
-export type Message = {
+export interface Message {
   id: string
   type: string
   has_read: boolean

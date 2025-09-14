@@ -1,9 +1,9 @@
-import { baseURL } from '~/server/constants'
-
-import { type Tab, validTabs } from '~/utils/tab'
 import type { Response, Topic } from '~/types'
 
-export default defineEventHandler(event => {
+import { baseURL } from '~/server/constants'
+import { validTabs } from '~/utils/tab'
+
+export default defineEventHandler((event) => {
   const query = getQuery(event)
   const { tab = 'all', page = '1' } = query as {
     tab: Tab
@@ -13,7 +13,7 @@ export default defineEventHandler(event => {
   if (!validTabs.includes(tab) || String(Number(page)) !== page) {
     throw createError({
       statusCode: 422,
-      statusMessage: `Must provide one of ${validTabs.join(', ')} and a valid page number.`
+      statusMessage: `Must provide one of ${validTabs.join(', ')} and a valid page number.`,
     })
   }
 
@@ -27,13 +27,13 @@ async function fetchTopics(tab: string, page = '1') {
       tab,
       page,
       limit: 40,
-      mdrender: true
-    }
+      mdrender: true,
+    },
   })
   if (!response.success) {
     throw createError({
       statusCode: 500,
-      statusMessage: 'Internal Server Error'
+      statusMessage: 'Internal Server Error',
     })
   }
   return response.data

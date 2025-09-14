@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Tab } from '~/utils/tab'
-
 useEditor()
 
 // hooks
@@ -10,12 +8,12 @@ const { $toast } = useNuxtApp()
 const loading = ref(false)
 const alert = reactive({
   visible: false,
-  title: ''
+  title: '',
 })
 const form = reactive({
   title: '',
   content: '',
-  tab: '' as Tab
+  tab: '' as Tab,
 })
 const editorRef = ref<HTMLTextAreaElement>()
 const editor = ref<Editor>()
@@ -23,18 +21,18 @@ const editor = ref<Editor>()
 // lifecycle
 onMounted(() => {
   editor.value = new Editor({
-    element: editorRef.value!
+    element: editorRef.value!,
   })
   editor.value.render()
 })
 
 // methods
-const setAlert = (title: string, visible: boolean) => {
+function setAlert(title: string, visible: boolean) {
   alert.title = title
   alert.visible = visible
 }
 
-const handleTopicSubmit = async () => {
+async function handleTopicSubmit() {
   if (!form.tab) {
     return setAlert('请选择发布的板块', true)
   }
@@ -48,7 +46,8 @@ const handleTopicSubmit = async () => {
     return setAlert('话题内容不能为空', true)
   }
 
-  if (loading.value) return
+  if (loading.value)
+    return
   loading.value = true
 
   const { data, error } = await createTopic(form)
@@ -57,10 +56,11 @@ const handleTopicSubmit = async () => {
   if (data.value?.success) {
     $toast.open({
       type: 'success',
-      message: '创建话题成功'
+      message: '创建话题成功',
     })
     navigateTo({ path: '/', query: { tab: form.tab } })
-  } else if (error.value) {
+  }
+  else if (error.value) {
     const { data } = error.value.data
     $toast.open({ type: 'error', message: data.error_msg })
   }
@@ -72,24 +72,36 @@ const handleTopicSubmit = async () => {
     <Panel>
       <template #header>
         <BaseBreadcrumb>
-          <BaseBreadcrumbItem to="/">主页</BaseBreadcrumbItem>
+          <BaseBreadcrumbItem to="/">
+            主页
+          </BaseBreadcrumbItem>
           <BaseBreadcrumbItem>发布话题</BaseBreadcrumbItem>
         </BaseBreadcrumb>
       </template>
       <div class="topic-create">
-        <BaseAlert v-model="alert.visible" class="topic-create__alert" :title="alert.title"></BaseAlert>
+        <BaseAlert v-model="alert.visible" class="topic-create__alert" :title="alert.title" />
         <div class="topic-create__plate">
           <span>选择板块：</span>
           <select id="plate" v-model="form.tab" name="plate">
-            <option disabled value="">请选择</option>
-            <option value="share">分享</option>
-            <option value="ask">问答</option>
-            <option value="job">招聘</option>
-            <option value="dev">客户端测试</option>
+            <option disabled value="">
+              请选择
+            </option>
+            <option value="share">
+              分享
+            </option>
+            <option value="ask">
+              问答
+            </option>
+            <option value="job">
+              招聘
+            </option>
+            <option value="dev">
+              客户端测试
+            </option>
           </select>
         </div>
         <div class="topic-create__title">
-          <input v-model="form.title" type="text" placeholder="标题字数 10 字以上" />
+          <input v-model="form.title" type="text" placeholder="标题字数 10 字以上">
         </div>
         <div class="topic-create__content">
           <div id="editormd">
@@ -97,7 +109,7 @@ const handleTopicSubmit = async () => {
               ref="editorRef"
               class="topic-create__editor"
               placeholder="文章支持 Markdown 语法, 请注意标记代码"
-            ></textarea>
+            />
           </div>
         </div>
         <div class="topic-create__submit">
