@@ -1,8 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', '@nuxtjs/stylelint-module', '@nuxtjs/tailwindcss'],
+  modules: ['@nuxt/eslint', '@nuxtjs/stylelint-module', '@nuxtjs/tailwindcss', '@element-plus/nuxt'],
 
-  css: ['vue-toast-notification/dist/theme-default.css', '@/assets/styles/index.scss'],
+  css: ['vue-toast-notification/dist/theme-default.css', '~/assets/css/element.css'],
 
   compatibilityDate: '2025-08-17',
 
