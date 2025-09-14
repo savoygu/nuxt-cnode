@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', '@nuxtjs/stylelint-module'],
+  modules: ['@nuxt/eslint', '@nuxtjs/stylelint-module', '@nuxtjs/tailwindcss'],
 
   css: ['vue-toast-notification/dist/theme-default.css', '@/assets/styles/index.scss'],
 
@@ -21,5 +21,13 @@ export default defineNuxtConfig({
     config: {
       standalone: false,
     },
+  },
+
+  // Defaults options
+  tailwindcss: {
+    cssPath: [`~/assets/css/tailwind.css`, { injectPosition: 'first' }],
+    config: {},
+    viewer: true,
+    exposeConfig: false,
   },
 })

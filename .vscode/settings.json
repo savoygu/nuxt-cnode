@@ -47,5 +47,15 @@
     "scss",
     "pcss",
     "postcss"
-  ]
+  ],
+
+  // Tailwind CSS
+  "tailwindCSS.experimental.classRegex": ["tw`(.*?)`", "tw\\('(.*?)'\\)", "tw\\(\\s*('(.*?)'|\"(.*?)\")\\s*\\)"],
+  "tailwindCSS.experimental.configFile": ".nuxt/tailwind/postcss.mjs",
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  }
 }
