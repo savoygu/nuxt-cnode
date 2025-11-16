@@ -1,16 +1,12 @@
 <script setup lang="ts">
-import type { Reply, Topic, ResponseReply } from '~/types'
-
-type TopicReplyProps = {
+interface TopicReplyProps {
   topic: Topic
   reply?: Reply | null
 }
 // props
 const props = withDefaults(defineProps<TopicReplyProps>(), {
-  reply: null
+  reply: null,
 })
-const { reply, topic } = toRefs(props)
-
 // emits
 const emit = defineEmits<{
   (
@@ -21,6 +17,8 @@ const emit = defineEmits<{
     }
   ): void
 }>()
+
+const { reply, topic } = toRefs(props)
 
 // reactive
 const visible = ref(false)
@@ -33,8 +31,9 @@ const editor = ref<Editor>()
 const replyId = computed(() => `reply-${reply.value?.id ?? '0'}`)
 
 // methods
-const handleTopicReply = async () => {
-  if (loading.value) return
+async function handleTopicReply() {
+  if (loading.value)
+    return
   loading.value = true
 
   const content = editor.value?.codemirror.getValue() ?? ''
@@ -44,7 +43,8 @@ const handleTopicReply = async () => {
   if (data.value?.success) {
     editor.value?.codemirror.getDoc().setValue('') // 清空回复
     emit('reply', { reply: reply.value, data: data.value })
-  } else {
+  }
+  else {
     errorText.value = error.value?.message ?? '回复失败'
   }
 }
@@ -53,46 +53,41 @@ const handleTopicReply = async () => {
 onMounted(() => {
   editor.value = new Editor({
     element: editorRef.value!,
-    status: false
+    status: false,
   })
   editor.value.render()
 })
 
 // expose
 defineExpose({
-  editor
+  editor,
 })
 </script>
 
 <template>
-  <div class="topic-reply">
-    <div class="topic-reply__inner">
-      <textarea :id="replyId" ref="editorRef" rows="8" style="display: none"></textarea>
+  <div>
+    <div>
+      <textarea
+        :id="replyId"
+        ref="editorRef"
+        rows="8"
+        class="w-[98%] h-[200px] p-[0.5em] text-[15px] leading-[2em] resize-y"
+        style="display: none"
+      />
     </div>
-    <button class="button--blue" :disabled="loading" @click="handleTopicReply">
+    <button
+      class="button-blue my-[10px]"
+      :disabled="loading"
+      @click="handleTopicReply"
+    >
       {{ loading ? '回复中..' : '回复' }}
     </button>
-    <BaseAlert v-model="visible" type="danger" :title="errorText"></BaseAlert>
+    <BaseAlert v-model="visible" type="danger" :title="errorText" />
   </div>
 </template>
 
-<style lang="scss">
-@include b(topic-reply) {
-  textarea {
-    width: 98%;
-    height: 200px;
-    padding: 0.5em;
-    font-size: 15px;
-    line-height: 2em;
-    resize: vertical;
-  }
-
-  .CodeMirror {
-    height: 160px;
-  }
-
-  button {
-    margin: 10px 0;
-  }
+<style>
+.CodeMirror {
+  height: 160px;
 }
 </style>

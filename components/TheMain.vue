@@ -1,9 +1,9 @@
 <template>
-  <div class="main">
-    <div class="main__sidebar">
-      <slot name="sidebar"></slot>
+  <div class="flex">
+    <div class="w-[290px] mr-[20px]">
+      <slot name="sidebar" />
     </div>
-    <div class="main__content">
+    <div class="flex-1">
       <slot />
     </div>
   </div>

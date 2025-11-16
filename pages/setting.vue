@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  middleware: 'auth'
+  middleware: 'auth',
 })
 
 // hooks
@@ -12,12 +12,14 @@ const accesstoken = useToken()
     <Panel>
       <template #header>
         <BaseBreadcrumb>
-          <BaseBreadcrumbItem to="/">主页</BaseBreadcrumbItem>
+          <BaseBreadcrumbItem to="/">
+            主页
+          </BaseBreadcrumbItem>
           <BaseBreadcrumbItem>Access Token</BaseBreadcrumbItem>
         </BaseBreadcrumb>
       </template>
-      <div class="setting">
-        <div class="setting-token">字符串：{{ accesstoken }}</div>
+      <div class="p-[10px] border-t border-t-[#e5e5e5]">
+        <div>字符串：{{ accesstoken }}</div>
         <!-- <div class="setting-code">
           <span>二维码：</span>
           <div>
@@ -28,14 +30,3 @@ const accesstoken = useToken()
     </Panel>
   </TheMain>
 </template>
-
-<style lang="scss">
-@include b(setting) {
-  padding: 10px;
-  border-top: 1px solid #e5e5e5;
-
-  h2 {
-    font-size: 26px;
-  }
-}
-</style>

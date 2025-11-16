@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  name: 'user'
+  name: 'user',
 })
 
 // hooks
@@ -21,40 +21,58 @@ if (!currentUser.value && loginUser.value) {
       <Panel>
         <template #header>
           <BaseBreadcrumb>
-            <BaseBreadcrumbItem to="/">主页</BaseBreadcrumbItem>
-            <BaseBreadcrumbItem></BaseBreadcrumbItem>
+            <BaseBreadcrumbItem to="/">
+              主页
+            </BaseBreadcrumbItem>
+            <BaseBreadcrumbItem />
           </BaseBreadcrumb>
         </template>
-        <div class="user__info">
-          <div class="user__personal">
-            <img class="user__avatar" :src="user.avatar_url" alt="" />
-            <span class="user__name">{{ user.loginname }}</span>
+        <div class="p-[10px]">
+          <div class="flex items-center">
+            <img
+              class="w-[40px] h-[40px] mr-[10px] rounded-[3px]"
+              :src="user.avatar_url"
+              alt=""
+            >
+            <span class="inline-block text-[#778087] leading-[32px] align-top">
+              {{ user.loginname }}
+            </span>
           </div>
-          <div class="user__profile">
-            <div class="user__score">{{ user.score }} 积分</div>
-            <div class="user__collection">
-              <nuxt-link :to="`/user/${user.loginname}/collections`">查看话题收藏</nuxt-link>
+          <div class="mt-[20px]">
+            <div class="leading-[20px]">
+              {{ user.score }} 积分
+            </div>
+            <div class="leading-[2em]">
+              <nuxt-link class="text-[#778087]" :to="`/user/${user.loginname}/collections`">
+                查看话题收藏
+              </nuxt-link>
             </div>
           </div>
-          <p class="user__register">注册时间 {{ timeAgo(user.create_at) }}</p>
+          <p class="text-[#ababab] text-[14px] leading-[2em]">
+            注册时间 {{ timeAgo(user.create_at) }}
+          </p>
         </div>
       </Panel>
       <Panel title="最近创建的话题">
-        <TopicLatest :topics="user.recent_topics"></TopicLatest>
+        <TopicLatest :topics="user.recent_topics" />
       </Panel>
       <Panel title=" 最近参与的话题">
-        <TopicLatest :topics="user.recent_replies"></TopicLatest>
+        <TopicLatest :topics="user.recent_replies" />
       </Panel>
     </template>
     <Panel v-else>
       <template #header>
         <BaseBreadcrumb>
-          <BaseBreadcrumbItem to="/">主页</BaseBreadcrumbItem>
+          <BaseBreadcrumbItem to="/">
+            主页
+          </BaseBreadcrumbItem>
           <BaseBreadcrumbItem>通知</BaseBreadcrumbItem>
         </BaseBreadcrumb>
       </template>
-      <BaseAlert :model-value="true" title="这个用户不存在。"></BaseAlert>
-      <NuxtLink to="/" class="button--gray user__back">返回</NuxtLink>
+      <BaseAlert :model-value="true" title="这个用户不存在。" />
+      <NuxtLink to="/" class="button-gray mt-[20px] no-underline">
+        返回
+      </NuxtLink>
     </Panel>
     <template #sidebar>
       <SidebarPersonalInformation :user="user" />
@@ -65,64 +83,14 @@ if (!currentUser.value && loginUser.value) {
   </TheMain>
 </template>
 
-<style lang="scss">
-@include b(user) {
-  @include e(info) {
-    padding: 10px;
-  }
-
-  @include e(avatar) {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-    border-radius: 3px;
-  }
-
-  @include e(name) {
-    display: inline-block;
-    color: #778087;
-    line-height: 32px;
-    vertical-align: top;
-  }
-
-  @include e(profile) {
-    margin-top: 20px;
-  }
-
-  @include e(score) {
-    line-height: 20px;
-  }
-
-  @include e(collection) {
-    line-height: 2em;
-
-    a {
-      color: #778087;
-    }
-  }
-
-  @include e(register) {
-    color: #ababab;
-    font-size: 14px;
-    line-height: 2em;
-  }
-
-  @include e(back) {
-    margin-top: 20px;
-    text-decoration: none;
-  }
-}
-
-@media screen and (max-width: $breakpoint-lg) {
+<style>
+@media screen and (max-width: 992px) {
   .user__profile {
     margin-top: 0;
   }
-
-  .latest-topic__title {
-    h3 {
-      width: 100%;
-      font-size: 14px;
-    }
+  .latest-topic__title h3 {
+    width: 100%;
+    font-size: 14px;
   }
 }
 </style>

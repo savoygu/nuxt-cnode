@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  middleware: 'guest'
+  middleware: 'guest',
 })
 
 // hooks
@@ -10,17 +10,17 @@ const route = useRoute()
 const accesstoken = ref('')
 const alert = reactive({
   visible: false,
-  title: ''
+  title: '',
 })
 const loading = ref(false)
 
-const setAlert = (title: string, visible: boolean) => {
+function setAlert(title: string, visible: boolean) {
   alert.title = title
   alert.visible = visible
 }
 
 // methods
-const signin = async () => {
+async function signin() {
   if (!accesstoken.value) {
     setAlert('请输入 Access Token', true)
     return false
@@ -33,9 +33,11 @@ const signin = async () => {
 
     const fallback = route.query.fallback as string
     return navigateTo(fallback ?? '/')
-  } catch (err: any) {
+  }
+  catch (err: any) {
     setAlert(err.message, true)
-  } finally {
+  }
+  finally {
     loading.value = false
   }
 }
@@ -46,22 +48,32 @@ const signin = async () => {
     <Panel>
       <template #header>
         <BaseBreadcrumb>
-          <BaseBreadcrumbItem to="/">主页</BaseBreadcrumbItem>
+          <BaseBreadcrumbItem to="/">
+            主页
+          </BaseBreadcrumbItem>
           <BaseBreadcrumbItem>登录</BaseBreadcrumbItem>
         </BaseBreadcrumb>
       </template>
-      <BaseAlert v-model="alert.visible" :title="alert.title"></BaseAlert>
-      <div class="form">
-        <div class="form-control">
-          <div class="form-control__group">
-            <span class="form-control__label" for="accesstoken">Access Token</span>
-            <div class="form-control__item">
-              <input v-model="accesstoken" class="form-input--large" name="accesstoken" size="30" type="text" />
+      <BaseAlert v-model="alert.visible" :title="alert.title" />
+      <div class="mt-[40px]">
+        <div>
+          <div class="flex items-center mb-[20px]">
+            <span class="w-[160px] text-right" for="accesstoken">Access Token</span>
+            <div class="ml-[20px]">
+              <input
+                v-model="accesstoken"
+                class="w-[284px] h-[30px] p-[4px_6px] border border-[#ccc] rounded-[4px] shadow-[inset_0_1px_1px_rgb(0_0_0_/_7.5%)] text-[#555] text-[14px] leading-[20px] outline-none focus:border-[rgba(82,168,236,0.8)] focus:shadow-[inset_0_1px_1px_rgb(0_0_0_/_7.5%),_0_0_8px_rgb(82_168_236_/_60%)]"
+                name="accesstoken"
+                size="30"
+                type="text"
+              >
             </div>
           </div>
         </div>
-        <div class="form-action">
-          <button class="button--blue" @click="signin">{{ loading ? '登录中...' : '登录' }}</button>
+        <div class="p-[20px_20px_20px_180px] mt-[20px] mb-[20px]">
+          <button class="button-blue" @click="signin">
+            {{ loading ? '登录中...' : '登录' }}
+          </button>
         </div>
       </div>
     </Panel>
@@ -70,55 +82,3 @@ const signin = async () => {
     </template>
   </TheMain>
 </template>
-
-<style lang="scss">
-@include b(form) {
-  margin-top: 40px;
-}
-
-@include b(form-input) {
-  @include m(large) {
-    width: 284px;
-  }
-}
-
-@include b(form-control) {
-  @include e(group) {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  @include e(label) {
-    width: 160px;
-    text-align: right;
-  }
-
-  @include e(item) {
-    margin-left: 20px;
-
-    input {
-      height: 30px;
-      padding: 4px 6px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-shadow: inset 0 1px 1px rgb(0 0 0 / 7.5%);
-      color: #555;
-      font-size: 14px;
-      line-height: 20px;
-      outline: none;
-
-      &:focus {
-        border-color: rgb(82 168 236 / 80%);
-        box-shadow: inset 0 1px 1px rgb(0 0 0 / 7.5%), 0 0 8px rgb(82 168 236 / 60%);
-      }
-    }
-  }
-}
-
-@include b(form-action) {
-  padding: 20px 20px 20px 180px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-</style>

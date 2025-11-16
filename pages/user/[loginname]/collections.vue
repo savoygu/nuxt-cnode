@@ -11,15 +11,19 @@ const [{ data: user }, { data: collections }] = await Promise.all([fetchUser(log
     <Panel>
       <template #header>
         <BaseBreadcrumb>
-          <BaseBreadcrumbItem to="/">主页</BaseBreadcrumbItem>
+          <BaseBreadcrumbItem to="/">
+            主页
+          </BaseBreadcrumbItem>
           <BaseBreadcrumbItem>{{ user.loginname }} 收藏的话题</BaseBreadcrumbItem>
         </BaseBreadcrumb>
       </template>
-      <div class="collect-topic">
+      <div>
         <template v-if="collections.length">
-          <TopicItem v-for="item in collections" :key="item.id" :item="item"></TopicItem>
+          <TopicItem v-for="item in collections" :key="item.id" :item="item" />
         </template>
-        <p v-else class="collect-topic__none">暂无话题</p>
+        <p v-else class="py-[10px_0_20px] text-center">
+          暂无话题
+        </p>
       </div>
     </Panel>
     <template #sidebar>
@@ -30,12 +34,3 @@ const [{ data: user }, { data: collections }] = await Promise.all([fetchUser(log
     </template>
   </TheMain>
 </template>
-
-<style lang="scss">
-@include b(collect-topic) {
-  @include e(none) {
-    padding: 10px 0 20px;
-    text-align: center;
-  }
-}
-</style>

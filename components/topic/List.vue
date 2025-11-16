@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import type { Topic } from '~/types'
-
-type TopicProps = {
+interface TopicProps {
   topics: Topic[]
 }
 
@@ -10,13 +8,7 @@ const { topics } = toRefs(props)
 </script>
 
 <template>
-  <ul class="topic-list">
+  <ul class="m-0">
     <TopicItem v-for="topic in topics" :key="topic.id" :item="topic" />
   </ul>
 </template>
-
-<style lang="scss">
-@include b(topic-list) {
-  margin: 0;
-}
-</style>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-type PanelProps = {
+interface PanelProps {
   title?: string
   header?: boolean
   contentPadding?: boolean
@@ -9,92 +9,25 @@ const { title, header, contentPadding, bordered } = withDefaults(defineProps<Pan
   title: '',
   header: true,
   contentPadding: true,
-  bordered: false
+  bordered: false,
 })
 </script>
 
 <template>
-  <div class="panel">
-    <div v-if="header" class="panel__header">
+  <div class="mb-[13px] text-[13px]">
+    <div v-if="header" class="p-[10px] bg-[#f6f6f6] rounded-t-[3px]">
       <slot name="header">
-        <span class="panel__title">{{ title }}</span>
+        <span class="text-[#444]">{{ title }}</span>
       </slot>
     </div>
-    <div class="panel__content" :class="{ 'no-padding': !contentPadding, 'is-border': bordered }">
-      <slot></slot>
+    <div
+      class="p-[10px] bg-white rounded-b-[3px] leading-[2em]"
+      :class="{
+        'p-0': !contentPadding,
+        'border-t border-t-[#e5e5e5]': bordered,
+      }"
+    >
+      <slot />
     </div>
   </div>
 </template>
-
-<style lang="scss">
-@include b(panel) {
-  margin-bottom: 13px;
-  font-size: 13px;
-
-  @include e(header) {
-    padding: 10px;
-    background-color: #f6f6f6;
-    border-radius: 3px 3px 0 0;
-
-    a.dark {
-      color: #666;
-
-      @include p(':active', ':link', ':visited') {
-        color: #666;
-        text-decoration: none;
-      }
-
-      @include p(':hover') {
-        color: #385f8a;
-      }
-    }
-  }
-
-  @include e(title) {
-    color: #444;
-  }
-
-  @include e(content) {
-    padding: 10px;
-    background-color: #fff;
-    border-radius: 0 0 3px 3px;
-    line-height: 2em;
-
-    ol {
-      margin: 4px 0;
-      list-style: none;
-    }
-
-    &.no-padding {
-      padding: 0;
-    }
-
-    &.is-border {
-      border-top: 1px solid #e5e5e5;
-    }
-  }
-
-  @include e(link) {
-    color: #778087;
-  }
-
-  @include e(unstyled) {
-    margin: 0 0 10px;
-    list-style: none;
-
-    li {
-      line-height: 2em;
-
-      a {
-        display: inline-block;
-        max-width: 270px;
-        font-size: 14px;
-        line-height: 30px;
-        vertical-align: middle;
-
-        @include utils-ellipsis;
-      }
-    }
-  }
-}
-</style>

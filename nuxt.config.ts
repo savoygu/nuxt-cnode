@@ -19,4 +19,10 @@ export default defineNuxtConfig({
     viewer: true,
     exposeConfig: false,
   },
+
+  imports: {
+    dirs: [
+      './types',
+    ],
+  },
 })

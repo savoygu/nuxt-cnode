@@ -1,17 +1,14 @@
 <script setup lang="ts">
-import type { Reply, ResponseReply, Topic } from '~/types'
-import { TopicReply } from '#components'
-
-type CommentProps = {
+interface CommentProps {
   topic: Topic
 }
 
 // props
 const props = defineProps<CommentProps>()
-const { topic } = toRefs(props)
-
 // emits
-const emit = defineEmits<{ (e: 'reply', value: { reply: Reply | null; data: ResponseReply }): void }>()
+const emit = defineEmits<{ (e: 'reply', value: { reply: Reply | null, data: ResponseReply }): void }>()
+// props
+const { topic } = toRefs(props)
 
 // hooks
 const { $toast } = useNuxtApp()
@@ -20,22 +17,23 @@ const currentUser = computed(() => state.value.user)
 
 // reactive
 const replyRef = ref<InstanceType<typeof TopicReply>[]>()
-const showReplies = ref<boolean[]>(Array(topic.value.replies.length).fill(false))
+const showReplies = ref<boolean[]>(Array.from({ length: topic.value.replies.length }).fill(false))
 
 // methods
-const handleReplyStar = async (reply: Reply) => {
+async function handleReplyStar(reply: Reply) {
   const { data, error } = await starReply({ topicId: topic.value.id, replyId: reply.id })
   if (data.value?.success) {
     $toast.open({
       type: 'success',
-      message: data.value.action === 'up' ? '点赞成功' : '取消点赞成功'
+      message: data.value.action === 'up' ? '点赞成功' : '取消点赞成功',
     })
-  } else if (error.value) {
+  }
+  else if (error.value) {
     const { data } = error.value.data
     $toast.open({ type: 'error', message: data.error_msg })
   }
 }
-const onTopicReply = (reply: Reply, index: number) => {
+function onTopicReply(reply: Reply, index: number) {
   showReplies.value[index] = !showReplies.value[index]
 
   nextTick(() => {
@@ -57,26 +55,45 @@ const onTopicReply = (reply: Reply, index: number) => {
 <template>
   <Panel v-if="topic" :title="`${topic.reply_count} 回复`" :content-padding="false">
     <div class="comment__list">
-      <div v-for="(item, index) in topic.replies" :id="item.id" :key="item.id" class="comment__item">
-        <div class="comment__author">
-          <div class="comment__user">
+      <div
+        v-for="(item, index) in topic.replies"
+        :id="item.id"
+        :key="item.id"
+        class="p-[10px] border-t border-t-[#f0f0f0]"
+      >
+        <div class="flex justify-between">
+          <div class="flex">
             <a class="comment__avatar" :href="`/user/${item.author.loginname}`">
-              <img :src="item.author.avatar_url" :alt="item.author.loginname" />
+              <img
+                :src="item.author.avatar_url"
+                :alt="item.author.loginname"
+                class="w-[30px] h-[30px] rounded-[3px]"
+              >
             </a>
-            <a class="comment__name">{{ item.author.loginname }}</a>
-            <a class="comment__time" :href="`#${item.id}`">1楼•{{ timeAgo(item.create_at) }}</a>
+            <a class="ml-[10px] text-[#666] font-bold leading-[20px]">{{ item.author.loginname }}</a>
+            <a
+              class="ml-[4px] text-[#08c] text-[11px] leading-[20px] hover:text-[#005580] hover:underline"
+              :href="`#${item.id}`"
+            >
+              1楼•{{ timeAgo(item.create_at) }}
+            </a>
           </div>
           <div v-if="currentUser" class="comment__action">
-            <span :class="{ 'is-uped': item.is_uped }" @click="handleReplyStar(item)">
-              <i class="iconfont icon-star"></i>
-              <span class="comment__count">
+            <span
+              :class="{ 'opacity-100': item.is_uped }"
+              @click="handleReplyStar(item)"
+            >
+              <i class="iconfont icon-star cursor-pointer opacity-40 hover:opacity-100" />
+              <span class="text-gray-500 text-[11px]">
                 {{ item.ups.length }}
               </span>
             </span>
-            <span @click="onTopicReply(item, index)"><i class="iconfont icon-share"></i></span>
+            <span @click="onTopicReply(item, index)">
+              <i class="iconfont icon-share cursor-pointer opacity-40 hover:opacity-100" />
+            </span>
           </div>
         </div>
-        <div class="comment__content" v-html="item.content"></div>
+        <div class="pt-[5px]" v-html="item.content" />
         <TopicReply
           v-if="currentUser && showReplies[index]"
           ref="replyRef"
@@ -93,71 +110,3 @@ const onTopicReply = (reply: Reply, index: number) => {
     </div>
   </Panel>
 </template>
-
-<style lang="scss">
-@include b(comment) {
-  @include e(item) {
-    padding: 10px;
-    border-top: 1px solid #f0f0f0;
-  }
-
-  @include e(author) {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  @include e(user) {
-    display: flex;
-  }
-
-  @include e(avatar) {
-    img {
-      width: 30px;
-      height: 30px;
-      border-radius: 3px;
-    }
-  }
-
-  @include e(name) {
-    margin-left: 10px;
-    color: #666;
-    font-weight: 700;
-    line-height: 20px;
-  }
-
-  @include e(time) {
-    margin-left: 4px;
-    color: #08c;
-    font-size: 11px;
-    line-height: 20px;
-
-    @include hover {
-      color: #005580;
-      text-decoration: underline;
-    }
-  }
-
-  @include e(action) {
-    i {
-      cursor: pointer;
-      opacity: 0.4;
-    }
-
-    span {
-      @include is(uped) {
-        i {
-          opacity: 1;
-        }
-      }
-    }
-  }
-
-  @include e(count) {
-    color: gray;
-  }
-
-  @include e(content) {
-    padding-top: 5px;
-  }
-}
-</style>

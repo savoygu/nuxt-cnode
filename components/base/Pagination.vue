@@ -1,5 +1,5 @@
 <script setup lang="ts">
-type PaginationProps = {
+interface PaginationProps {
   currentPage: number
   totalPage: number
   pageRange?: number
@@ -9,7 +9,7 @@ type PaginationProps = {
 // props
 const props = withDefaults(defineProps<PaginationProps>(), {
   pageRange: 5,
-  edgePages: 1
+  edgePages: 1,
 })
 
 // emits
@@ -42,17 +42,20 @@ const pagers = computed(() => {
     for (let i = startPage + 1; i <= totalPage - edgePages; i++) {
       pagers.push(i)
     }
-  } else if (!showPrevMore && showNextMore) {
+  }
+  else if (!showPrevMore && showNextMore) {
     for (let i = edgePages + 1; i <= pagerCount - edgePages; i++) {
       pagers.push(i)
     }
-  } else if (showPrevMore && showNextMore) {
+  }
+  else if (showPrevMore && showNextMore) {
     const offset = Math.ceil(pagerCount / 2) - 1 - edgePages
     const endPage = pagerCount % 2 === 1 ? currentPage + offset : currentPage + offset + 1
     for (let i = currentPage - offset; i <= endPage; i++) {
       pagers.push(i)
     }
-  } else {
+  }
+  else {
     for (let i = edgePages + 1; i <= totalPage - edgePages; i++) {
       pagers.push(i)
     }
@@ -68,7 +71,8 @@ const leftPagers = computed(() => {
     for (let i = 1; i <= totalPage; i++) {
       pagers.push(i)
     }
-  } else {
+  }
+  else {
     for (let i = 1; i <= edgePages; i++) {
       pagers.push(i)
     }
@@ -82,7 +86,8 @@ const rightPagers = computed(() => {
     for (let i = edgePages + 1; i <= totalPage; i++) {
       pagers.push(i)
     }
-  } else {
+  }
+  else {
     for (let i = totalPage - edgePages + 1; i <= totalPage; i++) {
       pagers.push(i)
     }
@@ -91,19 +96,19 @@ const rightPagers = computed(() => {
 })
 
 // watch
-watch(showPrevMoreRef, val => {
+watch(showPrevMoreRef, (val) => {
   if (!val) {
     quickprevIconName.value = 'icon-more'
   }
 })
-watch(showNextMoreRef, val => {
+watch(showNextMoreRef, (val) => {
   if (!val) {
     quicknextIconName.value = 'icon-more'
   }
 })
 
 // methods
-const setCurrentPage = (pager: 'prev' | 'next' | 'prevMore' | 'nextMore' | number) => {
+function setCurrentPage(pager: 'prev' | 'next' | 'prevMore' | 'nextMore' | number) {
   const { currentPage, totalPage, pageRange } = props
   let page = currentPage
 
@@ -127,7 +132,8 @@ const setCurrentPage = (pager: 'prev' | 'next' | 'prevMore' | 'nextMore' | numbe
 
   if (page < 1) {
     page = 1
-  } else if (page > totalPage) {
+  }
+  else if (page > totalPage) {
     page = totalPage
   }
   if (page !== currentPage) {
@@ -137,8 +143,12 @@ const setCurrentPage = (pager: 'prev' | 'next' | 'prevMore' | 'nextMore' | numbe
 </script>
 
 <template>
-  <ul class="pagination">
-    <li class="pagination__item" :class="{ 'is-disabled': 1 === currentPage }" @click="setCurrentPage('prev')">
+  <ul class="inline-flex flex-wrap m-0 rounded-[4px]">
+    <li
+      class="flex w-[32px] h-[32px] items-center justify-center border border-l-0 border-[#ddd] bg-white text-[#778087] cursor-pointer text-[14px] text-center first:border-l first:border-l-[1px] first:rounded-l-[4px] last:rounded-r-[4px] hover:text-[#80bd01]"
+      :class="{ 'cursor-not-allowed opacity-75': 1 === currentPage }"
+      @click="setCurrentPage('prev')"
+    >
       <slot name="prev">
         <i class="iconfont icon-arrow_left" />
       </slot>
@@ -146,110 +156,56 @@ const setCurrentPage = (pager: 'prev' | 'next' | 'prevMore' | 'nextMore' | numbe
     <li
       v-for="pager in leftPagers"
       :key="pager"
-      class="pagination__item"
-      :class="{ 'is-active': pager === currentPage }"
+      class="flex w-[32px] h-[32px] items-center justify-center border border-l-0 border-[#ddd] bg-white text-[#778087] cursor-pointer text-[14px] text-center first:border-l first:border-l-[1px] first:rounded-l-[4px] last:rounded-r-[4px] hover:text-[#80bd01]"
+      :class="{ 'border border-[#80bd01] bg-[#80bd01] text-white cursor-default': pager === currentPage }"
       @click="setCurrentPage(pager)"
     >
       {{ pager }}
     </li>
     <li
       v-if="showPrevMoreRef"
-      class="pagination__item"
+      class="flex w-[32px] h-[32px] items-center justify-center border border-l-0 border-[#ddd] bg-white text-[#778087] cursor-pointer text-[14px] text-center first:border-l first:border-l-[1px] first:rounded-l-[4px] last:rounded-r-[4px] hover:text-[#80bd01]"
       @mouseenter="quickprevIconName = 'icon-db-arrow_left'"
       @mouseleave="quickprevIconName = 'icon-more'"
       @click="setCurrentPage('prevMore')"
     >
-      <i class="pagination__icon iconfont" :class="quickprevIconName" />
+      <i class="iconfont" :class="quickprevIconName" />
     </li>
     <li
       v-for="pager in pagers"
       :key="pager"
-      class="pagination__item"
-      :class="{ 'is-active': pager === currentPage }"
+      class="flex w-[32px] h-[32px] items-center justify-center border border-l-0 border-[#ddd] bg-white text-[#778087] cursor-pointer text-[14px] text-center first:border-l first:border-l-[1px] first:rounded-l-[4px] last:rounded-r-[4px] hover:text-[#80bd01]"
+      :class="{ 'border border-[#80bd01] bg-[#80bd01] text-white cursor-default': pager === currentPage }"
       @click="setCurrentPage(pager)"
     >
       {{ pager }}
     </li>
     <li
       v-if="showNextMoreRef"
-      class="pagination__item"
+      class="flex w-[32px] h-[32px] items-center justify-center border border-l-0 border-[#ddd] bg-white text-[#778087] cursor-pointer text-[14px] text-center first:border-l first:border-l-[1px] first:rounded-l-[4px] last:rounded-r-[4px] hover:text-[#80bd01]"
       @mouseenter="quicknextIconName = 'icon-db-arrow_right'"
       @mouseleave="quicknextIconName = 'icon-more'"
       @click="setCurrentPage('nextMore')"
     >
-      <i class="pagination__icon iconfont" :class="quicknextIconName" />
+      <i class="iconfont" :class="quicknextIconName" />
     </li>
     <li
       v-for="pager in rightPagers"
       :key="pager"
-      class="pagination__item"
-      :class="{ 'is-active': pager === currentPage }"
+      class="flex w-[32px] h-[32px] items-center justify-center border border-l-0 border-[#ddd] bg-white text-[#778087] cursor-pointer text-[14px] text-center first:border-l first:border-l-[1px] first:rounded-l-[4px] last:rounded-r-[4px] hover:text-[#80bd01]"
+      :class="{ 'border border-[#80bd01] bg-[#80bd01] text-white cursor-default': pager === currentPage }"
       @click="setCurrentPage(pager)"
     >
       {{ pager }}
     </li>
-    <li class="pagination__item" :class="{ 'is-disabled': totalPage === currentPage }" @click="setCurrentPage('next')">
+    <li
+      class="flex w-[32px] h-[32px] items-center justify-center border border-l-0 border-[#ddd] bg-white text-[#778087] cursor-pointer text-[14px] text-center first:border-l first:border-l-[1px] first:rounded-l-[4px] last:rounded-r-[4px] hover:text-[#80bd01]"
+      :class="{ 'cursor-not-allowed opacity-75': totalPage === currentPage }"
+      @click="setCurrentPage('next')"
+    >
       <slot name="next">
         <i class="iconfont icon-arrow_right" />
       </slot>
     </li>
   </ul>
 </template>
-
-<style lang="scss">
-@include b(pagination) {
-  display: inline-flex;
-  flex-wrap: wrap;
-  margin: 0;
-  border-radius: 4px;
-
-  @include e(item) {
-    display: flex;
-    width: 32px;
-    height: 32px;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #ddd;
-    border-left-width: 0;
-    background-color: white;
-    color: #778087;
-    cursor: pointer;
-    font-size: 14px;
-    text-align: center;
-
-    &:first-child {
-      border-left-width: 1px;
-      border-bottom-left-radius: 4px;
-      border-top-left-radius: 4px;
-    }
-
-    &:last-child {
-      border-bottom-right-radius: 4px;
-      border-top-right-radius: 4px;
-    }
-
-    &:hover {
-      color: #80bd01;
-    }
-
-    @include is(active) {
-      border: 1px solid #80bd01;
-      background-color: #80bd01;
-      color: white;
-      cursor: default;
-    }
-
-    @include is(disabled) {
-      cursor: not-allowed;
-      opacity: 0.75;
-    }
-  }
-
-  @include e(icon) {
-    &.icon-db-arrow_right,
-    &.icon-db-arrow_left {
-      color: #80bd01;
-    }
-  }
-}
-</style>

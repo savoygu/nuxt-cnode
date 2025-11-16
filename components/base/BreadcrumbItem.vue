@@ -1,20 +1,7 @@
-<template>
-  <div class="breadcrumb__item">
-    <span class="breadcrumb__inner">
-      <NuxtLink v-if="to" :to="to" :replace="replace">
-        <slot></slot>
-      </NuxtLink>
-      <slot v-else></slot>
-    </span>
-    <i v-if="separatorClass" class="breadcrumb__separator" :class="separatorClass"></i>
-    <span class="breadcrumb__separator" :class="separatorClass">{{ separator }}</span>
-  </div>
-</template>
-
 <script setup lang="ts">
-import { RouteLocationRaw } from 'vue-router'
+import type { RouteLocationRaw } from 'vue-router'
 
-type BreadcrumbItemProps = {
+interface BreadcrumbItemProps {
   to?: string | RouteLocationRaw
   replace?: boolean
 }
@@ -22,9 +9,36 @@ type BreadcrumbItemProps = {
 // props
 const { to, replace } = withDefaults(defineProps<BreadcrumbItemProps>(), {
   to: '',
-  replace: false
+  replace: false,
 })
 
 const breadcrumbContext = inject('BreadcrumbContext', undefined)!
 const { separator, separatorClass } = toRefs(breadcrumbContext)
 </script>
+
+<template>
+  <div>
+    <span>
+      <NuxtLink
+        v-if="to"
+        :to="to"
+        :replace="replace"
+        class="text-[#80bd01] hover:underline"
+      >
+        <slot />
+      </NuxtLink>
+      <slot v-else />
+    </span>
+    <i
+      v-if="separatorClass"
+      class="mx-[5px] text-[#ccc]"
+      :class="separatorClass"
+    />
+    <span
+      class="mx-[5px] text-[#ccc]"
+      :class="separatorClass"
+    >
+      {{ separator }}
+    </span>
+  </div>
+</template>

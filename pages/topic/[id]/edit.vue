@@ -82,9 +82,9 @@ async function handleTopicSubmit() {
           <BaseBreadcrumbItem>编辑话题</BaseBreadcrumbItem>
         </BaseBreadcrumb>
       </template>
-      <div class="topic-create">
-        <BaseAlert v-model="alert.visible" class="topic-create__alert" :title="alert.title" />
-        <div class="topic-create__plate">
+      <div>
+        <BaseAlert v-model="alert.visible" :title="alert.title" />
+        <div class="mb-[20px]">
           <span>选择板块：</span>
           <select id="plate" v-model="form.tab" name="plate">
             <option disabled value="">
@@ -104,20 +104,25 @@ async function handleTopicSubmit() {
             </option>
           </select>
         </div>
-        <div class="topic-create__title">
-          <input v-model="form.title" type="text" placeholder="标题字数 10 字以上">
+        <div class="mb-[20px]">
+          <input
+            v-model="form.title"
+            type="text"
+            class="w-full p-[8px] border border-[#ccc] rounded-[4px]"
+            placeholder="标题字数 10 字以上"
+          >
         </div>
-        <div class="topic-create__content">
+        <div class="mb-[20px]">
           <div id="editormd">
             <textarea
               ref="editorRef"
-              class="topic-create__editor"
+              class="w-full p-[8px] border border-[#ccc] rounded-[4px] min-h-[300px]"
               placeholder="文章支持 Markdown 语法, 请注意标记代码"
             >{{ topic?.content ?? '' }}</textarea>
           </div>
         </div>
-        <div class="topic-create__submit">
-          <button :disabled="loading" class="button--blue" @click="handleTopicSubmit">
+        <div>
+          <button :disabled="loading" class="button-blue" @click="handleTopicSubmit">
             {{ loading ? '提交中..' : '提交' }}
           </button>
         </div>

@@ -64,13 +64,13 @@ function handlePageChange(page: number) {
           v-for="item in validTabs"
           :key="item"
           :to="{ query: { tab: item } }"
-          class="home__tab"
-          :class="{ 'is-current': currentTab === item }"
+          class="mx-[10px] text-[#80bd01] hover:no-underline"
+          :class="{ 'p-[3px_4px] bg-[#80bd01] rounded-[3px] text-white': currentTab === item }"
         >
           {{ tabsInfo[item].name }}
         </NuxtLink>
       </template>
-      <div v-if="!pending" class="home__topic">
+      <div v-if="!pending" class="bg-white rounded-b-[3px]">
         <template v-if="topics && topics.length > 0">
           <TopicList :topics="topics" />
           <BasePagination
@@ -102,57 +102,28 @@ function handlePageChange(page: number) {
   </TheMain>
 </template>
 
-<style lang="scss">
-@include b(home) {
-  @include e(tab) {
-    margin: 0 10px;
-    color: #80bd01;
-
-    &:hover,
-    &:focus {
-      text-decoration: none;
-    }
-
-    @include is(current) {
-      padding: 3px 4px;
-      background-color: #80bd01;
-      border-radius: 3px;
-      color: #fff;
-    }
-  }
-
-  @include e(topic) {
-    background-color: #fff;
-    border-radius: 0 0 3px 3px;
-  }
-}
-
-@media screen and (max-width: $breakpoint-lg) {
-  @include b(main) {
+<style>
+@media screen and (max-width: 992px) {
+  .main {
     display: block;
     width: 100%;
     min-width: 0;
     margin: 20px auto;
-
-    @include e(content) {
-      margin-right: 0;
-    }
-
-    @include e(panel) {
-      margin: 0 5px;
-    }
-
-    @include e(sidebar) {
-      display: none;
-    }
+  }
+  .main__content {
+    margin-right: 0;
+  }
+  .main__panel {
+    margin: 0 5px;
+  }
+  .main__sidebar {
+    display: none;
   }
 }
 
-@media screen and (max-width: $breakpoint-sm) {
-  @include b(home) {
-    @include e(tab) {
-      margin: 0 8px;
-    }
+@media screen and (max-width: 420px) {
+  .home__tab {
+    margin: 0 8px;
   }
 }
 </style>

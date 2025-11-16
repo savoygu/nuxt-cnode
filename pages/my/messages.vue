@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  middleware: 'auth'
+  middleware: 'auth',
 })
 
 // hooks
@@ -10,7 +10,7 @@ const user = computed(() => state.value.users[currentUser.value?.loginname ?? ''
 
 const [{ data: message }] = await Promise.all([
   fetchMessages(),
-  currentUser.value && fetchUser(currentUser.value.loginname)
+  currentUser.value && fetchUser(currentUser.value.loginname),
 ])
 </script>
 
@@ -19,23 +19,29 @@ const [{ data: message }] = await Promise.all([
     <Panel :content-padding="false">
       <template #header>
         <BaseBreadcrumb>
-          <BaseBreadcrumbItem to="/">主页</BaseBreadcrumbItem>
+          <BaseBreadcrumbItem to="/">
+            主页
+          </BaseBreadcrumbItem>
           <BaseBreadcrumbItem>新消息</BaseBreadcrumbItem>
         </BaseBreadcrumb>
       </template>
-      <div class="messages">
+      <div>
         <template v-if="message?.hasnot_read_messages.length">
-          <Message v-for="item in message.hasnot_read_messages" :key="item.id" :message="item"></Message>
+          <Message v-for="item in message.hasnot_read_messages" :key="item.id" :message="item" />
         </template>
-        <p v-else class="messages__none">无消息</p>
+        <p v-else class="p-[10px]">
+          无消息
+        </p>
       </div>
     </Panel>
     <Panel title="过往消息" :content-padding="false">
-      <div class="messages__beyond">
+      <div>
         <template v-if="message?.has_read_messages.length">
-          <Message v-for="item in message.has_read_messages" :key="item.id" :message="item"></Message>
+          <Message v-for="item in message.has_read_messages" :key="item.id" :message="item" />
         </template>
-        <p v-else class="messages__none">无消息</p>
+        <p v-else class="p-[10px]">
+          无消息
+        </p>
       </div>
     </Panel>
     <template #sidebar>
@@ -46,15 +52,3 @@ const [{ data: message }] = await Promise.all([
     </template>
   </TheMain>
 </template>
-
-<style lang="scss">
-@include b(messages) {
-  @include e(none) {
-    padding: 10px;
-  }
-
-  @include e(beyond) {
-    // body
-  }
-}
-</style>
