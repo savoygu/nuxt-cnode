@@ -1,3 +1,5 @@
+import type { ToastPluginApi } from 'vue-toast-notification'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: ['@nuxt/eslint', '@nuxtjs/stylelint-module', '@nuxtjs/tailwindcss', '@element-plus/nuxt'],
@@ -26,3 +28,9 @@ export default defineNuxtConfig({
     ],
   },
 })
+
+declare module '#app' {
+  interface NuxtApp {
+    $toast: ToastPluginApi
+  }
+}
