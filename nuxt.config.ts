@@ -8,6 +8,12 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2025-08-17',
 
+  runtimeConfig: {
+    public: {
+      cnodeApiBaseUrl: import.meta.env.NUXT_PUBLIC_CNODEAPI_BASE_URL || 'https://cnodejs.org',
+    },
+  },
+
   eslint: {
     config: {
       standalone: false,
@@ -25,6 +31,7 @@ export default defineNuxtConfig({
   imports: {
     dirs: [
       './types',
+      './repository/modules',
     ],
   },
 })
