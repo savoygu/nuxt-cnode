@@ -19,7 +19,7 @@ export const INITIAL_USER = {
 export function useStore() {
   return useState<RootState>('main', () => ({
     topics: {},
-    tabs: Object.fromEntries(validTabs.map(tab => [tab, {}])),
+    tabs: Object.fromEntries(TAB_KEYS.map(tab => [tab, {}])),
     isLogin: false,
     user: undefined, // INITIAL_USER
     users: {},

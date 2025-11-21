@@ -2,9 +2,19 @@ import type { ToastPluginApi } from 'vue-toast-notification'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', '@nuxtjs/stylelint-module', '@nuxtjs/tailwindcss', '@element-plus/nuxt'],
+  modules: [
+    '@nuxt/eslint',
+    '@nuxtjs/stylelint-module',
+    '@nuxtjs/tailwindcss',
+    '@element-plus/nuxt',
+    './modules/trace-id',
+  ],
 
-  css: ['vue-toast-notification/dist/theme-default.css', '~/assets/css/fonts.css', '~/assets/css/element.css'],
+  css: [
+    'vue-toast-notification/dist/theme-default.css',
+    '~/assets/css/fonts.css',
+    '~/assets/css/element.css',
+  ],
 
   compatibilityDate: '2025-08-17',
 

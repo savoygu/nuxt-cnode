@@ -1,73 +1,51 @@
 <script setup lang="ts">
-definePageMeta({
-  middleware: 'tab',
-})
-
-// hooks
-const state = useStore()
+const { $api } = useNuxtApp()
 const route = useRoute()
-const tab = computed(() => route.query.tab as Tab)
-const page = computed(() => route.query.page as string)
-const currentUser = computed(() => state.value.user)
-const user = computed(() => state.value.users[currentUser.value?.loginname ?? ''])
+const userState = useUserState()
+const logger = useLogger('[pages:index]')
 
-// reactive
-const currentTab = ref(tab.value || 'all')
-const currentPage = ref(Number(page.value) || 1)
+const user = computed(() => userState.value.user)
 
-// fetch
-const [{ data: topics, pending }] = await Promise.all([
-  fetchTopics({
-    currentTab,
-    currentPage,
-  }),
-  currentUser.value && fetchUser(currentUser.value.loginname),
-])
+const currentTab = computed<string>(() => route.query.tab as string || 'all')
+const currentPage = computed<number>(() => Number(route.query.page) || 1)
 
-// watch
-watch(tab, (newTab) => {
-  currentTab.value = newTab || 'all'
-  currentPage.value = 1
-})
-watch(
-  tab,
-  (newTab) => {
-    useHead({
-      title: newTab !== 'all' ? tabsInfo[newTab ?? 'all'].title : '',
-    })
+const { data: topics, pending, fetch } = useRefreshAsyncData({
+  fetcher: () => $api.cnode.topics({ tab: currentTab.value, page: currentPage.value, limit: 20, mdrender: 'false' }),
+  processor(data) {
+    return data ?? []
   },
-  {
-    immediate: true,
+  logger,
+  logContext: 'topics',
+  fetchOptions: {
+    watch: [currentPage, currentTab],
   },
-)
-watch(page, (newPage) => {
-  currentPage.value = Number(newPage) || 1
-  window.scrollTo(0, 0)
 })
 
-// methods
-function handlePageChange(page: number) {
-  navigateTo({
-    query: {
-      tab: currentTab.value,
-      page,
-    },
-  })
+try {
+  await fetch()
+}
+catch (err) {
+  logger.error({ err }, 'get topics error')
+}
+
+async function handlePageChange(page: number) {
+  await navigateTo({ path: route.path, query: { ...route.query, page } })
+  window.scrollTo({ top: 0 })
 }
 </script>
 
 <template>
-  <TheMain>
+  <NuxtLayout>
     <Panel :content-padding="false">
       <template #header>
         <NuxtLink
-          v-for="item in validTabs"
-          :key="item"
-          :to="{ query: { tab: item } }"
+          v-for="(value, key) in TABS"
+          :key="key"
+          :to="{ path: '/', query: { tab: key } }"
           class="mx-[10px] text-[#80bd01] hover:no-underline"
-          :class="{ 'p-[3px_4px] bg-[#80bd01] rounded-[3px] text-white': currentTab === item }"
+          :class="{ 'p-[3px_4px] bg-[#80bd01] rounded-[3px] text-white': currentTab === key }"
         >
-          {{ tabsInfo[item].name }}
+          {{ value.name }}
         </NuxtLink>
       </template>
       <div v-if="!pending" class="bg-white rounded-b-[3px]">
@@ -75,7 +53,7 @@ function handlePageChange(page: number) {
           <TopicList :topics="topics" />
           <BasePagination
             class="main__pagination"
-            :total-page="tabsInfo[currentTab].total"
+            :total-page="TAB_MAP[currentTab]?.totalPage ?? 0"
             :current-page="currentPage"
             @change="handlePageChange"
           />
@@ -99,7 +77,7 @@ function handlePageChange(page: number) {
       <SidebarFriendlyCommunity />
       <SidebarClientQRCode />
     </template>
-  </TheMain>
+  </NuxtLayout>
 </template>
 
 <style>

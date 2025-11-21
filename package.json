@@ -27,6 +27,8 @@
     "nitropack": "^2.12.9",
     "nuxt": "^4.0.3",
     "ofetch": "^1.5.1",
+    "pino": "^10.1.0",
+    "pino-pretty": "^13.1.2",
     "stylelint": "^16.24.0",
     "stylelint-config-recommended-vue": "^1.6.1",
     "tailwindcss": "^3.4.17",

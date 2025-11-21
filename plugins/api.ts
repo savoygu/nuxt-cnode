@@ -53,12 +53,12 @@ export default defineNuxtPlugin({
     }
 
     const sharedFetchOptions: FetchOptions = {
-      ...(import.meta.server
-        ? { headers: useRequestHeaders(['cookie']) }
-        : {
-            headers: useRequestHeaders(['cookie']),
-            credentials: 'include',
-          }),
+      // ...(import.meta.server
+      //   ? { headers: useRequestHeaders(['cookie']) }
+      //   : {
+      //       headers: useRequestHeaders(['cookie']),
+      //       credentials: 'include',
+      //     }),
       onResponse({ response }) {
         if (response._data && typeof response._data === 'object') {
           response._data = normalizeApiResponse(response._data)

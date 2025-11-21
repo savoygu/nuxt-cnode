@@ -22,7 +22,7 @@ const { item } = defineProps<{
       class="p-[2px_4px] mr-[4px] bg-[#e5e5e5] rounded-[3px] text-[#999] text-[12px] leading-[14px]"
       :class="{ 'bg-[#80bd01] text-white': item.top || item.good }"
     >
-      {{ item.top ? '置顶' : item.good ? '精华' : (item.tab && tabsInfo[item.tab].name) || item.tab }}
+      {{ item.top ? '置顶' : item.good ? '精华' : (item.tab && TAB_MAP[item.tab]?.name) || item.tab }}
     </span>
     <a
       class="max-w-[70%] flex-1 text-[#333] text-[16px] leading-[30px] overflow-hidden text-ellipsis whitespace-nowrap visited:text-[#888]"

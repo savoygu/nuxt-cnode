@@ -1,7 +1,7 @@
 import type { Response, Topic } from '~/types'
 
 import { baseURL } from '~/server/constants'
-import { validTabs } from '~/utils/tab'
+import { TAB_KEYS } from '~/utils/constants'
 
 export default defineEventHandler((event) => {
   const query = getQuery(event)
@@ -10,10 +10,10 @@ export default defineEventHandler((event) => {
     page: string
   }
 
-  if (!validTabs.includes(tab) || String(Number(page)) !== page) {
+  if (!TAB_KEYS.includes(tab) || String(Number(page)) !== page) {
     throw createError({
       statusCode: 422,
-      statusMessage: `Must provide one of ${validTabs.join(', ')} and a valid page number.`,
+      statusMessage: `Must provide one of ${TAB_KEYS.join(', ')} and a valid page number.`,
     })
   }
 

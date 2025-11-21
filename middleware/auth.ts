@@ -1,8 +1,11 @@
-export default defineNuxtRouteMiddleware(async from => {
-  const user = await useUser()
+import { isUndefined } from 'lodash-es'
 
-  // eslint-disable-next-line eqeqeq
-  if (user == null && user == undefined) {
-    return navigateTo(`/signin?fallback=${encodeURIComponent(from.fullPath)}`)
+export default defineNuxtRouteMiddleware(async (from, to) => {
+  const user = await useUser()
+  if (isUndefined(user) && from.path !== '/signin') {
+    return navigateTo(`/signin?fallback=${encodeURIComponent(to.fullPath)}`)
+  }
+  else if (!isUndefined(user) && to.path === '/signin') {
+    return navigateTo('/')
   }
 })

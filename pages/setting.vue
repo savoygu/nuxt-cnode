@@ -4,7 +4,7 @@ definePageMeta({
 })
 
 // hooks
-const accesstoken = useToken()
+const accesstoken = useTokenCookie()
 </script>
 
 <template>

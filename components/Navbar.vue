@@ -1,15 +1,18 @@
 <script setup lang="ts">
-// hooks
-const state = useStore()
-const user = computed(() => state.value.user)
-let messageCount = 0
-if (user.value) {
-  messageCount = (await fetchMessageCount()).data.value ?? 0
+const { $api } = useNuxtApp()
+const tokenCookie = useTokenCookie()
+const userState = useUserState()
+const user = computed(() => userState.value.user)
+
+const messageCount = shallowRef(0)
+
+if (tokenCookie.value) {
+  const { data } = await useAsyncData(() => $api.cnode.messageCount({ accesstoken: tokenCookie.value! }))
+  messageCount.value = data.value?.data ?? 0
 }
 
-// methods
-function logout() {
-  removeAccesstoken()
+function handleLogout() {
+  useUserLogout()
   return navigateTo('/')
 }
 </script>
@@ -53,7 +56,7 @@ function logout() {
           <span class="no-ssr">
             <template v-if="user">
               <NuxtLink class="inline-block p-[10px_15px] text-[#ccc] cursor-pointer leading-[20px] hover:text-white hover:no-underline" to="/setting">设置</NuxtLink>
-              <span class="inline-block p-[10px_15px] text-[#ccc] cursor-pointer leading-[20px] hover:text-white" @click="logout">退出</span>
+              <span class="inline-block p-[10px_15px] text-[#ccc] cursor-pointer leading-[20px] hover:text-white" @click="handleLogout()">退出</span>
             </template>
             <template v-else>
               <NuxtLink class="inline-block p-[10px_15px] text-[#ccc] cursor-pointer leading-[20px] hover:text-white hover:no-underline" to="/signin">登录</NuxtLink>

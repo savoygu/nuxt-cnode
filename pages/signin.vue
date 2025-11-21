@@ -1,18 +1,16 @@
 <script setup lang="ts">
 definePageMeta({
-  middleware: 'guest',
+  middleware: 'auth',
 })
 
-// hooks
 const route = useRoute()
 
-// reactive
-const accesstoken = ref('')
+const accesstoken = shallowRef('')
 const alert = reactive({
   visible: false,
   title: '',
 })
-const loading = ref(false)
+const loading = shallowRef(false)
 
 function setAlert(title: string, visible: boolean) {
   alert.title = title
