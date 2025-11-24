@@ -12,9 +12,9 @@
     font-family: 'Helvetica Neue', 'Luxi Sans', 'DejaVu Sans', Tahoma, 'Hiragino Sans GB', STHeiti, sans-serif;
   }
 
-  html, body, #__nuxt {
+  /* html, body, #__nuxt {
     @apply h-full;
-  }
+  } */
 
   *, *::before, *::after {
     @apply box-border m-0;

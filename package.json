@@ -20,6 +20,8 @@
     "@nuxtjs/stylelint-module": "^5.2.1",
     "@nuxtjs/tailwindcss": "6.14.0",
     "@types/codemirror": "^5.60.16",
+    "@vueuse/core": "^14.0.0",
+    "@vueuse/nuxt": "^14.0.0",
     "element-plus": "^2.11.2",
     "eslint": "^9.33.0",
     "eslint-plugin-format": "^1.0.1",

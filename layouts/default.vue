@@ -1,12 +1,12 @@
 <template>
   <div class="flex min-h-full flex-col">
     <Navbar />
-    <div class="flex">
-      <div class="w-[290px] mr-[20px]">
-        <slot name="sidebar" />
-      </div>
-      <div class="flex-1">
+    <div class="grid grid-cols-[1fr_290px] gap-[15px] w-[90%] max-w-[1400px] min-w-[960px] my-[15px] mx-auto">
+      <div class="content">
         <slot />
+      </div>
+      <div class="sidebar">
+        <slot name="sidebar" />
       </div>
     </div>
     <TheFooter />

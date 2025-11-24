@@ -83,3 +83,119 @@ export function useRefreshAsyncData<T>({
     lazyFetch,
   }
 }
+
+export interface UsePaginateAsyncDataOptions<T> {
+  fetcher: (page: number, limit: number) => Promise<APIResponse<T[]>>
+  processor: (data?: T[]) => T[]
+  initialValue?: T[]
+  logger?: Logger
+  logContext?: string
+  uniqueKey?: string
+  fetchOptions?: AsyncDataOptions<APIResponse<T[]>>
+  limit?: number
+  enableLimitCheck?: boolean
+  scrollTarget?: Ref<HTMLElement | null | undefined> | HTMLElement | null // 滚动监听的目标元素
+  distance?: number // 距离底部多少像素时触发加载
+}
+
+export function usePaginateAsyncData<T>({
+  fetcher,
+  processor,
+  initialValue,
+  logger,
+  logContext,
+  uniqueKey: providedKey,
+  fetchOptions,
+  limit = 40,
+  enableLimitCheck = true,
+  scrollTarget,
+  distance = 100,
+}: UsePaginateAsyncDataOptions<T>) {
+  const instanceId = useId()
+  const uniqueKey = providedKey ?? `__use-paginate-async-data-${instanceId}__`
+
+  const dataState = ref<APIAsyncData<T[]> | null>(null)
+  const page = ref(1)
+  const list = ref<T[]>(initialValue ?? processor()) as Ref<T[]>
+  const loading = ref(false) // 用于客户端加载“更多”的状态
+  const finished = ref(false)
+
+  watch(
+    () => dataState.value?.data?.data,
+    (newData) => {
+      const processedData = list.value = processor(newData)
+      if (!processedData || !processedData.length || (enableLimitCheck && processedData.length < limit)) {
+        finished.value = true
+      }
+      if (logger && logContext) {
+        logger.info({ page: 1, data: toRaw(dataState.value?.data), render: toRaw(processedData) }, `watch ${logContext} change`)
+      }
+    },
+  )
+
+  async function fetch() {
+    dataState.value = await useAsyncData(uniqueKey, () => {
+      page.value = 1
+      finished.value = false
+      return fetcher(1, limit)
+    }, fetchOptions)
+    if (!dataState.value?.pending) {
+      const data = dataState.value?.data
+      const processedData = list.value = processor(data?.data)
+      if (!processedData || !processedData.length || (enableLimitCheck && processedData.length < limit)) {
+        finished.value = true
+      }
+      if (logger && logContext) {
+        logger.info({ page: 1, data: toRaw(data), render: toRaw(processedData) }, `get ${logContext}`)
+      }
+    }
+  }
+
+  async function loadMore() {
+    if (loading.value || finished.value || dataState.value?.pending) {
+      return
+    }
+
+    loading.value = true
+    page.value++
+
+    try {
+      const { data } = await fetcher(page.value, limit)
+      const processedData = processor(data)
+      if (processedData && processedData.length > 0) {
+        list.value.push(...processedData)
+        if (enableLimitCheck && processedData.length < limit) {
+          finished.value = true
+        }
+      }
+      else {
+        finished.value = true
+      }
+      if (logger && logContext) {
+        logger.info({ page: page.value, data: toRaw(data), render: toRaw(processedData) }, `load more ${logContext}`)
+      }
+    }
+    catch (err) {
+      page.value--
+      if (logger && logContext) {
+        logger.error({ err }, `load more ${logContext} error`)
+      }
+    }
+    finally {
+      loading.value = false
+    }
+  }
+
+  useInfiniteScroll(scrollTarget || window, loadMore, { distance })
+
+  return {
+    dataState,
+    initialLoading: computed(() => dataState.value?.pending),
+    page,
+    list,
+    loading,
+    finished,
+    fetch,
+    loadMore,
+  }
+}

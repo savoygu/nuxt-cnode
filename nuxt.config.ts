@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     '@nuxtjs/stylelint-module',
     '@nuxtjs/tailwindcss',
     '@element-plus/nuxt',
+    '@vueuse/nuxt',
     './modules/trace-id',
   ],
 

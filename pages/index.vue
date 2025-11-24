@@ -5,32 +5,27 @@ const userState = useUserState()
 const logger = useLogger('[pages:index]')
 
 const user = computed(() => userState.value.user)
-
 const currentTab = computed<string>(() => route.query.tab as string || 'all')
-const currentPage = computed<number>(() => Number(route.query.page) || 1)
 
-const { data: topics, pending, fetch } = useRefreshAsyncData({
-  fetcher: () => $api.cnode.topics({ tab: currentTab.value, page: currentPage.value, limit: 20, mdrender: 'false' }),
+const { list: topics, initialLoading: pending, fetch: fetchTopics } = usePaginateAsyncData({
+  fetcher: (page, limit) => $api.cnode.topics({ tab: currentTab.value, page, limit, mdrender: 'false' }),
   processor(data) {
     return data ?? []
   },
   logger,
   logContext: 'topics',
   fetchOptions: {
-    watch: [currentPage, currentTab],
+    watch: [currentTab],
   },
+  limit: 40,
+  distance: 200,
 })
 
 try {
-  await fetch()
+  await fetchTopics()
 }
 catch (err) {
   logger.error({ err }, 'get topics error')
-}
-
-async function handlePageChange(page: number) {
-  await navigateTo({ path: route.path, query: { ...route.query, page } })
-  window.scrollTo({ top: 0 })
 }
 </script>
 
@@ -51,12 +46,12 @@ async function handlePageChange(page: number) {
       <div v-if="!pending" class="bg-white rounded-b-[3px]">
         <template v-if="topics && topics.length > 0">
           <TopicList :topics="topics" />
-          <BasePagination
+          <!-- <BasePagination
             class="main__pagination"
             :total-page="TAB_MAP[currentTab]?.totalPage ?? 0"
             :current-page="currentPage"
             @change="handlePageChange"
-          />
+          /> -->
         </template>
         <div v-else class="main__empty">
           暂无数据
