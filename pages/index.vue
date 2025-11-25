@@ -7,7 +7,7 @@ const logger = useLogger('[pages:index]')
 const user = computed(() => userState.value.user)
 const currentTab = computed<string>(() => route.query.tab as string || 'all')
 
-const { list: topics, initialLoading: pending, fetch: fetchTopics } = usePaginateAsyncData({
+const { list: topics, initialLoading: pending, fetch: fetchTopics } = usePaginatedList({
   fetcher: (page, limit) => $api.cnode.topics({ tab: currentTab.value, page, limit, mdrender: 'false' }),
   processor(data) {
     return data ?? []

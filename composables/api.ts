@@ -9,7 +9,7 @@ export interface APIResponse<T = any> {
 
 export type APIAsyncData<T> = Awaited<AsyncData<APIResponse<T> | undefined, NuxtError<unknown> | undefined>>
 
-interface UseRefreshAsyncDataOptions<T> {
+interface UseAPIDataOptions<T> {
   fetcher: () => Promise<APIResponse<T>>
   processor: (data?: T) => T
   initialValue?: T
@@ -19,7 +19,7 @@ interface UseRefreshAsyncDataOptions<T> {
   fetchOptions?: AsyncDataOptions<APIResponse<T>>
 }
 
-export function useRefreshAsyncData<T>({
+export function useAPIData<T>({
   fetcher,
   processor,
   initialValue,
@@ -27,13 +27,13 @@ export function useRefreshAsyncData<T>({
   logContext,
   uniqueKey: providedKey,
   fetchOptions,
-}: UseRefreshAsyncDataOptions<T>) {
+}: UseAPIDataOptions<T>) {
   // 使用 useId() 来生成在 SSR 环境下安全的唯一 ID
   const instanceId = useId()
 
   // 如果提供了 uniqueKey，则使用它；否则，使用 useId() 生成的 ID
-  const uniqueKey = providedKey ?? `__use-refresh-async-data-${instanceId}__`
-  const uniqueLazyKey = providedKey ?? `__use-refresh-lazy-async-data-${instanceId}__`
+  const uniqueKey = providedKey ?? `__use-api-data-${instanceId}__`
+  const uniqueLazyKey = providedKey ?? `__use-lazy-api-data-${instanceId}__`
 
   // useAsyncData 的返回状态
   const dataState = ref<APIAsyncData<T> | null>(null)
@@ -84,7 +84,7 @@ export function useRefreshAsyncData<T>({
   }
 }
 
-export interface UsePaginateAsyncDataOptions<T> {
+export interface UsePaginatedListOptions<T> {
   fetcher: (page: number, limit: number) => Promise<APIResponse<T[]>>
   processor: (data?: T[]) => T[]
   initialValue?: T[]
@@ -98,7 +98,7 @@ export interface UsePaginateAsyncDataOptions<T> {
   distance?: number // 距离底部多少像素时触发加载
 }
 
-export function usePaginateAsyncData<T>({
+export function usePaginatedList<T>({
   fetcher,
   processor,
   initialValue,
@@ -110,9 +110,9 @@ export function usePaginateAsyncData<T>({
   enableLimitCheck = true,
   scrollTarget,
   distance = 100,
-}: UsePaginateAsyncDataOptions<T>) {
+}: UsePaginatedListOptions<T>) {
   const instanceId = useId()
-  const uniqueKey = providedKey ?? `__use-paginate-async-data-${instanceId}__`
+  const uniqueKey = providedKey ?? `__use-paginated-list-${instanceId}__`
 
   const dataState = ref<APIAsyncData<T[]> | null>(null)
   const page = ref(1)
