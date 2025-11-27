@@ -6,6 +6,10 @@ export default withNuxt(
   antfu({
     formatters: {
       css: 'prettier',
+      html: 'prettier',
+      prettierOptions: {
+        plugins: ['prettier-plugin-tailwindcss'],
+      },
     },
   }),
 )

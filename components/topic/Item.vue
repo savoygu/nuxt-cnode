@@ -5,7 +5,7 @@ const { item } = defineProps<{
 </script>
 
 <template>
-  <li class="relative flex items-center p-[10px] border-t border-t-[#f0f0f0] bg-white text-[14px] first:border-t-0">
+  <div class="grid          items-center relative p-2.5 border-t border-t-[#f0f0f0] bg-white text-[14px] first:border-t-0">
     <NuxtLink class="topic-item__author" :to="`/user/${item.author?.loginname}`">
       <img
         class="block w-[30px] h-[30px] rounded-[3px]"
@@ -37,7 +37,7 @@ const { item } = defineProps<{
     >
       <span class="min-w-[50px] whitespace-nowrap">{{ timeAgo(item.last_reply_at) }}</span>
     </a>
-  </li>
+  </div>
 </template>
 
 <style>

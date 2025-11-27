@@ -1,14 +1,11 @@
 <script setup lang="ts">
-interface TopicProps {
+defineProps<{
   topics: Topic[]
-}
-
-const props = defineProps<TopicProps>()
-const { topics } = toRefs(props)
+}>()
 </script>
 
 <template>
-  <ul class="m-0">
+  <div class="m-0">
     <TopicItem v-for="topic in topics" :key="topic.id" :item="topic" />
-  </ul>
+  </div>
 </template>
