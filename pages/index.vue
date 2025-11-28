@@ -38,12 +38,12 @@ catch (err) {
           :key="key"
           :to="{ path: '/', query: { tab: key } }"
           class="mx-[10px] text-[#80bd01] hover:no-underline"
-          :class="{ 'p-[3px_4px] bg-[#80bd01] rounded-[3px] text-white': currentTab === key }"
+          :class="{ 'rounded-[3px] bg-[#80bd01] p-[3px_4px] text-white': currentTab === key }"
         >
           {{ value.name }}
         </NuxtLink>
       </template>
-      <div v-if="!pending" class="bg-white rounded-b-[3px]">
+      <div v-if="!pending" class="rounded-b-[3px] bg-white">
         <template v-if="topics && topics.length > 0">
           <TopicList :topics="topics" />
           <!-- <BasePagination

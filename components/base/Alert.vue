@@ -25,7 +25,7 @@ function onClose() {
 <template>
   <div
     v-show="visible"
-    class="relative p-[8px_35px_8px_14px] border border-[#fbeed5] leading-[2em] text-shadow-[0_1px_0_rgb(255_255_255_/_50%)]"
+    class="text-shadow-[0_1px_0_rgb(255_255_255_/_50%)] relative border border-[#fbeed5] p-[8px_35px_8px_14px] leading-[2em]"
     :class="{
       'border-[#eed3d7] bg-[#f2dede] text-[#b94a48]': type === 'danger',
       'border-[#bce8f1] bg-[#d9edf7] text-[#3a87ad]': type === 'info',
@@ -34,7 +34,7 @@ function onClose() {
     }"
   >
     <i
-      class="absolute top-[6px] right-[12px] cursor-pointer text-[20px] font-bold opacity-20 text-shadow-[0_1px_0_#fff] hover:opacity-100"
+      class="text-shadow-[0_1px_0_#fff] absolute right-[12px] top-[6px] cursor-pointer text-[20px] font-bold opacity-20 hover:opacity-100"
       @click="onClose"
     >
       ×

@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --color-primary: 0 136 204;
+    --color-success: 128 189 1;
+    --color-info: 91 192 222;
+  }
+
   html {
     /* @apply text-[100%] text-size-adjust-[100%]; */
   }

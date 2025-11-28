@@ -1,12 +1,8 @@
 /* Element Plus 主题变量覆盖 */
 :root {
-  --el-color-primary: #80bd01;
-  --el-color-primary-light-3: #a0d44c;
-  --el-color-primary-light-5: #c0e897;
-  --el-color-primary-light-7: #e0f4e1;
-  --el-color-primary-light-8: #f0faf0;
-  --el-color-primary-light-9: #f8fdf8;
-  --el-color-primary-dark-2: #5a8f01;
+  --el-color-primary: rgb(var(--color-primary));
+  --el-color-success: rgb(var(--color-success));
+  --el-color-info: rgb(var(--color-info));
 
   --el-border-radius-base: 3px;
   --el-border-radius-small: 2px;
