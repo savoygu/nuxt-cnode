@@ -18,48 +18,48 @@ function handleLogout() {
 </script>
 
 <template>
-  <div class="relative z-[9] w-full mb-0 bg-[#444] text-[13px]">
-    <div class="w-[90%] min-h-[50px] p-[5px] border-none mx-auto bg-transparent rounded-none shadow-none">
-      <div class="flex w-full min-w-[960px] max-w-[1400px] items-center justify-between mx-auto">
+  <div class="relative z-[9] mb-0 w-full bg-[#444] text-[13px]">
+    <div class="mx-auto min-h-[50px] w-[90%] rounded-none border-none bg-transparent p-[5px] shadow-none">
+      <div class="mx-auto flex w-full min-w-[960px] max-w-[1400px] items-center justify-between">
         <div class="flex justify-start">
-          <NuxtLink class="w-[160px] h-[40px] p-[3px_20px] ml-[-20px] text-[#ccc] font-bold" to="/">
+          <NuxtLink class="ml-[-20px] h-[40px] w-[160px] p-[3px_20px] font-bold text-[#ccc]" to="/">
             <img src="//static2.cnodejs.org/public/images/cnodejs_light.svg" alt="CNode 中文社区">
           </NuxtLink>
-          <form class="relative flex items-center mb-0" action="/search">
+          <form class="relative mb-0 flex items-center" action="/search">
             <input
               id="q"
               type="text"
               name="q"
-              class="w-[233px] h-[26px] p-[3px_5px_3px_22px] border-0 bg-[url(//static2.cnodejs.org/public/images/search.e53b380a.hashed.png)_4px_4px_no-repeat_#888] rounded-[15px] text-[#666] text-[13px] font-normal leading-[1] transition-all duration-500 focus:bg-white focus:shadow-[inset_0_1px_1px_rgb(0_0_0_/_7.5%),_0_0_8px_rgb(82_168_236_/_60%)] focus:outline-0"
+              class="h-[26px] w-[233px] rounded-[15px] border-0 bg-[url(//static2.cnodejs.org/public/images/search.e53b380a.hashed.png)_4px_4px_no-repeat_#888] p-[3px_5px_3px_22px] text-[13px] font-normal leading-none text-[#666] transition-all duration-500 focus:bg-white focus:shadow-[inset_0_1px_1px_rgb(0_0_0_/_7.5%),_0_0_8px_rgb(82_168_236_/_60%)] focus:outline-0"
             >
           </form>
         </div>
         <div class="flex items-center">
           <span>
-            <NuxtLink class="block p-[10px_15px] text-[#ccc] cursor-pointer leading-[20px] hover:text-white hover:no-underline" to="/">首页</NuxtLink>
+            <NuxtLink class="block cursor-pointer p-[10px_15px] leading-[20px] text-[#ccc] hover:text-white hover:no-underline" to="/">首页</NuxtLink>
           </span>
           <span v-if="user?.loginname">
-            <NuxtLink class="block p-[10px_15px] text-[#ccc] cursor-pointer leading-[20px] hover:text-white hover:no-underline" to="/my/messages">
-              <span v-if="messageCount > 0" class="p-[1px_5px] mr-[0.5em] bg-[#80bd01] rounded-[8px] text-white">{{ messageCount }}</span>
+            <NuxtLink class="block cursor-pointer p-[10px_15px] leading-[20px] text-[#ccc] hover:text-white hover:no-underline" to="/my/messages">
+              <span v-if="messageCount > 0" class="mr-[0.5em] rounded-[8px] bg-[#80bd01] p-[1px_5px] text-white">{{ messageCount }}</span>
               未读消息
             </NuxtLink>
           </span>
           <span>
-            <NuxtLink class="block p-[10px_15px] text-[#ccc] cursor-pointer leading-[20px] hover:text-white hover:no-underline" to="/getstart">新手入门</NuxtLink>
+            <NuxtLink class="block cursor-pointer p-[10px_15px] leading-[20px] text-[#ccc] hover:text-white hover:no-underline" to="/getstart">新手入门</NuxtLink>
           </span>
           <span>
-            <NuxtLink class="block p-[10px_15px] text-[#ccc] cursor-pointer leading-[20px] hover:text-white hover:no-underline" to="/api">API</NuxtLink>
+            <NuxtLink class="block cursor-pointer p-[10px_15px] leading-[20px] text-[#ccc] hover:text-white hover:no-underline" to="/api">API</NuxtLink>
           </span>
           <span>
-            <NuxtLink class="block p-[10px_15px] text-[#ccc] cursor-pointer leading-[20px] hover:text-white hover:no-underline" to="/about">关于</NuxtLink>
+            <NuxtLink class="block cursor-pointer p-[10px_15px] leading-[20px] text-[#ccc] hover:text-white hover:no-underline" to="/about">关于</NuxtLink>
           </span>
           <span class="no-ssr">
             <template v-if="user">
-              <NuxtLink class="inline-block p-[10px_15px] text-[#ccc] cursor-pointer leading-[20px] hover:text-white hover:no-underline" to="/setting">设置</NuxtLink>
-              <span class="inline-block p-[10px_15px] text-[#ccc] cursor-pointer leading-[20px] hover:text-white" @click="handleLogout()">退出</span>
+              <NuxtLink class="inline-block cursor-pointer p-[10px_15px] leading-[20px] text-[#ccc] hover:text-white hover:no-underline" to="/setting">设置</NuxtLink>
+              <span class="inline-block cursor-pointer p-[10px_15px] leading-[20px] text-[#ccc] hover:text-white" @click="handleLogout()">退出</span>
             </template>
             <template v-else>
-              <NuxtLink class="inline-block p-[10px_15px] text-[#ccc] cursor-pointer leading-[20px] hover:text-white hover:no-underline" to="/signin">登录</NuxtLink>
+              <NuxtLink class="inline-block cursor-pointer p-[10px_15px] leading-[20px] text-[#ccc] hover:text-white hover:no-underline" to="/signin">登录</NuxtLink>
             </template>
           </span>
         </div>

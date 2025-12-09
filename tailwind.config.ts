@@ -4,13 +4,14 @@ export default <Partial<Config>>{
   theme: {
     extend: {
       colors: {
-        primary: 'rgb(var(--color-primary))',
-        secondary: '#26A69A',
-        accent: '#9C27B0',
-        error: '#F44336',
-        warning: '#FF9800',
-        info: 'rgb(var(--color-info))',
-        success: 'rgb(var(--color-success))',
+        'primary': 'rgb(var(--color-primary))',
+        'info': 'rgb(var(--color-info))',
+        'success': 'rgb(var(--color-success))',
+        'color-primary': 'rgb(var(--text-color-primary))',
+        'color-regular': 'rgb(var(--text-color-regular))',
+        'color-secondary': 'rgb(var(--text-color-secondary))',
+        'color-placeholder': 'rgb(var(--text-color-placeholder))',
+        'color-disabled': 'rgb(var(--text-color-disabled))',
       },
       screens: {
         xs: '375px',
@@ -20,6 +21,17 @@ export default <Partial<Config>>{
       },
       listStyleType: {
         circle: 'circle',
+      },
+      fontSize: {
+        10: '10px',
+        11: '11px',
+      },
+      lineHeight: {
+        3.5: '14px',
+        7.5: '30px',
+      },
+      borderRadius: {
+        3: '3px',
       },
     },
   },

@@ -147,7 +147,7 @@ export interface CNodeReply {
 export interface CNodeTopic {
   id: string
   author_id: string
-  tab: Tab
+  tab: string
   content: string
   text?: string
   title: string

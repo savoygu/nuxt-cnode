@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineProps<{
-  topics: Topic[]
+  topics: CNodeTopic[]
 }>()
 </script>
 

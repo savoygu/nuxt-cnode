@@ -4,9 +4,14 @@
 
 @layer base {
   :root {
-    --color-primary: 0 136 204;
-    --color-success: 128 189 1;
-    --color-info: 91 192 222;
+    --color-primary: 0 136 204; /* #08c */
+    --color-success: 128 189 1; /* #80bd01 */
+    --color-info: 91 192 222; /* #5bc0de */
+    --text-color-primary: 51 51 51; /* #333 */
+    --text-color-regular: 119 128 135; /* #778087 */
+    --text-color-secondary: 153 153 153; /* #999 */
+    --text-color-placeholder: 153 153 153; /* #999 */
+    --text-color-disabled: 230 230 230; /* #e6e6e6 */
   }
 
   html {
@@ -27,17 +32,17 @@
   }
 
   a {
-    @apply text-[#08c] no-underline;
+    @apply text-primary no-underline;
   }
 
-  a:focus, a:hover {
+  /* a:focus, a:hover {
     @apply text-[#005580] underline;
-  }
+  } */
 
-  a:focus {
+  /* a:focus {
     @apply outline-dotted outline-[#333] outline-[thin] outline-offset-[-2px];
     outline: -webkit-focus-ring-color auto 5px;
-  }
+  } */
 
   a.dark, a.dark:active, a.dark:link, a.dark:visited {
     @apply text-[#666] no-underline;

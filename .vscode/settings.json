@@ -49,13 +49,9 @@
     "postcss"
   ],
 
-  "*.css": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-
   // Tailwind CSS
   "tailwindCSS.experimental.classRegex": ["tw`(.*?)`", "tw\\('(.*?)'\\)", "tw\\(\\s*('(.*?)'|\"(.*?)\")\\s*\\)"],
-  "tailwindCSS.experimental.configFile": ".nuxt/tailwind/postcss.mjs",
+  // "tailwindCSS.experimental.configFile": ".nuxt/tailwind/postcss.mjs",
   "files.associations": {
     "*.css": "tailwindcss"
   },

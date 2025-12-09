@@ -14,16 +14,16 @@ const { title, header, contentPadding, bordered } = withDefaults(defineProps<Pan
 </script>
 
 <template>
-  <div class="mb-[13px] text-[13px]">
-    <div v-if="header" class="p-[10px] bg-[#f6f6f6] rounded-t-[3px]">
+  <div class="panel mb-[13px] text-[13px]">
+    <div v-if="header" class="rounded-t-3 bg-[#f6f6f6] p-[10px]">
       <slot name="header">
         <span class="text-[#444]">{{ title }}</span>
       </slot>
     </div>
     <div
-      class="p-[10px] bg-white rounded-b-[3px] leading-[2em]"
+      class="rounded-b-3 bg-white p-[10px] leading-[2em]"
       :class="{
-        'p-0': !contentPadding,
+        '!p-0': !contentPadding,
         'border-t border-t-[#e5e5e5]': bordered,
       }"
     >
