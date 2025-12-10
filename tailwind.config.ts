@@ -7,6 +7,7 @@ export default <Partial<Config>>{
         'primary': 'rgb(var(--color-primary))',
         'info': 'rgb(var(--color-info))',
         'success': 'rgb(var(--color-success))',
+        'error': 'rgb(var(--color-error))',
         'color-primary': 'rgb(var(--text-color-primary))',
         'color-regular': 'rgb(var(--text-color-regular))',
         'color-secondary': 'rgb(var(--text-color-secondary))',

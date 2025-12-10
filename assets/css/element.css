@@ -3,6 +3,7 @@
   --el-color-primary: rgb(var(--color-primary));
   --el-color-success: rgb(var(--color-success));
   --el-color-info: rgb(var(--color-info));
+  --el-color-error: rgb(var(--color-error));
   --el-text-color-primary: rgb(var(--text-color-primary));
   --el-text-color-regular: rgb(var(--text-color-regular));
   --el-text-color-secondary: rgb(var(--text-color-secondary));
@@ -13,4 +14,34 @@
   --el-border-radius-small: 2px;
 
   --el-font-size-base: 14px;
+}
+
+.panel {
+  .el-breadcrumb__item {
+    &:last-child {
+      .el-breadcrumb__inner {
+        color: var(--el-text-color-placeholder);
+
+        &:hover {
+          color: var(--el-text-color-placeholder);
+        }
+      }
+    }
+  }
+
+  .el-breadcrumb__separator {
+    font-weight: normal;
+    color: #ccc;
+  }
+
+  .el-breadcrumb__inner {
+    &.is-link  {
+      color: var(--el-color-success);
+      font-weight: normal;
+
+      &:hover {
+        color: var(--el-color-success);
+      }
+    }
+  }
 }

@@ -7,11 +7,12 @@ export async function useUser() {
   if (tokenCookie.value && !userState.value.isLogin) {
     try {
       const response = await $api.cnode.accesstoken({ accesstoken: tokenCookie.value })
-      const user = response.data
+      const data = response.data
       userState.value.isLogin = response.success
-      const { success, data } = await $api.cnode.user({ loginname: user.loginname })
-      if (success)
-        userState.value.user = data
+      const { success, data: user } = await $api.cnode.user({ loginname: data.loginname })
+      if (success) {
+        userState.value.user = user
+      }
       logger.info({ ...userState.value }, 'get accesstoken success')
       return user
     }
@@ -24,6 +25,23 @@ export async function useUser() {
   }
 
   return userState.value.user
+}
+
+export async function useUserLogin(accesstoken: string) {
+  const { $api } = useNuxtApp()
+  const tokenCookie = useTokenCookie()
+  const userState = useUserState()
+
+  const response = await $api.cnode.accesstoken({ accesstoken })
+  if (response.success) {
+    tokenCookie.value = accesstoken
+    userState.value.isLogin = true
+    const { success, data } = await $api.cnode.user({ loginname: response.data.loginname })
+    if (success) {
+      userState.value.user = data
+    }
+  }
+  return response
 }
 
 export function useUserLogout() {

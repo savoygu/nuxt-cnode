@@ -1,15 +1,18 @@
 <script setup lang="ts">
+import type { FetchError } from 'ofetch'
+
 definePageMeta({
   middleware: 'auth',
 })
 
 const route = useRoute()
+const fallback = route.query.fallback as string | undefined
 
-const accesstoken = shallowRef('')
 const alert = reactive({
   visible: false,
   title: '',
 })
+const accesstoken = shallowRef('')
 const loading = shallowRef(false)
 
 function setAlert(title: string, visible: boolean) {
@@ -17,8 +20,11 @@ function setAlert(title: string, visible: boolean) {
   alert.visible = visible
 }
 
-// methods
-async function signin() {
+async function handleSignin() {
+  if (loading.value) {
+    return
+  }
+
   if (!accesstoken.value) {
     setAlert('请输入 Access Token', true)
     return false
@@ -27,13 +33,14 @@ async function signin() {
 
   loading.value = true
   try {
-    await fetchAccesstoken(accesstoken.value)
-
-    const fallback = route.query.fallback as string
-    return navigateTo(fallback ?? '/')
+    const { success } = await useUserLogin(accesstoken.value)
+    if (success) {
+      await navigateTo(fallback ?? '/')
+    }
   }
-  catch (err: any) {
-    setAlert(err.message, true)
+  catch (err: unknown) {
+    const data = (err as FetchError).data as APIResponse<CNodeToken>
+    setAlert(data.msg!, true)
   }
   finally {
     loading.value = false
@@ -42,34 +49,32 @@ async function signin() {
 </script>
 
 <template>
-  <TheMain>
+  <NuxtLayout>
     <Panel>
       <template #header>
-        <BaseBreadcrumb>
-          <BaseBreadcrumbItem to="/">
+        <ElBreadcrumb>
+          <ElBreadcrumbItem to="/">
             主页
-          </BaseBreadcrumbItem>
-          <BaseBreadcrumbItem>登录</BaseBreadcrumbItem>
-        </BaseBreadcrumb>
+          </ElBreadcrumbItem>
+          <ElBreadcrumbItem>登录</ElBreadcrumbItem>
+        </ElBreadcrumb>
       </template>
-      <BaseAlert v-model="alert.visible" :title="alert.title" />
-      <div class="mt-[40px]">
-        <div>
-          <div class="flex items-center mb-[20px]">
-            <span class="w-[160px] text-right" for="accesstoken">Access Token</span>
-            <div class="ml-[20px]">
-              <input
-                v-model="accesstoken"
-                class="w-[284px] h-[30px] p-[4px_6px] border border-[#ccc] rounded-[4px] shadow-[inset_0_1px_1px_rgb(0_0_0_/_7.5%)] text-[#555] text-[14px] leading-[20px] outline-none focus:border-[rgba(82,168,236,0.8)] focus:shadow-[inset_0_1px_1px_rgb(0_0_0_/_7.5%),_0_0_8px_rgb(82_168_236_/_60%)]"
-                name="accesstoken"
-                size="30"
-                type="text"
-              >
-            </div>
+      <ElAlert v-if="alert.visible" :title="alert.title" type="error" />
+      <div class="mt-10">
+        <div class="flex items-center">
+          <span class="w-40 text-right" for="accesstoken">Access Token</span>
+          <div class="ml-5">
+            <input
+              v-model="accesstoken"
+              class="h-[30px] w-[284px] rounded border border-[#ccc] p-[4px_6px] text-sm text-[#555] shadow-[inset_0_1px_1px_rgb(0_0_0_/_7.5%)] outline-none focus:border-[rgba(82,168,236,0.8)] focus:shadow-[inset_0_1px_1px_rgb(0_0_0_/_7.5%),_0_0_8px_rgb(82_168_236_/_60%)]"
+              name="accesstoken"
+              size="30"
+              type="text"
+            >
           </div>
         </div>
-        <div class="p-[20px_20px_20px_180px] mt-[20px] mb-[20px]">
-          <button class="button-blue" @click="signin">
+        <div class="my-5 p-[20px_20px_20px_180px]">
+          <button class="button-blue" @click="handleSignin()">
             {{ loading ? '登录中...' : '登录' }}
           </button>
         </div>
@@ -78,5 +83,5 @@ async function signin() {
     <template #sidebar>
       <SidebarAbout />
     </template>
-  </TheMain>
+  </NuxtLayout>
 </template>

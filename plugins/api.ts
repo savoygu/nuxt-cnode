@@ -1,10 +1,11 @@
 import type { FetchOptions } from 'ofetch'
-import { has, omit } from 'lodash-es'
+import { has, omit, pick } from 'lodash-es'
 
 export default defineNuxtPlugin({
   name: 'api',
   setup() {
     const config = useRuntimeConfig()
+    const logger = useLogger('[plugin:api]')
 
     function normalizeApiResponse<T = any>(response: APIResponse<T>): APIResponse<T> {
       if (has(response, 'error_msg')) {
@@ -63,6 +64,14 @@ export default defineNuxtPlugin({
         if (response._data && typeof response._data === 'object') {
           response._data = normalizeApiResponse(response._data)
         }
+      },
+      onResponseError({ response, request, options, error }) {
+        logger.error({
+          request,
+          ...pick(options, ['method', 'body']),
+          ...pick(response, ['status', 'statusText', '_data']),
+          ...error,
+        }, 'response error')
       },
     }
     const cnodeApi = $fetch.create({
