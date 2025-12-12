@@ -11,7 +11,10 @@ export async function useUser() {
       userState.value.isLogin = response.success
       const { success, data: user } = await $api.cnode.user({ loginname: data.loginname })
       if (success) {
-        userState.value.user = user
+        userState.value.user = {
+          ...data,
+          ...user,
+        }
       }
       logger.info({ ...userState.value }, 'get accesstoken success')
       return user
@@ -38,7 +41,10 @@ export async function useUserLogin(accesstoken: string) {
     userState.value.isLogin = true
     const { success, data } = await $api.cnode.user({ loginname: response.data.loginname })
     if (success) {
-      userState.value.user = data
+      userState.value.user = {
+        ...response.data,
+        ...data,
+      }
     }
   }
   return response

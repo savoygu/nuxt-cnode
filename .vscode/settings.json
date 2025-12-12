@@ -50,7 +50,12 @@
   ],
 
   // Tailwind CSS
-  "tailwindCSS.experimental.classRegex": ["tw`(.*?)`", "tw\\('(.*?)'\\)", "tw\\(\\s*('(.*?)'|\"(.*?)\")\\s*\\)"],
+  "tailwindCSS.experimental.classRegex": [
+    "tw`(.*?)`",
+    "tw\\('(.*?)'\\)",
+    "tw\\(\\s*('(.*?)'|\"(.*?)\")\\s*\\)",
+    "class:\\s*?[\"'`]([^\"'`]*).*?,"
+  ],
   // "tailwindCSS.experimental.configFile": ".nuxt/tailwind/postcss.mjs",
   "files.associations": {
     "*.css": "tailwindcss"

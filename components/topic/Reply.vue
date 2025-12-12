@@ -1,51 +1,62 @@
 <script setup lang="ts">
-interface TopicReplyProps {
-  topic: Topic
-  reply?: Reply | null
-}
+import type { FetchError } from 'ofetch'
+
 // props
-const props = withDefaults(defineProps<TopicReplyProps>(), {
-  reply: null,
-})
-// emits
-const emit = defineEmits<{
-  (
-    e: 'reply',
-    value: {
-      reply: Reply | null
-      data: ResponseReply
-    }
-  ): void
+const props = defineProps<{
+  topic: CNodeTopic
+  reply?: CNodeReply
 }>()
 
-const { reply, topic } = toRefs(props)
+// emits
+const emit = defineEmits<{
+  (e: 'replySuccess', value?: CNodeReply): void
+}>()
+
+const { $api } = useNuxtApp()
+const tokenCookie = useTokenCookie()
+const editorRef = useTemplateRef('editor')
 
 // reactive
-const visible = ref(false)
-const loading = ref(false)
-const errorText = ref('')
-const editorRef = ref<HTMLTextAreaElement>()
-const editor = ref<Editor>()
+const loading = shallowRef(false)
+const editor = shallowRef<Editor>()
+const alert = reactive({
+  visible: false,
+  title: '',
+})
 
 // computed
-const replyId = computed(() => `reply-${reply.value?.id ?? '0'}`)
+const replyId = computed(() => `reply-${props.reply?.id ?? '0'}`)
 
 // methods
-async function handleTopicReply() {
+async function handleReply() {
   if (loading.value)
     return
+
   loading.value = true
 
-  const content = editor.value?.codemirror.getValue() ?? ''
-  const { data, error } = await replyTopic(topic.value!.id, content, reply.value?.id ?? '')
-  loading.value = false
-
-  if (data.value?.success) {
-    editor.value?.codemirror.getDoc().setValue('') // 清空回复
-    emit('reply', { reply: reply.value, data: data.value })
+  try {
+    const content = editor.value?.codemirror.getValue() ?? ''
+    const { success, msg } = await $api.cnode.createReply({ accesstoken: tokenCookie.value!, topic_id: props.topic.id, content, reply_id: props.reply?.id })
+    if (success) {
+      editor.value?.codemirror.getDoc().setValue('') // 清空回复
+      emit('replySuccess', props.reply)
+    }
+    else {
+      Object.assign(alert, {
+        visible: true,
+        title: msg ?? '回复失败',
+      })
+    }
   }
-  else {
-    errorText.value = error.value?.message ?? '回复失败'
+  catch (err) {
+    const data = (err as FetchError).data as APIResponse
+    Object.assign(alert, {
+      visible: true,
+      title: data.msg ?? '回复失败',
+    })
+  }
+  finally {
+    loading.value = false
   }
 }
 
@@ -65,29 +76,32 @@ defineExpose({
 </script>
 
 <template>
-  <div>
+  <div class="reply">
     <div>
       <textarea
         :id="replyId"
-        ref="editorRef"
+        ref="editor"
         rows="8"
-        class="w-[98%] h-[200px] p-[0.5em] text-[15px] leading-[2em] resize-y"
+        class="h-[200px] w-[98%] resize-y p-[0.5em] text-[15px] leading-[2em]"
         style="display: none"
       />
     </div>
-    <button
-      class="button-blue my-[10px]"
+    <ElButton
+      type="primary"
+      class="my-2.5"
       :disabled="loading"
-      @click="handleTopicReply"
+      @click="handleReply()"
     >
       {{ loading ? '回复中..' : '回复' }}
-    </button>
-    <BaseAlert v-model="visible" type="danger" :title="errorText" />
+    </ElButton>
+    <ElAlert v-if="alert.visible" type="error" :title="alert.title" />
   </div>
 </template>
 
-<style>
-.CodeMirror {
-  height: 160px;
+<style scoped>
+.reply {
+  .CodeMirror {
+    height: 160px;
+  }
 }
 </style>

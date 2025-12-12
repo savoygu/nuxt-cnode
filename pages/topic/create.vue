@@ -1,5 +1,5 @@
 <script setup lang="ts">
-useEditor()
+// useEditor()
 
 // hooks
 const { $toast } = useNuxtApp()
@@ -104,7 +104,7 @@ async function handleTopicSubmit() {
           <input
             v-model="form.title"
             type="text"
-            class="w-full p-[8px] border border-[#ccc] rounded-[4px]"
+            class="w-full rounded-[4px] border border-[#ccc] p-[8px]"
             placeholder="标题字数 10 字以上"
           >
         </div>
@@ -112,7 +112,7 @@ async function handleTopicSubmit() {
           <div id="editormd">
             <textarea
               ref="editorRef"
-              class="w-full p-[8px] border border-[#ccc] rounded-[4px] min-h-[300px]"
+              class="min-h-[300px] w-full rounded-[4px] border border-[#ccc] p-[8px]"
               placeholder="文章支持 Markdown 语法, 请注意标记代码"
             />
           </div>

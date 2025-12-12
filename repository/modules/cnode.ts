@@ -135,7 +135,7 @@ export interface CNodeRanking {
 // 回复
 export interface CNodeReply {
   id: string
-  author: Author
+  author: CNodeAuthor
   content: string
   ups: string[]
   create_at: string
@@ -157,12 +157,13 @@ export interface CNodeTopic {
   reply_count: number
   visit_count: number
   create_at: string
-  author: Author
-  replies: Reply[]
+  author: CNodeAuthor
+  replies: CNodeReply[]
   is_collect: boolean
 }
 
 export interface CNodeUser {
+  id: string
   loginname: string
   avatar_url: string
   githubUsername: string

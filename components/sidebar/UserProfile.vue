@@ -1,10 +1,11 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   title: string
+  user?: CNodeUser
 }>()
 
 const userState = useUserState()
-const user = computed(() => userState.value.user)
+const user = computed(() => props.user || userState.value.user)
 </script>
 
 <template>

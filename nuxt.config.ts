@@ -1,5 +1,3 @@
-import type { ToastPluginApi } from 'vue-toast-notification'
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
@@ -9,11 +7,11 @@ export default defineNuxtConfig({
     '@element-plus/nuxt',
     '@vueuse/nuxt',
     './modules/trace-id',
+    './modules/simple-editor',
   ],
 
   css: [
     'element-plus/theme-chalk/base.css',
-    'vue-toast-notification/dist/theme-default.css',
     '~/assets/css/fonts.css',
     '~/assets/css/element.css',
   ],
@@ -55,9 +53,3 @@ export default defineNuxtConfig({
     ],
   },
 })
-
-declare module '#app' {
-  interface NuxtApp {
-    $toast: ToastPluginApi
-  }
-}

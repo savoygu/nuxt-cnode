@@ -1,5 +1,5 @@
 <script setup lang="ts">
-useEditor()
+// useEditor()
 
 // hooks
 const { $toast, $api } = useNuxtApp()
@@ -68,10 +68,12 @@ async function handleTopicCollect() {
     $toast.open({ type: 'error', message: msg! })
   }
 }
-async function handleTopicReply({ reply, data }: { reply: Reply | null, data: ResponseReply }) {
+async function handleTopicReply(reply: CNodeReply) {
   await topicState.value?.refresh()
   reply?.id && navigateTo({ path: route.path, replace: true, hash: `#${data?.reply_id}` })
 }
+
+const hello = ref(`<p>I'm running Tiptap with Vue.js. 🎉</p>`)
 </script>
 
 <template>
@@ -79,7 +81,7 @@ async function handleTopicReply({ reply, data }: { reply: Reply | null, data: Re
     <Panel class="bg-white" bordered>
       <template #header>
         <span class="my-2 inline-block w-3/4 text-[22px] font-bold leading-[130%]">
-          <span class="rounded-3 bg-success p-[2px_4px] text-xs text-white">
+          <span v-if="topic.top || topic.good" class="rounded-3 bg-success p-[2px_4px] text-xs text-white">
             {{ topic.top ? '置顶' : topic.good ? '精品' : tabName }}
           </span>
           {{ topic.title }}
@@ -93,12 +95,12 @@ async function handleTopicReply({ reply, data }: { reply: Reply | null, data: Re
             <span>&nbsp;来自 {{ tabName }}&nbsp;</span>
           </div>
           <div class="flex">
-            <button
-              :class="topic.is_collect ? 'button-white' : 'button-green'"
+            <ElButton
+              :type="topic.is_collect ? 'default' : 'success'"
               @click="handleTopicCollect"
             >
               {{ topic.is_collect ? '取消收藏' : '收藏' }}
-            </button>
+            </ElButton>
           </div>
         </div>
         <div v-if="isSameUser">
@@ -109,9 +111,13 @@ async function handleTopicReply({ reply, data }: { reply: Reply | null, data: Re
       </template>
       <div class="mx-[10px]" v-html="topic.content" />
     </Panel>
-    <Comment v-if="topic.replies.length > 0" :topic="topic" @reply="handleTopicReply" />
+    <!-- <TopicComment v-if="topic.replies.length > 0" v-model:topic="topic" @reply-success="handleTopicReply" /> -->
     <Panel v-if="user" id="reply-topic" title="添加回复" bordered>
-      <TopicReply :topic="topic" @reply="handleTopicReply" />
+      {{ hello }}
+      <ClientOnly>
+        <TiptapSimpleEditor v-model="hello" />
+      </ClientOnly>
+      <!-- <TopicReply :topic="topic" @reply="handleTopicReply" /> -->
     </Panel>
     <template #sidebar>
       <SidebarUserProfile title="作者" :user="author" />
