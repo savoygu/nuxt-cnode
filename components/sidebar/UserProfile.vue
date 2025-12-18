@@ -15,7 +15,7 @@ const user = computed(() => props.user || userState.value.user)
         <div class="flex items-center">
           <NuxtLink class="mr-[0.5em]" :to="`/user/${user.loginname}`">
             <img
-              class="block size-12 rounded-3"
+              class="block size-12 rounded-small"
               :src="user.avatar_url"
               :alt="user.loginname"
             >
@@ -46,7 +46,7 @@ const user = computed(() => props.user || userState.value.user)
     </p>
     <div>
       您可以通过 CNode Token
-      <NuxtLink to="/signin" class="text-color-regular hover:underline">
+      <NuxtLink to="/signin" class="text-text-1 hover:underline">
         登录
       </NuxtLink>
     </div>

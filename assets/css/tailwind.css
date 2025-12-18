@@ -3,18 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --color-primary: 0 136 204; /* #08c */
-    --color-success: 128 189 1; /* #80bd01 */
-    --color-info: 91 192 222; /* #5bc0de */
-    --color-error: 185 74 72; /* #b94a48 */
-    --text-color-primary: 51 51 51; /* #333 */
-    --text-color-regular: 119 128 135; /* #778087 */
-    --text-color-secondary: 153 153 153; /* #999 */
-    --text-color-placeholder: 153 153 153; /* #999 */
-    --text-color-disabled: 230 230 230; /* #e6e6e6 */
-  }
-
   html {
     /* @apply text-[100%] text-size-adjust-[100%]; */
   }
@@ -274,8 +262,6 @@
   }
 }
 
-
-
 @layer components {
   .main {
     @apply w-[90%] min-w-[960px] max-w-[1400px] min-h-[calc(100vh-166px)] flex-1 my-[15px] mx-auto;
@@ -414,6 +400,22 @@
 }
 
 @layer utilities {
+  .all-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .ver-center {
+    display: flex;
+    align-items: center;
+  }
+
+  .hor-center {
+    display: flex;
+    justify-content: center;
+  }
+
   .user-select-none {
     user-select: none;
   }

@@ -12,9 +12,22 @@ export default defineNuxtConfig({
 
   css: [
     'element-plus/theme-chalk/base.css',
+    '@semi-bot/semi-theme-cnode/scss/global.scss',
+    '@semi-bot/semi-theme-cnode/scss/animation.scss',
+    '~/assets/css/semi.css',
     '~/assets/css/fonts.css',
     '~/assets/css/element.css',
   ],
+
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          silenceDeprecations: ['import'],
+        },
+      },
+    },
+  },
 
   compatibilityDate: '2025-08-17',
 

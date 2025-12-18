@@ -1,0 +1,45 @@
+body, :host {
+  --semi-font-size-small: 12px;
+  --semi-font-size-regular: 14px;
+  --semi-font-size-header-6: 16px;
+  --semi-font-size-header-5: 18px;
+  --semi-font-size-header-4: 20px;
+  --semi-font-size-header-3: 24px;
+  --semi-font-size-header-2: 28px;
+  --semi-font-size-header-1: 32px;
+  --semi-font-weight-light: 200;
+  --semi-font-weight-regular: 400;
+  --semi-font-weight-bold: 600;
+
+  --semi-width-icon-extra-small: 8px;
+  --semi-width-icon-small: 12px;
+  --semi-width-icon-medium: 16px;
+  --semi-width-icon-large: 20px;
+  --semi-width-icon-extra-large: 24px;
+  --semi-height-control-small: 24px;
+  --semi-height-control-default: 32px;
+  --semi-height-control-large: 40px;
+
+  --semi-spacing-none: 0;
+  --semi-spacing-super-tight: 2px;
+  --semi-spacing-extra-tight: 4px;
+  --semi-spacing-tight: 8px;
+  --semi-spacing-base-tight: 12px;
+  --semi-spacing-base: 16px;
+  --semi-spacing-base-loose: 20px;
+  --semi-spacing-loose: 24px;
+  --semi-spacing-extra-loose: 32px;
+  --semi-spacing-super-loose: 40px;
+
+  --semi-z-portal: 1;
+  --semi-z-affix: 10;
+  --semi-z-backdrop: 10;
+  --semi-z-badge: 10;
+  --semi-z-modal: 1000;
+  --semi-z-modal-mask: 1000;
+  --semi-z-toast: 1010;
+  --semi-z-notification: 1010;
+  --semi-z-popover: 1030;
+  --semi-z-tooltip: 1060;
+  --semi-z-image-preview: 1070;
+}

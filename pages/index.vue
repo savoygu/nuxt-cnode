@@ -35,13 +35,13 @@ catch (err) {
           v-for="(value, key) in TABS"
           :key="key"
           :to="{ path: '/', query: { tab: key } }"
-          class="mx-[10px] text-success hover:text-primary hover:no-underline focus:no-underline"
-          :class="{ 'rounded-3 bg-success p-[3px_4px] text-white hover:text-white focus:text-white': currentTab === key }"
+          class="mx-2.5 text-primary hover:text-primary-hover hover:no-underline focus:no-underline"
+          :class="{ 'rounded-small bg-primary p-1 text-white hover:text-white focus:text-white': currentTab === key }"
         >
           {{ value.name }}
         </NuxtLink>
       </template>
-      <div v-if="!pending" class="rounded-b-3 bg-white">
+      <div v-if="!pending" class="rounded-b-small bg-white">
         <TopicList v-if="topics && topics.length > 0" :topics="topics" />
         <div v-else>
           暂无数据

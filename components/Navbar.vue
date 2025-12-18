@@ -18,7 +18,7 @@ function handleLogout() {
 </script>
 
 <template>
-  <div class="relative z-[9] mb-0 w-full bg-[#444] text-[13px]">
+  <div class="relative z-[9] mb-0 w-full bg-[#444] text-small text-primary">
     <div class="mx-auto min-h-[50px] w-[90%] rounded-none border-none bg-transparent p-[5px] shadow-none">
       <div class="mx-auto flex w-full min-w-[960px] max-w-[1400px] items-center justify-between">
         <div class="flex justify-start">
@@ -30,7 +30,7 @@ function handleLogout() {
               id="q"
               type="text"
               name="q"
-              class="h-[26px] w-[233px] rounded-[15px] border-0 bg-[url(//static2.cnodejs.org/public/images/search.e53b380a.hashed.png)_4px_4px_no-repeat_#888] p-[3px_5px_3px_22px] text-[13px] font-normal leading-none text-[#666] transition-all duration-500 focus:bg-white focus:shadow-[inset_0_1px_1px_rgb(0_0_0_/_7.5%),_0_0_8px_rgb(82_168_236_/_60%)] focus:outline-0"
+              class="h-[26px] w-[233px] rounded-[15px] border-0 bg-[url(//static2.cnodejs.org/public/images/search.e53b380a.hashed.png)_4px_4px_no-repeat_#888] p-[3px_5px_3px_22px] text-small font-normal leading-none text-[#666] transition-all duration-500 focus:bg-white focus:shadow-[inset_0_1px_1px_rgb(0_0_0_/_7.5%),_0_0_8px_rgb(82_168_236_/_60%)] focus:outline-0"
             >
           </form>
         </div>

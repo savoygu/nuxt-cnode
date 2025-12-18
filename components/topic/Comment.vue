@@ -92,7 +92,7 @@ function handleReply(item: CNodeReply, index: number) {
             <img
               :src="item.author.avatar_url"
               :alt="item.author.loginname"
-              class="size-[30px] rounded-3"
+              class="size-[30px] rounded-small"
             >
           </NuxtLink>
           <div>
@@ -100,7 +100,7 @@ function handleReply(item: CNodeReply, index: number) {
               <a class="font-bold text-[#666]">{{ item.author.loginname }}</a>
               <div class="mr-auto">
                 <a
-                  class="mx-1 text-11 text-primary hover:text-[#005580] hover:underline"
+                  class="mx-1 text-small text-primary hover:text-[#005580] hover:underline"
                   :href="`#${item.id}`"
                 >
                   {{ index + 1 }}楼•{{ timeAgo(item.create_at) }}
@@ -113,7 +113,7 @@ function handleReply(item: CNodeReply, index: number) {
                   @click="handleStarReply(item)"
                 >
                   <i class="iconfont icon-star cursor-pointer opacity-40 hover:opacity-100" />
-                  <span class="text-11 text-gray-500">
+                  <span class="text-small text-gray-500">
                     {{ item.ups.length }}
                   </span>
                 </span>

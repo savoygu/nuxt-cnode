@@ -81,7 +81,7 @@ const hello = ref(`<p>I'm running Tiptap with Vue.js. 🎉</p>`)
     <Panel class="bg-white" bordered>
       <template #header>
         <span class="my-2 inline-block w-3/4 text-[22px] font-bold leading-[130%]">
-          <span v-if="topic.top || topic.good" class="rounded-3 bg-success p-[2px_4px] text-xs text-white">
+          <span v-if="topic.top || topic.good" class="rounded-small bg-primary p-[2px_4px] text-xs text-white">
             {{ topic.top ? '置顶' : topic.good ? '精品' : tabName }}
           </span>
           {{ topic.title }}
@@ -96,7 +96,7 @@ const hello = ref(`<p>I'm running Tiptap with Vue.js. 🎉</p>`)
           </div>
           <div class="flex">
             <ElButton
-              :type="topic.is_collect ? 'default' : 'success'"
+              :type="topic.is_collect ? 'default' : 'primary'"
               @click="handleTopicCollect"
             >
               {{ topic.is_collect ? '取消收藏' : '收藏' }}
