@@ -1,20 +1,21 @@
 <script setup lang="ts">
 // useEditor()
 
-// hooks
-const { $toast } = useNuxtApp()
+const { $api } = useNuxtApp()
+const tokenCookie = useTokenCookie()
+const logger = useLogger('page:topic:create')
 
 // reactive
-const loading = ref(false)
+const form = reactive({
+  title: '',
+  content: '',
+  tab: '' as TabKey,
+})
 const alert = reactive({
   visible: false,
   title: '',
 })
-const form = reactive({
-  title: '',
-  content: '',
-  tab: '' as Tab,
-})
+const loading = ref(false)
 const editorRef = ref<HTMLTextAreaElement>()
 const editor = ref<Editor>()
 
@@ -50,36 +51,40 @@ async function handleTopicSubmit() {
     return
   loading.value = true
 
-  const { data, error } = await createTopic(form)
-  loading.value = false
+  try {
+    const { success, msg } = await $api.cnode.createTopic({ accesstoken: tokenCookie.value!, ...form })
 
-  if (data.value?.success) {
-    $toast.open({
-      type: 'success',
-      message: '创建话题成功',
-    })
-    navigateTo({ path: '/', query: { tab: form.tab } })
+    if (success) {
+      ElMessage.success({ type: 'success', message: '创建话题成功' })
+      await navigateTo({ path: '/', query: { tab: form.tab } })
+    }
+    else {
+      ElMessage.error({ type: 'error', message: msg || '创建话题失败' })
+    }
   }
-  else if (error.value) {
-    const { data } = error.value.data
-    $toast.open({ type: 'error', message: data.error_msg })
+  catch (err) {
+    logger.error({ err }, 'create topic error')
+    ElMessage.error({ type: 'error', message: '创建话题失败' })
+  }
+  finally {
+    loading.value = false
   }
 }
 </script>
 
 <template>
-  <TheMain>
+  <NuxtLayout>
     <Panel>
       <template #header>
-        <BaseBreadcrumb>
-          <BaseBreadcrumbItem to="/">
+        <ElBreadcrumb>
+          <ElBreadcrumbItem to="/">
             主页
-          </BaseBreadcrumbItem>
-          <BaseBreadcrumbItem>发布话题</BaseBreadcrumbItem>
-        </BaseBreadcrumb>
+          </ElBreadcrumbItem>
+          <ElBreadcrumbItem>发布话题</ElBreadcrumbItem>
+        </ElBreadcrumb>
       </template>
       <div>
-        <BaseAlert v-model="alert.visible" :title="alert.title" />
+        <ElAlert v-model="alert.visible" :title="alert.title" />
         <div class="mb-[20px]">
           <span>选择板块：</span>
           <select id="plate" v-model="form.tab" name="plate">
@@ -128,5 +133,5 @@ async function handleTopicSubmit() {
       <SidebarMarkdownGrammar />
       <SidebarTopicPublishGuide />
     </template>
-  </TheMain>
+  </NuxtLayout>
 </template>

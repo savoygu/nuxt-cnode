@@ -1,4 +1,5 @@
-body, :host {
+body,
+:host {
   --semi-font-size-small: 12px;
   --semi-font-size-regular: 14px;
   --semi-font-size-header-6: 16px;

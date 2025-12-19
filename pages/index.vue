@@ -4,6 +4,10 @@ const route = useRoute()
 const logger = useLogger('[pages:index]')
 
 const currentTab = computed<string>(() => route.query.tab as string || 'all')
+const showTag = computed(() => {
+  const tab = route.query.tab as string
+  return !tab || tab === 'all' || tab === 'good'
+})
 
 const { list: topics, initialLoading: pending, fetch: fetchTopics } = usePaginatedList({
   fetcher: (page, limit) => $api.cnode.topics({ tab: currentTab.value, page, limit, mdrender: 'false' }),
@@ -42,7 +46,7 @@ catch (err) {
         </NuxtLink>
       </template>
       <div v-if="!pending" class="rounded-b-small bg-white">
-        <TopicList v-if="topics && topics.length > 0" :topics="topics" />
+        <TopicList v-if="topics && topics.length > 0" :topics="topics" :show-tag="showTag" />
         <div v-else>
           暂无数据
         </div>

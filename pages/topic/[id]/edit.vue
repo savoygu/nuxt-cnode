@@ -2,25 +2,27 @@
 // useEditor()
 
 // hooks
-const { $toast } = useNuxtApp()
 const route = useRoute()
+const { $api } = useNuxtApp()
+const tokenCookie = useTokenCookie()
 const id = route.params.id as string
 
-const { data: topic } = await fetchTopic(id, false)
+const { data } = await useAsyncData(() => $api.cnode.topic({ id, accesstoken: tokenCookie.value!, mdrender: 'true' }))
+const topic = data.value?.data
 
 // reactive
-const loading = ref(false)
+const form = reactive({
+  title: topic?.title ?? '',
+  content: topic?.content ?? '',
+  tab: topic?.tab as TabKey,
+})
 const alert = reactive({
   visible: false,
   title: '',
 })
-const form = reactive({
-  title: topic.value?.title ?? '',
-  content: topic.value?.content ?? '',
-  tab: topic.value?.tab as Tab,
-})
-const editorRef = ref<HTMLTextAreaElement>()
-const editor = ref<Editor>()
+const editorRef = shallowRef<HTMLTextAreaElement>()
+const editor = shallowRef<Editor>()
+const loading = shallowRef(false)
 
 // lifecycle
 onMounted(() => {
@@ -37,6 +39,9 @@ function setAlert(title: string, visible: boolean) {
 }
 
 async function handleTopicSubmit() {
+  if (loading.value)
+    return
+
   if (!form.tab) {
     return setAlert('请选择发布的板块', true)
   }
@@ -50,23 +55,19 @@ async function handleTopicSubmit() {
     return setAlert('话题内容不能为空', true)
   }
 
-  if (loading.value)
-    return
   loading.value = true
 
-  const { data, error } = await updateTopic(id, form)
+  const { success, msg } = await $api.cnode.updateTopic({ topic_id: id, accesstoken: tokenCookie.value!, ...form })
   loading.value = false
-
-  if (data.value?.success) {
-    $toast.open({
+  if (success) {
+    ElMessage.success({
       type: 'success',
       message: '更新话题成功',
     })
-    navigateTo({ path: '/', query: { tab: form.tab } })
+    await navigateTo({ path: '/', query: { tab: form.tab } })
   }
-  else if (error.value) {
-    const { data } = error.value.data
-    $toast.open({ type: 'error', message: data.error_msg })
+  else {
+    ElMessage.error({ type: 'error', message: msg ?? '更新话题失败' })
   }
 }
 </script>
@@ -75,15 +76,15 @@ async function handleTopicSubmit() {
   <TheMain>
     <Panel>
       <template #header>
-        <BaseBreadcrumb>
-          <BaseBreadcrumbItem to="/">
+        <ElBreadcrumb>
+          <ElBreadcrumbItem to="/">
             主页
-          </BaseBreadcrumbItem>
-          <BaseBreadcrumbItem>编辑话题</BaseBreadcrumbItem>
-        </BaseBreadcrumb>
+          </ElBreadcrumbItem>
+          <ElBreadcrumbItem>编辑话题</ElBreadcrumbItem>
+        </ElBreadcrumb>
       </template>
       <div>
-        <BaseAlert v-model="alert.visible" :title="alert.title" />
+        <ElAlert v-model="alert.visible" :title="alert.title" />
         <div class="mb-[20px]">
           <span>选择板块：</span>
           <select id="plate" v-model="form.tab" name="plate">
@@ -116,9 +117,10 @@ async function handleTopicSubmit() {
           <div id="editormd">
             <textarea
               ref="editorRef"
+              v-model="form.content"
               class="min-h-[300px] w-full rounded-[4px] border border-[#ccc] p-[8px]"
               placeholder="文章支持 Markdown 语法, 请注意标记代码"
-            >{{ topic?.content ?? '' }}</textarea>
+            />
           </div>
         </div>
         <div>

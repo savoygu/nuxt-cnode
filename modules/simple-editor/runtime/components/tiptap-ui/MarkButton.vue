@@ -33,7 +33,7 @@ const emit = defineEmits<{
 const attrs = useAttrs()
 const slots = useSlots()
 const { editor } = useEditorStore()!
-const { isVisible, canToggle, isActive, label, shortcutKeys, Icon, handleMark } = useMark()
+const { isVisible, canToggle, isActive, label, Icon, handleMark } = useMark()
 
 function handleClick(event: MouseEvent) {
   emit('click', event)

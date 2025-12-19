@@ -38,20 +38,11 @@ function handleLogout() {
           <span>
             <NuxtLink class="block cursor-pointer p-[10px_15px] leading-[20px] text-[#ccc] hover:text-white hover:no-underline" to="/">首页</NuxtLink>
           </span>
-          <span v-if="user?.loginname">
+          <span v-if="user">
             <NuxtLink class="block cursor-pointer p-[10px_15px] leading-[20px] text-[#ccc] hover:text-white hover:no-underline" to="/my/messages">
               <span v-if="messageCount > 0" class="mr-[0.5em] rounded-[8px] bg-[#80bd01] p-[1px_5px] text-white">{{ messageCount }}</span>
               未读消息
             </NuxtLink>
-          </span>
-          <span>
-            <NuxtLink class="block cursor-pointer p-[10px_15px] leading-[20px] text-[#ccc] hover:text-white hover:no-underline" to="/getstart">新手入门</NuxtLink>
-          </span>
-          <span>
-            <NuxtLink class="block cursor-pointer p-[10px_15px] leading-[20px] text-[#ccc] hover:text-white hover:no-underline" to="/api">API</NuxtLink>
-          </span>
-          <span>
-            <NuxtLink class="block cursor-pointer p-[10px_15px] leading-[20px] text-[#ccc] hover:text-white hover:no-underline" to="/about">关于</NuxtLink>
           </span>
           <span class="no-ssr">
             <template v-if="user">

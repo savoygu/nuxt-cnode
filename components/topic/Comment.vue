@@ -12,7 +12,7 @@ const topic = defineModel<CNodeTopic>('topic', {
 })
 
 // hooks
-const { $toast, $api } = useNuxtApp()
+const { $api } = useNuxtApp()
 const userState = useUserState()
 const tokenCookie = useTokenCookie()
 const user = computed(() => userState.value.user)
@@ -41,21 +41,21 @@ async function handleStarReply(reply: CNodeReply) {
         }
         return item
       })
-      $toast.open({
+      ElMessage.success({
         type: 'success',
         message: isUped ? '点赞成功' : '取消点赞成功',
       })
     }
     else {
-      $toast.open({ type: 'error', message: msg! })
+      ElMessage.error({ type: 'error', message: msg! })
     }
   }
   catch (err: unknown) {
     const data = (err as FetchError).data as APIResponse
-    $toast.open({ type: 'error', message: data.msg || '网络错误，点赞失败' })
+    ElMessage.error({ type: 'error', message: data.msg || '网络错误，点赞失败' })
   }
 }
-function handleOpenReply(reply: Reply, index: number) {
+function handleOpenReply(reply: CNodeReply, index: number) {
   showReplies.value[index] = !showReplies.value[index]
 
   nextTick(() => {

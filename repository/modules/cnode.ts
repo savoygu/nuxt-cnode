@@ -99,7 +99,7 @@ export class CNodeModule extends FetchFactory {
   }
 
   messages(query: { accesstoken: string, mdrender?: boolean }, opts?: NitroFetchOptions<'json'>) {
-    return this.$fetch<APIResponse<{ has_read_messages: CNodeMessage[], hasnot_read_messages: Message[] }>>(`${this.RESOURCE}/messages`, {
+    return this.$fetch<APIResponse<{ has_read_messages: CNodeMessage[], hasnot_read_messages: CNodeMessage[] }>>(`${this.RESOURCE}/messages`, {
       query,
       ...opts,
     })

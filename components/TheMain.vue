@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <div class="w-[290px] mr-[20px]">
+    <div class="mr-[20px] w-[290px]">
       <slot name="sidebar" />
     </div>
     <div class="flex-1">

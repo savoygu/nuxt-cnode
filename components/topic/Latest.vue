@@ -1,6 +1,6 @@
 <script setup lang="ts">
 interface TopicLatestProps {
-  topics: Topic[]
+  topics: CNodeTopic[]
 }
 
 const props = defineProps<TopicLatestProps>()
@@ -12,24 +12,24 @@ const { topics } = toRefs(props)
     <div
       v-for="topic in topics"
       :key="topic.id"
-      class="flex items-center p-[10px] border-t border-t-[#f0f0f0] bg-white text-[14px]"
+      class="flex items-center border-t border-t-[#f0f0f0] bg-white p-[10px] text-[14px]"
     >
-      <nuxt-link :to="`/user/${topic.author.loginname}`" class="text-[#08c] hover:text-[#005580] hover:underline">
+      <NuxtLink :to="`/user/${topic.author.loginname}`" class="text-[#08c] hover:text-[#005580] hover:underline">
         <img
           :src="topic.author.avatar_url"
           :alt="topic.author.loginname"
-          class="w-[30px] h-[30px] rounded-[3px]"
+          class="size-[30px] rounded-[3px]"
         >
-      </nuxt-link>
-      <nuxt-link
-        class="flex-1 ml-[8px] text-[16px] leading-[30px] text-[#08c] hover:text-[#005580] hover:underline"
+      </NuxtLink>
+      <NuxtLink
+        class="ml-[8px] flex-1 text-[16px] leading-7.5 text-[#08c] hover:text-[#005580] hover:underline"
         :to="`/topic/${topic.id}`"
       >
-        <span class="block max-w-[80%] overflow-hidden text-ellipsis whitespace-nowrap">
+        <span class="block max-w-[80%] truncate">
           {{ topic.title }}
         </span>
-      </nuxt-link>
-      <span class="text-[#777] text-[10px]">
+      </NuxtLink>
+      <span class="text-extra-small text-[#777]">
         {{ timeAgo(topic.last_reply_at) }}
       </span>
     </div>

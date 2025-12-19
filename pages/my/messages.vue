@@ -3,33 +3,52 @@ definePageMeta({
   middleware: 'auth',
 })
 
-// hooks
-const state = useStore()
-const currentUser = computed(() => state.value.user)
-const user = computed(() => state.value.users[currentUser.value?.loginname ?? ''])
+const { $api } = useNuxtApp()
+const userState = useUserState()
+const tokenCookie = useTokenCookie()
+const logger = useLogger('[page:messages]')
 
-const [{ data: message }] = await Promise.all([
-  fetchMessages(),
-  currentUser.value && fetchUser(currentUser.value.loginname),
-])
+const message = ref<{
+  hasnot_read_messages: CNodeMessage[]
+  has_read_messages: CNodeMessage[]
+}>({
+  hasnot_read_messages: [],
+  has_read_messages: [],
+})
+
+const currentUser = computed(() => userState.value.user)
+
+try {
+  await fetchMessages()
+}
+catch (err) {
+  logger.error({ err }, 'get my messages error')
+}
+
+async function fetchMessages() {
+  const { data, error } = await useAsyncData(() => $api.cnode.messages({ accesstoken: tokenCookie.value! }))
+  if (!error.value) {
+    message.value = data.value?.data || message.value
+  }
+}
 </script>
 
 <template>
-  <TheMain>
+  <NuxtLayout>
     <Panel :content-padding="false">
       <template #header>
-        <BaseBreadcrumb>
-          <BaseBreadcrumbItem to="/">
+        <ElBreadcrumb>
+          <ElBreadcrumbItem to="/">
             主页
-          </BaseBreadcrumbItem>
-          <BaseBreadcrumbItem>新消息</BaseBreadcrumbItem>
-        </BaseBreadcrumb>
+          </ElBreadcrumbItem>
+          <ElBreadcrumbItem>新消息</ElBreadcrumbItem>
+        </ElBreadcrumb>
       </template>
       <div>
         <template v-if="message?.hasnot_read_messages.length">
           <Message v-for="item in message.hasnot_read_messages" :key="item.id" :message="item" />
         </template>
-        <p v-else class="p-[10px]">
+        <p v-else class="p-2.5">
           无消息
         </p>
       </div>
@@ -39,16 +58,13 @@ const [{ data: message }] = await Promise.all([
         <template v-if="message?.has_read_messages.length">
           <Message v-for="item in message.has_read_messages" :key="item.id" :message="item" />
         </template>
-        <p v-else class="p-[10px]">
+        <p v-else class="p-2.5">
           无消息
         </p>
       </div>
     </Panel>
     <template #sidebar>
-      <SidebarPersonalInformation :user="user" />
-      <SidebarPublishTopic />
-      <SidebarFriendlyCommunity />
-      <SidebarClientQRCode />
+      <SidebarUserProfile title="个人信息" :user="currentUser" />
     </template>
-  </TheMain>
+  </NuxtLayout>
 </template>

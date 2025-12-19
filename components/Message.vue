@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import type { Message } from '~/types'
-
 interface MessageProps {
-  message: Message
+  message: CNodeMessage
 }
 
 const props = defineProps<MessageProps>()
@@ -10,17 +8,17 @@ const { message } = toRefs(props)
 </script>
 
 <template>
-  <div class="p-[10px] border-t border-t-[#f0f0f0] bg-white text-[14px]">
+  <div class="border-t border-t-[#f0f0f0] bg-white p-[10px] text-[14px]">
     <span class="leading-[22px]">
       <NuxtLink
-        class="inline-block max-w-[460px] text-[#08c] align-middle overflow-hidden text-ellipsis whitespace-nowrap"
+        class="inline-block max-w-[460px] truncate align-middle text-[#08c]"
         :to="`/user/${message.author.loginname}`"
       >
         {{ message.author.loginname }}
       </NuxtLink>
       {{ message.type === 'at' ? '在话题' : '回复了你的话题' }}
       <NuxtLink
-        class="inline-block max-w-[460px] text-[#08c] align-middle overflow-hidden text-ellipsis whitespace-nowrap"
+        class="inline-block max-w-[460px] truncate align-middle text-[#08c]"
         :to="`/topic/${message.topic.id}#${message.id}`"
       >
         {{ message.topic.title }}

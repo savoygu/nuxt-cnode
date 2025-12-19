@@ -1,5 +1,6 @@
 /* Element Plus 主题变量覆盖 */
-body, :host {
+body,
+:host {
   --el-color-white: var(--semi-color-white);
   --el-color-black: var(--semi-color-black);
   --el-font-size-extra-large: var(--semi-font-header-4);
@@ -96,7 +97,7 @@ body, :host {
   }
 
   .el-breadcrumb__inner {
-    &.is-link  {
+    &.is-link {
       color: var(--el-color-success);
       font-weight: normal;
 

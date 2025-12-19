@@ -2,7 +2,7 @@
 // useEditor()
 
 // hooks
-const { $toast, $api } = useNuxtApp()
+const { $api } = useNuxtApp()
 const route = useRoute()
 const tokenCookie = useTokenCookie()
 const userState = useUserState()
@@ -62,15 +62,15 @@ async function handleTopicCollect() {
   const { success, msg } = await (isCollect ? $api.cnode.deCollectTopic : $api.cnode.collectTopic)({ topic_id: topic.value.id, accesstoken: tokenCookie.value ?? '' })
   if (success) {
     await topicState.value?.refresh()
-    $toast.open({ type: 'success', message: isCollect ? '取消收藏成功' : '收藏成功' })
+    ElMessage.success({ type: 'success', message: isCollect ? '取消收藏成功' : '收藏成功' })
   }
   else {
-    $toast.open({ type: 'error', message: msg! })
+    ElMessage.error({ type: 'error', message: msg! })
   }
 }
 async function handleTopicReply(reply: CNodeReply) {
   await topicState.value?.refresh()
-  reply?.id && navigateTo({ path: route.path, replace: true, hash: `#${data?.reply_id}` })
+  reply?.id && navigateTo({ path: route.path, replace: true, hash: `#${reply?.reply_id}` })
 }
 
 const hello = ref(`<p>I'm running Tiptap with Vue.js. 🎉</p>`)
@@ -111,7 +111,7 @@ const hello = ref(`<p>I'm running Tiptap with Vue.js. 🎉</p>`)
       </template>
       <div class="mx-[10px]" v-html="topic.content" />
     </Panel>
-    <!-- <TopicComment v-if="topic.replies.length > 0" v-model:topic="topic" @reply-success="handleTopicReply" /> -->
+    <TopicComment v-if="topic.replies.length > 0" v-model:topic="topic" @reply-success="handleTopicReply" />
     <Panel v-if="user" id="reply-topic" title="添加回复" bordered>
       {{ hello }}
       <ClientOnly>

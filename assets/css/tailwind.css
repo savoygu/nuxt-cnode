@@ -16,7 +16,9 @@
     @apply h-full;
   } */
 
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     @apply box-border m-0;
   }
 
@@ -33,7 +35,10 @@
     outline: -webkit-focus-ring-color auto 5px;
   } */
 
-  a.dark, a.dark:active, a.dark:link, a.dark:visited {
+  a.dark,
+  a.dark:active,
+  a.dark:link,
+  a.dark:visited {
     @apply text-[#666] no-underline;
   }
 
@@ -41,11 +46,13 @@
     @apply text-[#385f8a];
   }
 
-  a:active, a:hover {
+  a:active,
+  a:hover {
     @apply outline-0;
   }
 
-  sub, sup {
+  sub,
+  sup {
     @apply text-[75%] leading-[0] align-baseline;
   }
 
@@ -62,16 +69,28 @@
     width: auto\9;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply my-[10px] font-bold leading-[20px];
     text-rendering: optimizelegibility;
   }
 
-  h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
+  h1 small,
+  h2 small,
+  h3 small,
+  h4 small,
+  h5 small,
+  h6 small {
     @apply text-[#999] font-normal leading-[1];
   }
 
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     @apply leading-[40px];
   }
 
@@ -83,15 +102,19 @@
     @apply text-[31.5px];
   }
 
-  h1 small, h3 {
+  h1 small,
+  h3 {
     @apply text-[24.5px];
   }
 
-  h2 small, h4 {
+  h2 small,
+  h4 {
     @apply text-[17.5px];
   }
 
-  h3 small, h4 small, h5 {
+  h3 small,
+  h4 small,
+  h5 {
     @apply text-[14px];
   }
 
@@ -99,15 +122,20 @@
     @apply text-[11.9px];
   }
 
-  ol, ul {
+  ol,
+  ul {
     @apply p-0 mb-[10px] ml-[25px] list-disc;
   }
 
-  ol ul, ul ul {
+  ol ul,
+  ul ul {
     @apply list-circle;
   }
 
-  ol.inline, ol.unstyled, ul.inline, ul.unstyled {
+  ol.inline,
+  ol.unstyled,
+  ul.inline,
+  ul.unstyled {
     @apply ml-0 list-none;
   }
 
@@ -147,7 +175,8 @@
     @apply pr-[15px] pl-0 border-r-[5px] border-r-[#eee] border-l-0 float-right;
   }
 
-  blockquote.pull-right p, blockquote.pull-right small {
+  blockquote.pull-right p,
+  blockquote.pull-right small {
     @apply text-right;
   }
 
@@ -159,11 +188,15 @@
     content: '\00A0 \2014';
   }
 
-  blockquote::after, blockquote::before, q::after, q::before {
+  blockquote::after,
+  blockquote::before,
+  q::after,
+  q::before {
     content: '';
   }
 
-  code, pre {
+  code,
+  pre {
     @apply px-[3px] py-0 pb-[2px] rounded-[3px] text-[#333] font-mono text-[12px];
   }
 
@@ -176,7 +209,9 @@
     border: 1px solid rgb(0 0 0 / 15%);
   }
 
-  fieldset, legend, pre code {
+  fieldset,
+  legend,
+  pre code {
     @apply p-0 border-0;
   }
 
@@ -196,7 +231,11 @@
     @apply block w-full border-b border-b-[#e5e5e5] text-[#333] text-[21px] leading-[40px];
   }
 
-  button, input, label, select, textarea {
+  button,
+  input,
+  label,
+  select,
+  textarea {
     @apply text-[14px] font-normal leading-[20px];
   }
 
@@ -208,15 +247,23 @@
     @apply block mb-[5px];
   }
 
-  input[type='radio'], input[type='checkbox'] {
+  input[type='radio'],
+  input[type='checkbox'] {
     @apply m-[4px_0_0] mt-[1px\9] leading-normal;
   }
 
-  input[type='button'], input[type='reset'], input[type='file'], input[type='image'], input[type='submit'], input[type='radio'], input[type='checkbox'] {
+  input[type='button'],
+  input[type='reset'],
+  input[type='file'],
+  input[type='image'],
+  input[type='submit'],
+  input[type='radio'],
+  input[type='checkbox'] {
     @apply w-auto;
   }
 
-  input[type='file'], select {
+  input[type='file'],
+  select {
     @apply h-[30px] leading-[30px];
   }
 
@@ -224,40 +271,57 @@
     @apply w-[220px] border border-[#ccc];
   }
 
-  select[multiple], select[size] {
+  select[multiple],
+  select[size] {
     @apply h-auto;
   }
 
-  input[type='file']:focus, input[type='radio']:focus, input[type='checkbox']:focus, select:focus {
+  input[type='file']:focus,
+  input[type='radio']:focus,
+  input[type='checkbox']:focus,
+  select:focus {
     @apply outline-dotted outline-[#333] outline-[thin] outline-offset-[-2px];
     outline: -webkit-focus-ring-color auto 5px;
   }
 
-  input:placeholder, textarea:placeholder {
+  input:placeholder,
+  textarea:placeholder {
     @apply text-[#999];
   }
 
-  .checkbox, .radio {
+  .checkbox,
+  .radio {
     @apply min-h-[20px] pl-[20px];
   }
 
-  .checkbox input[type='checkbox'], .radio input[type='radio'] {
+  .checkbox input[type='checkbox'],
+  .radio input[type='radio'] {
     @apply ml-[-20px] float-left;
   }
 
-  .checkbox.inline, .radio.inline {
+  .checkbox.inline,
+  .radio.inline {
     @apply inline-block pt-[5px] mb-0 align-middle;
   }
 
-  .checkbox.inline + .checkbox.inline, .radio.inline + .radio.inline {
+  .checkbox.inline + .checkbox.inline,
+  .radio.inline + .radio.inline {
     @apply ml-[10px];
   }
 
-  input[disabled], input[readonly], select[disabled], select[readonly], textarea[disabled], textarea[readonly] {
+  input[disabled],
+  input[readonly],
+  select[disabled],
+  select[readonly],
+  textarea[disabled],
+  textarea[readonly] {
     @apply bg-[#eee] cursor-not-allowed;
   }
 
-  input[type='radio'][disabled], input[type='radio'][readonly], input[type='checkbox'][disabled], input[type='checkbox'][readonly] {
+  input[type='radio'][disabled],
+  input[type='radio'][readonly],
+  input[type='checkbox'][disabled],
+  input[type='checkbox'][readonly] {
     @apply bg-transparent;
   }
 }
@@ -307,7 +371,9 @@
 @layer components {
   .markdown-text {
     /* 标题样式 */
-    h2, h3, h4 {
+    h2,
+    h3,
+    h4 {
       @apply border-b border-b-[#eee] my-[30px_0_15px];
     }
     h2 {
@@ -425,7 +491,7 @@
   }
 
   .clearfix::after {
-    content: "";
+    content: '';
     display: table;
     clear: both;
   }
@@ -433,7 +499,7 @@
   .vertical-center::after {
     display: inline-block;
     height: 100%;
-    content: "";
+    content: '';
     vertical-align: middle;
   }
 
