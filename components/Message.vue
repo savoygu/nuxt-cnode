@@ -1,10 +1,7 @@
 <script setup lang="ts">
-interface MessageProps {
+defineProps<{
   message: CNodeMessage
-}
-
-const props = defineProps<MessageProps>()
-const { message } = toRefs(props)
+}>()
 </script>
 
 <template>

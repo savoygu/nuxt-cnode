@@ -26,10 +26,10 @@ const loading = shallowRef(false)
 
 // lifecycle
 onMounted(() => {
-  editor.value = new Editor({
-    element: editorRef.value!,
-  })
-  editor.value.render()
+  // editor.value = new Editor({
+  //   element: editorRef.value!,
+  // })
+  // editor.value.render()
 })
 
 // methods
@@ -73,7 +73,7 @@ async function handleTopicSubmit() {
 </script>
 
 <template>
-  <TheMain>
+  <NuxtLayout>
     <Panel>
       <template #header>
         <ElBreadcrumb>
@@ -134,5 +134,5 @@ async function handleTopicSubmit() {
       <SidebarMarkdownGrammar />
       <SidebarTopicPublishGuide />
     </template>
-  </TheMain>
+  </NuxtLayout>
 </template>

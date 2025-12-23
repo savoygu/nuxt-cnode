@@ -1,10 +1,7 @@
 <script setup lang="ts">
-interface TopicLatestProps {
+defineProps<{
   topics: CNodeTopic[]
-}
-
-const props = defineProps<TopicLatestProps>()
-const { topics } = toRefs(props)
+}>()
 </script>
 
 <template>
