@@ -96,7 +96,7 @@ function handleReply(item: CNodeReply, index: number) {
             >
           </NuxtLink>
           <div>
-            <div class="flex justify-between">
+            <div class="justify-between ver-center">
               <a class="font-bold text-[#666]">{{ item.author.loginname }}</a>
               <div class="mr-auto">
                 <a
@@ -109,17 +109,16 @@ function handleReply(item: CNodeReply, index: number) {
               </div>
               <template v-if="user">
                 <span
+                  class="ver-center"
                   :class="{ 'opacity-100': item.is_uped }"
                   @click="handleStarReply(item)"
                 >
-                  <i class="iconfont icon-star cursor-pointer opacity-40 hover:opacity-100" />
-                  <span class="text-small text-gray-500">
+                  <NuxtIcon name="uil:thumbs-up" class="cursor-pointer opacity-40 hover:opacity-100" />
+                  <span class="text-small leading-4 text-gray-500">
                     {{ item.ups.length }}
                   </span>
                 </span>
-                <span @click="handleOpenReply(item, index)">
-                  <i class="iconfont icon-share cursor-pointer opacity-40 hover:opacity-100" />
-                </span>
+                <NuxtIcon name="uil:share" class="cursor-pointer opacity-40 hover:opacity-100" @click="handleOpenReply(item, index)" />
               </template>
             </div>
             <div class="pl-[15px]" v-html="item.content" />

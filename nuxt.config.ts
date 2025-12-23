@@ -1,21 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: [
-    '@nuxt/eslint',
-    '@nuxtjs/stylelint-module',
-    '@nuxtjs/tailwindcss',
-    '@element-plus/nuxt',
-    '@vueuse/nuxt',
-    './modules/trace-id',
-    './modules/simple-editor',
-  ],
+  app: {
+    cdnURL: import.meta.env.NUXT_PUBLIC_CDN_URL,
+  },
+
+  compatibilityDate: '2025-08-17',
 
   css: [
     'element-plus/theme-chalk/base.css',
     '@semi-bot/semi-theme-cnode/scss/global.scss',
     '@semi-bot/semi-theme-cnode/scss/animation.scss',
     '~/assets/css/semi.css',
-    '~/assets/css/fonts.css',
     '~/assets/css/element.css',
   ],
 
@@ -29,11 +24,27 @@ export default defineNuxtConfig({
     },
   },
 
-  compatibilityDate: '2025-08-17',
-
-  app: {
-    cdnURL: import.meta.env.NUXT_PUBLIC_CDN_URL,
+  features: {
+    inlineStyles: false,
   },
+
+  imports: {
+    dirs: [
+      './types',
+      './repository/modules',
+    ],
+  },
+
+  modules: [
+    '@nuxt/eslint',
+    '@nuxtjs/stylelint-module',
+    '@nuxtjs/tailwindcss',
+    '@element-plus/nuxt',
+    '@vueuse/nuxt',
+    '@nuxt/icon',
+    './modules/trace-id',
+    './modules/simple-editor',
+  ],
 
   runtimeConfig: {
     public: {
@@ -41,13 +52,19 @@ export default defineNuxtConfig({
     },
   },
 
-  features: {
-    inlineStyles: false,
-  },
-
   eslint: {
     config: {
       standalone: false,
+    },
+  },
+
+  icon: {
+    componentName: 'NuxtIcon',
+    size: '16px',
+    mode: 'css',
+    cssLayer: 'base',
+    serverBundle: {
+      collections: ['uil'],
     },
   },
 
@@ -57,12 +74,5 @@ export default defineNuxtConfig({
     config: {},
     viewer: true,
     exposeConfig: false,
-  },
-
-  imports: {
-    dirs: [
-      './types',
-      './repository/modules',
-    ],
   },
 })

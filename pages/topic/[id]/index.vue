@@ -105,7 +105,7 @@ const hello = ref(`<p>I'm running Tiptap with Vue.js. 🎉</p>`)
         </div>
         <div v-if="isSameUser">
           <NuxtLink :to="`/topic/${topic.id}/edit`">
-            <i class="iconfont icon-edit text-black opacity-40 hover:opacity-100" />
+            <NuxtIcon name="uil:edit" class="text-black opacity-40 hover:opacity-100" />
           </NuxtLink>
         </div>
       </template>
