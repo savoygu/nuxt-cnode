@@ -22,35 +22,36 @@ function handleLogout() {
     <div class="mx-auto min-h-[50px] w-[90%] rounded-none border-none bg-transparent p-[5px] shadow-none">
       <div class="mx-auto flex w-full min-w-[960px] max-w-[1400px] items-center justify-between">
         <div class="flex justify-start">
-          <NuxtLink class="ml-[-20px] h-[40px] w-[160px] p-[3px_20px] font-bold text-[#ccc]" to="/">
-            <img src="//static2.cnodejs.org/public/images/cnodejs_light.svg" alt="CNode 中文社区">
+          <NuxtLink class="-ml-5 h-10 w-40 px-5 py-1 font-bold text-[#ccc]" to="/">
+            <NuxtImg src="/cnodejs_light.svg" alt="CNode 中文社区" />
           </NuxtLink>
           <form class="relative mb-0 flex items-center" action="/search">
+            <NuxtImg src="/search.png" class="absolute left-1 size-5" />
             <input
               id="q"
               type="text"
               name="q"
-              class="h-[26px] w-[233px] rounded-[15px] border-0 bg-[url(//static2.cnodejs.org/public/images/search.e53b380a.hashed.png)_4px_4px_no-repeat_#888] p-[3px_5px_3px_22px] text-small font-normal leading-none text-[#666] transition-all duration-500 focus:bg-white focus:shadow-[inset_0_1px_1px_rgb(0_0_0_/_7.5%),_0_0_8px_rgb(82_168_236_/_60%)] focus:outline-0"
+              class="h-[26px] w-[233px] rounded-large border-0 bg-[#888] py-1 pl-6 pr-1 text-small font-normal leading-none text-[#666] transition-all duration-500 focus:bg-white focus:shadow-[inset_0_1px_1px_rgb(0_0_0_/_7.5%),_0_0_8px_rgb(82_168_236_/_60%)] focus:outline-0"
             >
           </form>
         </div>
         <div class="flex items-center">
           <span>
-            <NuxtLink class="block cursor-pointer p-[10px_15px] leading-[20px] text-[#ccc] hover:text-white hover:no-underline" to="/">首页</NuxtLink>
+            <NuxtLink class="block cursor-pointer p-[10px_15px] leading-5 text-[#ccc] hover:text-white hover:no-underline" to="/">首页</NuxtLink>
           </span>
           <span v-if="user">
-            <NuxtLink class="block cursor-pointer p-[10px_15px] leading-[20px] text-[#ccc] hover:text-white hover:no-underline" to="/my/messages">
-              <span v-if="messageCount > 0" class="mr-[0.5em] rounded-[8px] bg-[#80bd01] p-[1px_5px] text-white">{{ messageCount }}</span>
+            <NuxtLink class="block cursor-pointer p-[10px_15px] leading-5 text-[#ccc] hover:text-white hover:no-underline" to="/my/messages">
+              <span v-if="messageCount > 0" class="rounded-2 mr-[0.5em] bg-[#80bd01] p-[1px_5px] text-white">{{ messageCount }}</span>
               未读消息
             </NuxtLink>
           </span>
           <span class="no-ssr">
             <template v-if="user">
-              <NuxtLink class="inline-block cursor-pointer p-[10px_15px] leading-[20px] text-[#ccc] hover:text-white hover:no-underline" to="/setting">设置</NuxtLink>
-              <span class="inline-block cursor-pointer p-[10px_15px] leading-[20px] text-[#ccc] hover:text-white" @click="handleLogout()">退出</span>
+              <NuxtLink class="inline-block cursor-pointer p-[10px_15px] leading-5 text-[#ccc] hover:text-white hover:no-underline" to="/setting">设置</NuxtLink>
+              <span class="inline-block cursor-pointer p-[10px_15px] leading-5 text-[#ccc] hover:text-white" @click="handleLogout()">退出</span>
             </template>
             <template v-else>
-              <NuxtLink class="inline-block cursor-pointer p-[10px_15px] leading-[20px] text-[#ccc] hover:text-white hover:no-underline" to="/signin">登录</NuxtLink>
+              <NuxtLink class="inline-block cursor-pointer p-[10px_15px] leading-5 text-[#ccc] hover:text-white hover:no-underline" to="/signin">登录</NuxtLink>
             </template>
           </span>
         </div>

@@ -89,11 +89,11 @@ function handleReply(item: CNodeReply, index: number) {
       >
         <div class="grid grid-cols-[30px_1fr] gap-2.5">
           <NuxtLink :to="`/user/${item.author.loginname}`">
-            <img
+            <NuxtImg
               :src="item.author.avatar_url"
               :alt="item.author.loginname"
               class="size-[30px] rounded-small"
-            >
+            />
           </NuxtLink>
           <div>
             <div class="justify-between ver-center">
@@ -121,7 +121,7 @@ function handleReply(item: CNodeReply, index: number) {
                 <NuxtIcon name="uil:share" class="cursor-pointer opacity-40 hover:opacity-100" @click="handleOpenReply(item, index)" />
               </template>
             </div>
-            <div class="pl-[15px]" v-html="item.content" />
+            <div class="pl-4" v-html="item.content" />
           </div>
         </div>
         <TopicReply

@@ -109,7 +109,7 @@ const hello = ref(`<p>I'm running Tiptap with Vue.js. 🎉</p>`)
           </NuxtLink>
         </div>
       </template>
-      <div class="mx-[10px]" v-html="topic.content" />
+      <div class="mx-2.5" v-html="topic.content" />
     </Panel>
     <TopicComment v-if="topic.replies.length > 0" v-model:topic="topic" @reply-success="handleTopicReply" />
     <Panel v-if="user" id="reply-topic" title="添加回复" bordered>

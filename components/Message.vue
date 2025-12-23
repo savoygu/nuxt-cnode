@@ -5,7 +5,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="border-t border-t-[#f0f0f0] bg-white p-[10px] text-[14px]">
+  <div class="border-t border-t-[#f0f0f0] bg-white p-2.5 text-regular">
     <span class="leading-[22px]">
       <NuxtLink
         class="inline-block max-w-[460px] truncate align-middle text-[#08c]"

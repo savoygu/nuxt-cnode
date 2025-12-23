@@ -1,7 +1,7 @@
 <template>
   <div class="flex min-h-full flex-col">
     <Navbar />
-    <div class="main mx-auto my-[15px] grid w-[90%] min-w-[960px] max-w-[1400px] grid-cols-[1fr_290px] gap-[15px]">
+    <div class="main mx-auto my-4 grid w-[90%] min-w-[960px] max-w-[1400px] grid-cols-[1fr_290px] gap-4">
       <div class="content">
         <slot />
       </div>

@@ -18,11 +18,11 @@ const showCount = computed(() => {
 <template>
   <div class="relative grid grid-cols-[30px_70px_36px_1fr_80px] items-center border-t border-t-[#f0f0f0] bg-white p-2.5 text-sm first:border-t-0" :class="{ '!grid-cols-[30px_70px_1fr_50px]': showCount && !showTag, '!grid-cols-[30px_35px_1fr_50px]': !showCount && showTag, '!grid-cols-[30px_1fr_50px]': !showCount && !showTag }">
     <NuxtLink :to="`/user/${item.author?.loginname}`">
-      <img class="block size-[30px] rounded-small" :src="item.author?.avatar_url" :title="item.author?.loginname">
+      <NuxtImg class="block size-[30px] rounded-small" :src="item.author?.avatar_url" :title="item.author?.loginname" />
     </NuxtLink>
     <span v-if="showCount" class="text-center">
       <span class="text-[#9e78c0]"> {{ ` ${item.reply_count} ` }} </span>
-      <span class="mx-[-3px] text-extra-small"> / </span>
+      <span class="-mx-1 text-extra-small"> / </span>
       <span class="text-extra-small text-[#b4b4b4]"> {{ ` ${item.visit_count} ` }} </span>
     </span>
     <span v-if="showTag" class="rounded-small bg-[#e5e5e5] px-1 py-0.5 text-xs leading-3.5 text-text-2" :class="{ '!bg-primary !text-white': item.top || item.good }">

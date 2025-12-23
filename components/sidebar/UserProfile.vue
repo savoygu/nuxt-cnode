@@ -14,11 +14,11 @@ const user = computed(() => props.user || userState.value.user)
       <div>
         <div class="flex items-center">
           <NuxtLink class="mr-[0.5em]" :to="`/user/${user.loginname}`">
-            <img
+            <NuxtImg
               class="block size-12 rounded-small"
               :src="user.avatar_url"
               :alt="user.loginname"
-            >
+            />
           </NuxtLink>
           <span class="text-base">
             <NuxtLink class="text-[#666] hover:text-[#385f8a]" :to="`/user/${user.loginname}`">

@@ -6,7 +6,7 @@
     <p class="mb-2.5 text-sm">
       在这里你可以：
     </p>
-    <ul class="mb-2.5 ml-[25px] list-disc">
+    <ul class="mb-2.5 ml-6 list-disc">
       <li>向别人提出你遇到的问题</li>
       <li>帮助遇到问题的人</li>
       <li>分享自己的知识</li>

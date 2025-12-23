@@ -32,19 +32,18 @@ if (!isOwnProfile.value) {
             <ElBreadcrumbItem />
           </ElBreadcrumb>
         </template>
-        <div class="p-[10px]">
+        <div class="p-2.5">
           <div class="flex items-center">
-            <img
-              class="mr-[10px] size-[40px] rounded-[3px]"
+            <NuxtImg
+              class="mr-2.5 size-10 rounded-small"
               :src="currentUser.avatar_url"
-              alt=""
-            >
-            <span class="inline-block align-top leading-[32px] text-[#778087]">
+            />
+            <span class="inline-block align-top leading-8 text-[#778087]">
               {{ currentUser.loginname }}
             </span>
           </div>
-          <div class="mt-[20px]">
-            <div class="leading-[20px]">
+          <div class="mt-5">
+            <div class="leading-5">
               {{ currentUser.score }} 积分
             </div>
             <div class="leading-[2em]">
@@ -53,7 +52,7 @@ if (!isOwnProfile.value) {
               </NuxtLink>
             </div>
           </div>
-          <p class="text-[14px] leading-[2em] text-[#ababab]">
+          <p class="text-regular leading-[2em] text-[#ababab]">
             注册时间 {{ timeAgo(currentUser.create_at) }}
           </p>
         </div>

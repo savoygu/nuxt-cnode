@@ -37,11 +37,12 @@ export default defineNuxtConfig({
 
   modules: [
     '@nuxt/eslint',
+    '@nuxt/icon',
+    '@nuxt/image',
     '@nuxtjs/stylelint-module',
     '@nuxtjs/tailwindcss',
     '@element-plus/nuxt',
     '@vueuse/nuxt',
-    '@nuxt/icon',
     './modules/trace-id',
     './modules/simple-editor',
   ],
@@ -49,6 +50,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       cnodeApiBaseUrl: import.meta.env.NUXT_PUBLIC_CNODEAPI_BASE_URL,
+      cdnUrl: import.meta.env.NUXT_PUBLIC_CDN_URL,
     },
   },
 
@@ -66,6 +68,20 @@ export default defineNuxtConfig({
     serverBundle: {
       collections: ['uil'],
     },
+  },
+
+  image: {
+    providers: {
+      custom: {
+        name: 'custom',
+        provider: '~/providers/image-provider.ts',
+        options: {
+          baseURL: import.meta.env.NUXT_PUBLIC_CDN_URL,
+          dir: '/images',
+        },
+      },
+    },
+    provider: 'custom',
   },
 
   // Defaults options

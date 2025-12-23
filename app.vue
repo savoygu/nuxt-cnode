@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const img = useImage()
+
 useHead({
   titleTemplate: (titleChunk) => {
     return titleChunk ? `${titleChunk} - Nuxt CNode 技术社区` : 'Nuxt CNode：Node.js专业中文社区'
@@ -11,7 +13,7 @@ useHead({
   ],
   link: [
     { rel: 'alternate', title: 'RSS', type: 'application/rss+xml', href: '//cnodejs.org/rss' },
-    { rel: 'icon', type: 'image/x-icon', href: '//static2.cnodejs.org/public/images/cnode_icon_32.png' },
+    { rel: 'icon', type: 'image/x-icon', href: img('/cnode_icon_32.png') },
   ],
 })
 

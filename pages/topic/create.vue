@@ -85,7 +85,7 @@ async function handleTopicSubmit() {
       </template>
       <div>
         <ElAlert v-model="alert.visible" :title="alert.title" />
-        <div class="mb-[20px]">
+        <div class="mb-5">
           <span>选择板块：</span>
           <select id="plate" v-model="form.tab" name="plate">
             <option disabled value="">
@@ -105,19 +105,19 @@ async function handleTopicSubmit() {
             </option>
           </select>
         </div>
-        <div class="mb-[20px]">
+        <div class="mb-5">
           <input
             v-model="form.title"
             type="text"
-            class="w-full rounded-[4px] border border-[#ccc] p-[8px]"
+            class="w-full rounded border border-[#ccc] p-2"
             placeholder="标题字数 10 字以上"
           >
         </div>
-        <div class="mb-[20px]">
+        <div class="mb-5">
           <div id="editormd">
             <textarea
               ref="editorRef"
-              class="min-h-[300px] w-full rounded-[4px] border border-[#ccc] p-[8px]"
+              class="min-h-[300px] w-full rounded border border-[#ccc] p-2"
               placeholder="文章支持 Markdown 语法, 请注意标记代码"
             />
           </div>
