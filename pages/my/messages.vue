@@ -20,6 +20,7 @@ const currentUser = computed(() => userState.value.user)
 
 try {
   await fetchMessages()
+  await markAll()
 }
 catch (err) {
   logger.error({ err }, 'get my messages error')
@@ -30,6 +31,10 @@ async function fetchMessages() {
   if (!error.value) {
     message.value = data.value?.data || message.value
   }
+}
+
+async function markAll() {
+  await useLazyAsyncData(() => $api.cnode.messageMarkAll({ accesstoken: tokenCookie.value! }))
 }
 </script>
 

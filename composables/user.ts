@@ -22,7 +22,7 @@ export async function useUser() {
     catch (err) {
       tokenCookie.value = undefined
       userState.value.user = undefined
-      logger.error({ err }, 'get accesstoken failed')
+      logger.error({ err }, 'get accesstoken error')
       return undefined
     }
   }

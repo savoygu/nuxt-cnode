@@ -4,3 +4,9 @@ export function useUserState() {
     user: undefined,
   }))
 }
+
+export function useMessageState() {
+  return useState<{ count: number }>('message', () => ({
+    count: 0,
+  }))
+}

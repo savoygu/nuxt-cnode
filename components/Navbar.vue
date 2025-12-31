@@ -2,13 +2,22 @@
 const { $api } = useNuxtApp()
 const tokenCookie = useTokenCookie()
 const userState = useUserState()
+const messageState = useMessageState()
+const logger = useLogger('components:navbar')
 const user = computed(() => userState.value.user)
 
-const messageCount = shallowRef(0)
+try {
+  await getMessageCount()
+}
+catch (err) {
+  logger.error({ err }, 'get message count error')
+}
 
-if (tokenCookie.value) {
-  const { data } = await useAsyncData(() => $api.cnode.messageCount({ accesstoken: tokenCookie.value! }))
-  messageCount.value = data.value?.data ?? 0
+async function getMessageCount() {
+  if (tokenCookie.value) {
+    const { data } = await useAsyncData(() => $api.cnode.messageCount({ accesstoken: tokenCookie.value! }))
+    messageState.value.count = data.value?.data ?? 0
+  }
 }
 
 function handleLogout() {
@@ -41,7 +50,7 @@ function handleLogout() {
           </span>
           <span v-if="user">
             <NuxtLink class="block cursor-pointer p-[10px_15px] leading-5 text-[#ccc] hover:text-white hover:no-underline" to="/my/messages">
-              <span v-if="messageCount > 0" class="rounded-2 mr-[0.5em] bg-[#80bd01] p-[1px_5px] text-white">{{ messageCount }}</span>
+              <span v-if="messageState.count > 0" class="rounded-2 mr-[0.5em] bg-[#80bd01] p-[1px_5px] text-white">{{ messageState.count }}</span>
               未读消息
             </NuxtLink>
           </span>
