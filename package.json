@@ -47,6 +47,7 @@
     "pino-pretty": "^13.1.2",
     "postcss": "^8.5.6",
     "postcss-js": "^5.0.2",
+    "sass-embedded": "^1.97.1",
     "stylelint": "^16.26.0",
     "stylelint-config-recommended-vue": "^1.6.1",
     "tailwindcss": "^3.4.18",
