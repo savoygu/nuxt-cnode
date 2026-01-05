@@ -31,3 +31,20 @@ export function isNodeTypeSelected(editor: Editor | undefined, types: string[] =
 
   return false
 }
+
+/**
+ * 检测扩展是否可用
+ */
+export function isExtensionAvailable(eidtor: Editor | undefined, extensionNames: string | string[]) {
+  if (!eidtor) {
+    return false
+  }
+  const names = Array.isArray(extensionNames) ? extensionNames : [extensionNames]
+  const found = names.find(name => eidtor.extensionManager.extensions.some(ext => ext.name === name))
+  if (!found) {
+    console.warn(
+      `None of the extensions [${names.join(', ')}] were found in the editor schema. Ensure they are included in the editor configuration.`,
+    )
+  }
+  return found
+}

@@ -1,6 +1,7 @@
 import type { ModelRef } from 'vue'
 import { Subscript } from '@tiptap/extension-subscript'
 import { Superscript } from '@tiptap/extension-superscript'
+import { TextAlign } from '@tiptap/extension-text-align'
 import StarterKit from '@tiptap/starter-kit'
 import { useEditor } from '@tiptap/vue-3'
 
@@ -11,6 +12,7 @@ export const [useProvideEditorStore, useEditorStore] = createInjectionState((mod
       StarterKit,
       Superscript,
       Subscript,
+      TextAlign.configure({ types: ['heading', 'paragraph'] }),
     ],
     editorProps: {
       attributes: {

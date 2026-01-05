@@ -41,6 +41,13 @@ const { editor } = useProvideEditorStore(modelValue)
 
       <TiptapToolbarSeparator />
 
+      <TiptapToolbarGroup>
+        <TiptapTextAlignButton align="left" />
+        <TiptapTextAlignButton align="center" />
+        <TiptapTextAlignButton align="right" />
+        <TiptapTextAlignButton align="justify" />
+      </TiptapToolbarGroup>
+
       <!-- <button
         :disabled="!editor.can().chain().focus().toggleItalic().run()"
         :class="{ 'is-active': editor.isActive('italic') }"
