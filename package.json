@@ -25,6 +25,8 @@
     "@nuxtjs/tailwindcss": "6.14.0",
     "@semi-bot/semi-theme-cnode": "^0.0.1",
     "@tailwindcss/typography": "^0.5.19",
+    "@tiptap/extension-subscript": "^3.14.0",
+    "@tiptap/extension-superscript": "^3.14.0",
     "@tiptap/pm": "^3.13.0",
     "@tiptap/starter-kit": "^3.13.0",
     "@tiptap/vue-3": "^3.13.0",

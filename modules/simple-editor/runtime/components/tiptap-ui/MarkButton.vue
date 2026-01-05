@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Editor } from '@tiptap/vue-3'
 import type { DefineComponent } from 'vue'
-import { TiptapBoldIcon, TiptapItalicIcon } from '#components'
+import { TiptapBoldIcon, TiptapCode2Icon, TiptapItalicIcon, TiptapStrikeIcon, TiptapSubscriptIcon, TiptapSuperscriptIcon, TiptapUnderlineIcon } from '#components'
 
 type Mark
   = | 'bold'
@@ -49,6 +49,11 @@ function useMark() {
   const markIcons = {
     bold: TiptapBoldIcon,
     italic: TiptapItalicIcon,
+    strike: TiptapStrikeIcon,
+    code: TiptapCode2Icon,
+    underline: TiptapUnderlineIcon,
+    superscript: TiptapSuperscriptIcon,
+    subscript: TiptapSubscriptIcon,
   } as Record<Mark, DefineComponent>
 
   const MARK_SHORTCUT_KEYS: Record<Mark, string> = {
@@ -83,21 +88,28 @@ function useMark() {
   })
 
   function handleSelectionUpdate() {
-    setIsVisible(shouldShowButton())
+    setIsVisible(shouldShowButton({
+      editor: editor.value,
+      hideWhenUnavailable: props.hideWhenUnavailable,
+      type: props.type,
+    }))
   }
 
-  function shouldShowButton() {
-    if (!editor.value || !editor.value.isEditable) {
+  function shouldShowButton(props: {
+    editor: Editor | undefined
+    hideWhenUnavailable: boolean
+    type: Mark
+  }) {
+    const { editor, hideWhenUnavailable, type } = props
+    if (!editor || !editor.isEditable) {
       return false
     }
-    if (!isMarkInSchema(props.type, editor.value)) {
+    if (!isMarkInSchema(type, editor)) {
       return false
     }
-
-    if (props.hideWhenUnavailable && !editor.value.isActive('code')) {
-      return canToggleMark(editor.value, props.type)
+    if (hideWhenUnavailable && !editor.isActive('code')) {
+      return canToggleMark(editor, type)
     }
-
     return true
   }
 
@@ -116,11 +128,12 @@ function useMark() {
   }
 
   function toggleMark(editor: Editor | undefined, type: Mark): boolean {
-    if (!editor || !editor.isEditable)
+    if (!editor || !editor.isEditable) {
       return false
-    if (!canToggleMark(editor, type))
+    }
+    if (!canToggleMark(editor, type)) {
       return false
-
+    }
     return editor.chain().focus().toggleMark(type).run()
   }
 
@@ -128,7 +141,6 @@ function useMark() {
     if (!editor.value) {
       return false
     }
-
     const success = toggleMark(editor.value, props.type)
     if (success) {
       props.onToggled?.()
@@ -149,7 +161,15 @@ function useMark() {
 </script>
 
 <template>
-  <TiptapButton v-if="isVisible" type="button" :disabled="!canToggle" data-style="ghost" :data-active-state="`${isActive ? 'on' : 'off'}`" :data-disabled="!canToggle" v-bind="attrs" @click="handleClick">
+  <TiptapButton
+    v-if="isVisible"
+    type="button"
+    data-style="ghost"
+    :data-active-state="`${isActive ? 'on' : 'off'}`" :data-disabled="!canToggle"
+    :disabled="!canToggle"
+    v-bind="attrs"
+    @click="handleClick"
+  >
     <template #tooltip>
       {{ label }}
     </template>

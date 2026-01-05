@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { } from '@tiptap/starter-kit'
 import { EditorContent } from '@tiptap/vue-3'
 
 const modelValue = defineModel<string>()
@@ -12,8 +11,18 @@ const { editor } = useProvideEditorStore(modelValue)
       <TiptapSpacer />
 
       <TiptapToolbarGroup>
+        <TiptapUndoRedoButton action="undo" />
+        <TiptapUndoRedoButton action="redo" />
+      </TiptapToolbarGroup>
+
+      <TiptapToolbarSeparator />
+
+      <TiptapToolbarGroup>
         <TiptapMarkButton type="bold" />
         <TiptapMarkButton type="italic" />
+        <TiptapMarkButton type="strike" />
+        <TiptapMarkButton type="code" />
+        <TiptapMarkButton type="underline" />
         <!-- <button
           :disabled="!editor.can().chain().focus().toggleBold().run()"
           :class="{ 'is-active': editor.isActive('bold') }"
@@ -22,6 +31,15 @@ const { editor } = useProvideEditorStore(modelValue)
           bold
         </button> -->
       </TiptapToolbarGroup>
+
+      <TiptapToolbarSeparator />
+
+      <TiptapToolbarGroup>
+        <TiptapMarkButton type="superscript" />
+        <TiptapMarkButton type="subscript" />
+      </TiptapToolbarGroup>
+
+      <TiptapToolbarSeparator />
 
       <!-- <button
         :disabled="!editor.can().chain().focus().toggleItalic().run()"
