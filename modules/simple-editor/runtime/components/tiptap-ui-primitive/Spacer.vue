@@ -1,16 +1,12 @@
 <script setup lang="ts">
-const props = withDefaults(defineProps<{
+const { orientation = 'horizontal', size } = defineProps<{
   orientation?: 'horizontal' | 'vertical'
   size?: string | number
-}>(), {
-  orientation: 'horizontal',
-})
+}>()
 
 const attrs = useAttrs()
 
 const computedStyle = computed(() => {
-  const { orientation, size } = props
-
   return {
     ...(attrs.style ?? {}),
     ...(orientation === 'horizontal' && !size && { flex: 1 }),
@@ -23,5 +19,5 @@ const computedStyle = computed(() => {
 </script>
 
 <template>
-  <div v-bind="$attrs" :style="computedStyle" />
+  <div v-bind="attrs" :style="computedStyle" />
 </template>

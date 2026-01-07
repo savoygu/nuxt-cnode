@@ -1,11 +1,16 @@
-import type { ModelRef } from 'vue'
+import type { ModelRef, TemplateRef } from 'vue'
 import { Subscript } from '@tiptap/extension-subscript'
 import { Superscript } from '@tiptap/extension-superscript'
 import { TextAlign } from '@tiptap/extension-text-align'
 import StarterKit from '@tiptap/starter-kit'
 import { useEditor } from '@tiptap/vue-3'
 
-export const [useProvideEditorStore, useEditorStore] = createInjectionState((modelValue: ModelRef<string | undefined>) => {
+export const [useProvideEditorStore, useEditorStore] = createInjectionState((config: {
+  editorRef: TemplateRef<HTMLElement>
+  modelValue: ModelRef<string | undefined>
+}) => {
+  const { editorRef, modelValue } = config
+
   const editor = useEditor({
     content: modelValue.value,
     extensions: [
@@ -24,6 +29,10 @@ export const [useProvideEditorStore, useEditorStore] = createInjectionState((mod
     },
   })
 
+  const appendTo = computed(() => {
+    return editorRef.value || document.body
+  })
+
   watch(modelValue, (value) => {
     const isSame = editor.value?.getHTML() === value
     if (isSame) {
@@ -37,5 +46,5 @@ export const [useProvideEditorStore, useEditorStore] = createInjectionState((mod
     editor.value?.destroy()
   })
 
-  return { editor, canCommand: editor.value?.can }
+  return { editorRef, editor, appendTo, canCommand: editor.value?.can }
 })

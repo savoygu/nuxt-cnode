@@ -1,9 +1,7 @@
 <script setup lang="ts">
-withDefaults(defineProps<{
+const { variant = 'fixed' } = defineProps<{
   variant?: 'floating' | 'fixed'
-}>(), {
-  variant: 'fixed',
-})
+}>()
 
 const toolbarRef = useTemplateRef('toolbar')
 

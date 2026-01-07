@@ -87,8 +87,13 @@ export default defineNuxtConfig({
   // Defaults options
   tailwindcss: {
     cssPath: [`~/assets/css/tailwind.css`, { injectPosition: 'first' }],
-    config: {},
+    config: {
+      content: [
+        // 修复 simple-editor 模块中样式 size- !important max-w- 失效问题
+        'modules/simple-editor/**/*.{vue,js,jsx,mjs,ts,tsx}',
+      ],
+    },
     viewer: true,
-    exposeConfig: false,
+    exposeConfig: true,
   },
 })

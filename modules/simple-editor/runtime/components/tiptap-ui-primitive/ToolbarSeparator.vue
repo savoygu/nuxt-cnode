@@ -1,9 +1,7 @@
 <script setup lang="ts">
-withDefaults(defineProps<{
+const { orientation = 'vertical' } = defineProps<{
   orientation?: string
-}>(), {
-  orientation: 'vertical',
-})
+}>()
 
 const separatorRef = useTemplateRef('separator')
 

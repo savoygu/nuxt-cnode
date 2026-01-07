@@ -1,77 +1,27 @@
 <script setup lang="ts">
+import type { ButtonHTMLAttributes } from 'vue'
+
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<{
+const { className, shortcutKeys, showTooltip = true } = defineProps<ButtonProps>()
+
+const slots = defineSlots<{
+  default: () => any
+  tooltip?: () => any
+}>()
+
+export interface ButtonProps extends /* @vue-ignore */ ButtonHTMLAttributes {
   className?: string
   showTooltip?: boolean
   shortcutKeys?: string
-}>(), {
-  showTooltip: true,
-})
-
-defineSlots<{
-  default: () => any
-  tooltip: () => any
-}>()
+}
 
 const attrs = useAttrs()
 const buttonRef = useTemplateRef('button')
-const { shortcuts } = useShortcuts(props)
-
-function useShortcuts(props: { shortcutKeys?: string }) {
-  const MAC_SYMBOLS: Record<string, string> = {
-    mod: '⌘',
-    command: '⌘',
-    meta: '⌘',
-    ctrl: '⌃',
-    control: '⌃',
-    alt: '⌥',
-    option: '⌥',
-    shift: '⇧',
-    backspace: 'Del',
-    delete: '⌦',
-    enter: '⏎',
-    escape: '⎋',
-    capslock: '⇪',
-  } as const
-
-  const shortcuts = computed(() => {
-    return parseShortcutKeys({ shortcutKeys: props.shortcutKeys })
-  })
-
-  function isMac(): boolean {
-    return (
-      typeof navigator !== 'undefined'
-      && navigator.platform.toLowerCase().includes('mac')
-    )
-  }
-
-  function parseShortcutKeys(props: { shortcutKeys?: string, delimiter?: string, capitalize?: boolean }) {
-    const { shortcutKeys, delimiter = '+', capitalize = true } = props
-    if (!shortcutKeys)
-      return []
-
-    return shortcutKeys
-      .split(delimiter)
-      .map(key => key.trim())
-      .map(key => formatShortcutKey(key, isMac(), capitalize))
-  }
-
-  function formatShortcutKey(key: string, isMac: boolean, capitalize: boolean = true) {
-    if (isMac) {
-      const lowerKey = key.toLowerCase()
-      return MAC_SYMBOLS[lowerKey] || (capitalize ? key.toUpperCase() : key)
-    }
-
-    return capitalize ? key.charAt(0).toUpperCase() + key.slice(1) : key
-  }
-
-  return {
-    shortcuts,
-  }
-}
+const { appendTo } = useEditorStore()!
+const { shortcuts } = useShortcuts({ shortcutKeys: () => shortcutKeys })
 
 defineExpose({
   buttonRef,
@@ -79,27 +29,29 @@ defineExpose({
 </script>
 
 <template>
-  <template v-if="!showTooltip || !$slots.tooltip">
+  <template v-if="!showTooltip || !slots.tooltip">
     <button ref="button" class="tiptap-button" :class="className" v-bind="attrs">
       <slot />
     </button>
   </template>
-  <ElTooltip v-else placement="top">
-    <button ref="button" class="tiptap-button" :class="className" v-bind="attrs">
-      <slot />
-    </button>
-    <template #content>
-      <slot name="tooltip" />
-      <div>
-        <template v-for="(key, index) in shortcuts" :key="index">
-          <template v-if="index > 0">
-            <kbd>+</kbd>
+  <div v-else>
+    <ElTooltip placement="top" :append-to="appendTo">
+      <button ref="button" class="tiptap-button" :class="className" v-bind="attrs">
+        <slot />
+      </button>
+      <template #content>
+        <slot name="tooltip" />
+        <div>
+          <template v-for="(key, index) in shortcuts" :key="index">
+            <template v-if="index > 0">
+              <kbd>+</kbd>
+            </template>
+            <kbd>{{ key }}</kbd>
           </template>
-          <kbd>{{ key }}</kbd>
-        </template>
-      </div>
-    </template>
-  </ElTooltip>
+        </div>
+      </template>
+    </ElTooltip>
+  </div>
 </template>
 
 <style>

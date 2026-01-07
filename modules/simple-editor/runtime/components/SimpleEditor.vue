@@ -2,17 +2,28 @@
 import { EditorContent } from '@tiptap/vue-3'
 
 const modelValue = defineModel<string>()
-const { editor } = useProvideEditorStore(modelValue)
+
+const editorRef = useTemplateRef('simple-editor')
+const { editor } = useProvideEditorStore({
+  modelValue,
+  editorRef,
+})
 </script>
 
 <template>
-  <div class="simple-editor">
+  <div ref="simple-editor" class="simple-editor">
     <TiptapToolbar v-if="editor">
       <TiptapSpacer />
 
       <TiptapToolbarGroup>
         <TiptapUndoRedoButton action="undo" />
         <TiptapUndoRedoButton action="redo" />
+      </TiptapToolbarGroup>
+
+      <TiptapToolbarSeparator />
+
+      <TiptapToolbarGroup>
+        <TiptapHeadingDropdownMenu :levels="[1, 2, 3, 4]" />
       </TiptapToolbarGroup>
 
       <TiptapToolbarSeparator />
