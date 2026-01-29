@@ -9,7 +9,7 @@ const showTag = computed(() => {
   return !tab || tab === 'all' || tab === 'good'
 })
 
-const { list: topics, initialLoading: pending, fetch: fetchTopics } = usePaginatedList({
+const { list: topics, initialLoading, shouldShowLoading, loading, finished, fetch: fetchTopics } = usePaginatedList({
   fetcher: (page, limit) => $api.cnode.topics({ tab: currentTab.value, page, limit, mdrender: 'false' }),
   processor(data) {
     return data ?? []
@@ -45,13 +45,17 @@ catch (err) {
           {{ value.name }}
         </NuxtLink>
       </template>
-      <div v-if="!pending" class="rounded-b-small bg-white">
+      <div v-if="!initialLoading" class="rounded-b-small bg-white">
         <TopicList v-if="topics && topics.length > 0" :topics="topics" :show-tag="showTag" />
         <div v-else>
           暂无数据
         </div>
       </div>
       <Skeleton v-else />
+      <div v-if="shouldShowLoading" class="p-4 all-center">
+        <span v-if="loading" class="ver-center"><NuxtIcon name="uil:spinner-alt" class="mr-1 animate-spin" />正在载入中...</span>
+        <span v-if="finished">没有更多内容了</span>
+      </div>
     </Panel>
     <template #sidebar>
       <SidebarUserProfile title="个人信息" />

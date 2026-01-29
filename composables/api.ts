@@ -120,6 +120,13 @@ export function usePaginatedList<T>({
   const loading = ref(false) // 用于客户端加载“更多”的状态
   const finished = ref(false)
 
+  const initialLoading = computed(() => {
+    return dataState.value?.pending
+  })
+  const shouldShowLoading = computed(() => {
+    return loading.value || finished.value
+  })
+
   watch(
     () => dataState.value?.data?.data,
     (newData) => {
@@ -190,11 +197,12 @@ export function usePaginatedList<T>({
 
   return {
     dataState,
-    initialLoading: computed(() => dataState.value?.pending),
+    initialLoading,
     page,
     list,
     loading,
     finished,
+    shouldShowLoading,
     fetch,
     loadMore,
   }

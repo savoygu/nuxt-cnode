@@ -509,6 +509,19 @@
     white-space: nowrap;
   }
 
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+
   .button-base {
     @apply inline-block px-[10px] py-[3px] border-none rounded-[3px] text-white cursor-pointer text-[14px] tracking-[2px] leading-[2em] transition-all duration-200 ease-in-out;
   }
