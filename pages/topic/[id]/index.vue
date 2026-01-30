@@ -115,7 +115,9 @@ const hello = ref(`<p>I'm running Tiptap with Vue.js. 🎉</p>`)
     <Panel v-if="user" id="reply-topic" title="添加回复" bordered>
       {{ hello }}
       <ClientOnly>
-        <TiptapSimpleEditor v-model="hello" />
+        <div class="h-[70vh] w-full">
+          <TiptapSimpleEditor v-model="hello" />
+        </div>
       </ClientOnly>
       <!-- <TopicReply :topic="topic" @reply="handleTopicReply" /> -->
     </Panel>

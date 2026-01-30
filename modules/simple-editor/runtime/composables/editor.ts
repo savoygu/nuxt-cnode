@@ -1,4 +1,5 @@
 import type { ModelRef, TemplateRef } from 'vue'
+import { TaskItem, TaskList } from '@tiptap/extension-list'
 import { Subscript } from '@tiptap/extension-subscript'
 import { Superscript } from '@tiptap/extension-superscript'
 import { TextAlign } from '@tiptap/extension-text-align'
@@ -18,10 +19,12 @@ export const [useProvideEditorStore, useEditorStore] = createInjectionState((con
       Superscript,
       Subscript,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
+      TaskList,
+      TaskItem.configure({ nested: true }),
     ],
     editorProps: {
       attributes: {
-        class: 'prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none',
+        class: 'simple-editor',
       },
     },
     onUpdate({ editor }) {

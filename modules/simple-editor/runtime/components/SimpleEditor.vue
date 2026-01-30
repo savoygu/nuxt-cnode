@@ -11,7 +11,7 @@ const { editor } = useProvideEditorStore({
 </script>
 
 <template>
-  <div ref="simple-editor" class="simple-editor">
+  <div ref="simple-editor" class="simple-editor-wrapper">
     <TiptapToolbar v-if="editor">
       <TiptapSpacer />
 
@@ -24,6 +24,9 @@ const { editor } = useProvideEditorStore({
 
       <TiptapToolbarGroup>
         <TiptapHeadingDropdownMenu :levels="[1, 2, 3, 4]" />
+        <TiptapListDropdownMenu
+          :types="['bulletList', 'orderedList', 'taskList']"
+        />
       </TiptapToolbarGroup>
 
       <TiptapToolbarSeparator />
@@ -171,12 +174,22 @@ const { editor } = useProvideEditorStore({
         redo
       </button> -->
     </TiptapToolbar>
-    <EditorContent :editor="editor" class="mx-auto flex size-full max-w-[648px] flex-1 flex-col" />
+    <EditorContent :editor="editor" class="simple-editor-content" />
   </div>
 </template>
 
 <style>
-.simple-editor {
+.simple-editor-wrapper {
+  /******************
+  Basics
+  ******************/
+
+  overflow-wrap: break-word;
+  text-size-adjust: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
   /******************
   Colors variables
   ******************/
@@ -326,135 +339,179 @@ const { editor } = useProvideEditorStore({
   --tt-accent-contrast: 8%;
   --tt-destructive-contrast: 8%;
   --tt-foreground-contrast: 8%;
+
+  &,
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+    transition: none var(--tt-transition-duration-default) var(--tt-transition-easing-default);
+  }
 }
 </style>
 
 <style>
-.simple-editor {
+.simple-editor-wrapper {
+  /**************************************************
+      Global colors
+  **************************************************/
+
+  /* Global colors - Light mode */
+  --tt-bg-color: var(--white);
+  --tt-border-color: var(--tt-gray-light-a-200);
+  --tt-border-color-tint: var(--tt-gray-light-a-100);
+  --tt-sidebar-bg-color: var(--tt-gray-light-100);
+  --tt-scrollbar-color: var(--tt-gray-light-a-200);
+  --tt-cursor-color: var(--tt-brand-color-500);
+  --tt-selection-color: rgba(157, 138, 255, 0.2);
+  --tt-card-bg-color: var(--white);
+  --tt-card-border-color: var(--tt-gray-light-a-100);
+
+  /* Global colors - Dark mode */
+  &.dark {
+    --tt-bg-color: var(--black);
+    --tt-border-color: var(--tt-gray-dark-a-200);
+    --tt-border-color-tint: var(--tt-gray-dark-a-100);
+    --tt-sidebar-bg-color: var(--tt-gray-dark-100);
+    --tt-scrollbar-color: var(--tt-gray-dark-a-200);
+    --tt-cursor-color: var(--tt-brand-color-400);
+    --tt-selection-color: rgba(122, 82, 255, 0.2);
+    --tt-card-bg-color: var(--tt-gray-dark-50);
+    --tt-card-border-color: var(--tt-gray-dark-a-50);
+
+    --tt-shadow-elevated-md:
+      0px 16px 48px 0px rgba(0, 0, 0, 0.5), 0px 12px 24px 0px rgba(0, 0, 0, 0.24), 0px 6px 8px 0px rgba(0, 0, 0, 0.22),
+      0px 2px 3px 0px rgba(0, 0, 0, 0.12);
+  }
+}
+</style>
+
+<style>
+.simple-editor-wrapper {
+  /* Text colors */
+  --tt-color-text-gray: hsl(45, 2%, 46%);
+  --tt-color-text-brown: hsl(19, 31%, 47%);
+  --tt-color-text-orange: hsl(30, 89%, 45%);
+  --tt-color-text-yellow: hsl(38, 62%, 49%);
+  --tt-color-text-green: hsl(148, 32%, 39%);
+  --tt-color-text-blue: hsl(202, 54%, 43%);
+  --tt-color-text-purple: hsl(274, 32%, 54%);
+  --tt-color-text-pink: hsl(328, 49%, 53%);
+  --tt-color-text-red: hsl(2, 62%, 55%);
+
+  --tt-color-text-gray-contrast: hsla(39, 26%, 26%, 0.15);
+  --tt-color-text-brown-contrast: hsla(18, 43%, 69%, 0.35);
+  --tt-color-text-orange-contrast: hsla(24, 73%, 55%, 0.27);
+  --tt-color-text-yellow-contrast: hsla(44, 82%, 59%, 0.39);
+  --tt-color-text-green-contrast: hsla(126, 29%, 60%, 0.27);
+  --tt-color-text-blue-contrast: hsla(202, 54%, 59%, 0.27);
+  --tt-color-text-purple-contrast: hsla(274, 37%, 64%, 0.27);
+  --tt-color-text-pink-contrast: hsla(331, 60%, 71%, 0.27);
+  --tt-color-text-red-contrast: hsla(8, 79%, 79%, 0.4);
+
+  &.dark {
+    --tt-color-text-gray: hsl(0, 0%, 61%);
+    --tt-color-text-brown: hsl(18, 35%, 58%);
+    --tt-color-text-orange: hsl(25, 53%, 53%);
+    --tt-color-text-yellow: hsl(36, 54%, 55%);
+    --tt-color-text-green: hsl(145, 32%, 47%);
+    --tt-color-text-blue: hsl(202, 64%, 52%);
+    --tt-color-text-purple: hsl(270, 55%, 62%);
+    --tt-color-text-pink: hsl(329, 57%, 58%);
+    --tt-color-text-red: hsl(1, 69%, 60%);
+
+    --tt-color-text-gray-contrast: hsla(0, 0%, 100%, 0.09);
+    --tt-color-text-brown-contrast: hsla(17, 45%, 50%, 0.25);
+    --tt-color-text-orange-contrast: hsla(27, 82%, 53%, 0.2);
+    --tt-color-text-yellow-contrast: hsla(35, 49%, 47%, 0.2);
+    --tt-color-text-green-contrast: hsla(151, 55%, 39%, 0.2);
+    --tt-color-text-blue-contrast: hsla(202, 54%, 43%, 0.2);
+    --tt-color-text-purple-contrast: hsla(271, 56%, 60%, 0.18);
+    --tt-color-text-pink-contrast: hsla(331, 67%, 58%, 0.22);
+    --tt-color-text-red-contrast: hsla(0, 67%, 60%, 0.25);
+  }
+}
+</style>
+
+<style>
+.simple-editor-wrapper {
+  /* Highlight colors */
+  --tt-color-highlight-yellow: #fef9c3;
+  --tt-color-highlight-green: #dcfce7;
+  --tt-color-highlight-blue: #e0f2fe;
+  --tt-color-highlight-purple: #f3e8ff;
+  --tt-color-highlight-red: #ffe4e6;
+  --tt-color-highlight-gray: rgb(248, 248, 247);
+  --tt-color-highlight-brown: rgb(244, 238, 238);
+  --tt-color-highlight-orange: rgb(251, 236, 221);
+  --tt-color-highlight-pink: rgb(252, 241, 246);
+
+  --tt-color-highlight-yellow-contrast: #fbe604;
+  --tt-color-highlight-green-contrast: #c7fad8;
+  --tt-color-highlight-blue-contrast: #ceeafd;
+  --tt-color-highlight-purple-contrast: #e4ccff;
+  --tt-color-highlight-red-contrast: #ffccd0;
+  --tt-color-highlight-gray-contrast: rgba(84, 72, 49, 0.15);
+  --tt-color-highlight-brown-contrast: rgba(210, 162, 141, 0.35);
+  --tt-color-highlight-orange-contrast: rgba(224, 124, 57, 0.27);
+  --tt-color-highlight-pink-contrast: rgba(225, 136, 179, 0.27);
+
+  &.dark {
+    --tt-color-highlight-yellow: #6b6524;
+    --tt-color-highlight-green: #509568;
+    --tt-color-highlight-blue: #6e92aa;
+    --tt-color-highlight-purple: #583e74;
+    --tt-color-highlight-red: #743e42;
+    --tt-color-highlight-gray: rgb(47, 47, 47);
+    --tt-color-highlight-brown: rgb(74, 50, 40);
+    --tt-color-highlight-orange: rgb(92, 59, 35);
+    --tt-color-highlight-pink: rgb(78, 44, 60);
+
+    --tt-color-highlight-yellow-contrast: #58531e;
+    --tt-color-highlight-green-contrast: #47855d;
+    --tt-color-highlight-blue-contrast: #5e86a1;
+    --tt-color-highlight-purple-contrast: #4c3564;
+    --tt-color-highlight-red-contrast: #643539;
+    --tt-color-highlight-gray-contrast: rgba(255, 255, 255, 0.094);
+    --tt-color-highlight-brown-contrast: rgba(184, 101, 69, 0.25);
+    --tt-color-highlight-orange-contrast: rgba(233, 126, 37, 0.2);
+    --tt-color-highlight-pink-contrast: rgba(220, 76, 145, 0.22);
+  }
+}
+</style>
+
+<style>
+@import './tiptap-node/blockquote-node/blockquote-node.css';
+@import './tiptap-node/code-block-node/code-block-node.css';
+@import './tiptap-node/heading-node/heading-node.css';
+@import './tiptap-node/image-node/image-node.css';
+@import './tiptap-node/list-node/list-node.css';
+@import './tiptap-node/paragraph-node/paragraph-node.css';
+
+.simple-editor-wrapper {
   width: 100%;
   height: 100%;
   overflow: auto;
 }
 
-.tiptap-toolbar-group {
+.simple-editor-content {
+  max-width: 648px;
+  width: 100%;
+  margin: 0 auto;
+  height: 100%;
   display: flex;
-  align-items: center;
-  gap: 2px;
+  flex-direction: column;
+  flex: 1;
 }
 
-.tiptap-separator {
-  flex-shrink: 0;
-  width: 1px;
-  height: 24px;
-  background-color: #e5e5e5;
+.simple-editor-content .tiptap.ProseMirror.simple-editor {
+  flex: 1;
+  padding: 3rem 3rem 30vh;
 }
 
-.tiptap-button {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.15;
-  height: 32px;
-  min-width: 32px;
-  border: none;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  transition-property: background, color, opacity;
-  transition-duration: 0.2s;
-  transition-timing-function: cubic-bezier(0.46, 0.03, 0.52, 0.96);
-}
-
-/* Basic editor styles */
-.tiptap {
-  :first-child {
-    margin-top: 0;
-  }
-
-  /* List styles */
-  ul,
-  ol {
-    padding: 0 1rem;
-    margin: 1.25rem 1rem 1.25rem 0.4rem;
-
-    li p {
-      margin-top: 0.25em;
-      margin-bottom: 0.25em;
-    }
-  }
-
-  /* Heading styles */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    line-height: 1.1;
-    margin-top: 2.5rem;
-    text-wrap: pretty;
-  }
-
-  h1,
-  h2 {
-    margin-top: 3.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  h1 {
-    font-size: 1.4rem;
-  }
-
-  h2 {
-    font-size: 1.2rem;
-  }
-
-  h3 {
-    font-size: 1.1rem;
-  }
-
-  h4,
-  h5,
-  h6 {
-    font-size: 1rem;
-  }
-
-  /* Code and preformatted text styles */
-  code {
-    background-color: var(--purple-light);
-    border-radius: 0.4rem;
-    color: var(--black);
-    font-size: 0.85rem;
-    padding: 0.25em 0.3em;
-  }
-
-  pre {
-    background: var(--black);
-    border-radius: 0.5rem;
-    color: var(--white);
-    font-family: 'JetBrainsMono', monospace;
-    margin: 1.5rem 0;
-    padding: 0.75rem 1rem;
-
-    code {
-      background: none;
-      color: inherit;
-      font-size: 0.8rem;
-      padding: 0;
-    }
-  }
-
-  blockquote {
-    border-left: 3px solid var(--gray-3);
-    margin: 1.5rem 0;
-    padding-left: 1rem;
-  }
-
-  hr {
-    border: none;
-    border-top: 1px solid var(--gray-2);
-    margin: 2rem 0;
+@media screen and (max-width: 480px) {
+  .simple-editor-content .tiptap.ProseMirror.simple-editor {
+    padding: 1rem 1.5rem 30vh;
   }
 }
 </style>
