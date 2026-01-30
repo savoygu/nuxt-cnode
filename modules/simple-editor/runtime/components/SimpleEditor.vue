@@ -27,6 +27,8 @@ const { editor } = useProvideEditorStore({
         <TiptapListDropdownMenu
           :types="['bulletList', 'orderedList', 'taskList']"
         />
+        <TiptapBlockquoteButton />
+        <TiptapCodeBlockButton />
       </TiptapToolbarGroup>
 
       <TiptapToolbarSeparator />
