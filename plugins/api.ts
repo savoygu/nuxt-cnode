@@ -5,7 +5,8 @@ export default defineNuxtPlugin({
   name: 'api',
   setup() {
     const config = useRuntimeConfig()
-    const logger = useLogger('[plugin:api]')
+    const logger = useLogger(`[${import.meta.server ? 'server' : 'client'}:plugin:api]`)
+    const traceId = useTraceId()
 
     function normalizeApiResponse<T = any>(response: APIResponse<T>): APIResponse<T> {
       if (has(response, 'error_msg')) {
@@ -67,9 +68,12 @@ export default defineNuxtPlugin({
       },
       onResponseError({ response, request, options, error }) {
         logger.error({
+          requestId: traceId.value,
           request,
           ...pick(options, ['method', 'body']),
           ...pick(response, ['status', 'statusText', '_data']),
+          traceId: response.headers.get('x-trace-id'),
+          cookie: options.headers.get('cookie'),
           ...error,
         }, 'response error')
       },

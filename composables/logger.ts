@@ -11,8 +11,13 @@ export function hasLoggerParam() {
 
 export function useLogger(msgPrefix: string, bindings: Bindings = {}) {
   const { $logger } = useNuxtApp()
+  const isServer = import.meta.server
 
-  const childLogger = $logger.child(bindings, { msgPrefix })
+  if (!msgPrefix.startsWith('[client:') && !msgPrefix.startsWith('[server:')) {
+    msgPrefix = msgPrefix.replace('[', isServer ? '[server:' : '[client:')
+  }
+
+  const childLogger = $logger.child(bindings, { msgPrefix: isServer ? '' : msgPrefix })
 
   const addPrefix = (args: any[]): LogFnArgs => {
     if (args.length > 0 && typeof args[0] === 'string') {
