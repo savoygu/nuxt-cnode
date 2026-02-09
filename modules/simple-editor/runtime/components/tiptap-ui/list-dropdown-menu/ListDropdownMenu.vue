@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { ButtonProps } from '../../tiptap-ui-primitive/Button.vue'
 import type { UseListDropdownMenuConfig } from './useListDropdownMenu'
-import ChevronDownIcon from '../../tiptap-icons/ChevronDownIcon.vue'
 import { useListDropdownMenu } from './useListDropdownMenu'
 
 const { types = ['bulletList', 'orderedList', 'taskList'], hideWhenUnavailable = false, onOpenChange, ...buttonProps } = defineProps<ListDropdownMenuProps>()
@@ -53,7 +52,7 @@ function handleOpenChange(open: boolean) {
         List
       </template>
       <component :is="Icon" class="tiptap-button-icon" />
-      <ChevronDownIcon class="tiptap-button-dropdown-small" />
+      <TiptapChevronDownIcon class="tiptap-button-dropdown-small" />
     </TiptapButton>
     <template #dropdown>
       <ElDropdownMenu class="!p-1.5">

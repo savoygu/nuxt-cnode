@@ -1,4 +1,5 @@
 import type { ModelRef, TemplateRef } from 'vue'
+import { Highlight } from '@tiptap/extension-highlight'
 import { TaskItem, TaskList } from '@tiptap/extension-list'
 import { Subscript } from '@tiptap/extension-subscript'
 import { Superscript } from '@tiptap/extension-superscript'
@@ -21,6 +22,7 @@ export const [useProvideEditorStore, useEditorStore] = createInjectionState((con
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
       TaskList,
       TaskItem.configure({ nested: true }),
+      Highlight.configure({ multicolor: true }),
     ],
     editorProps: {
       attributes: {

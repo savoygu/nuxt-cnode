@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { ButtonProps } from '../../tiptap-ui-primitive/Button.vue'
 import type { UseHeadingDropdownMenuConfig } from './useHeadingDropdownMenu'
-import ChevronDownIcon from '../../tiptap-icons/ChevronDownIcon.vue'
 import { useHeadingDropdownMenu } from './useHeadingDropdownMenu'
 
 interface HeadingDropdownMenuProps extends /* @vue-ignore */ Omit<ButtonProps, 'type' | 'disabled'>, UseHeadingDropdownMenuConfig {
@@ -53,7 +52,7 @@ function handleOpenChange(open: boolean) {
         Heading
       </template>
       <component :is="Icon" class="tiptap-button-icon" />
-      <ChevronDownIcon class="tiptap-button-dropdown-small" />
+      <TiptapChevronDownIcon class="tiptap-button-dropdown-small" />
     </TiptapButton>
     <template #dropdown>
       <ElDropdownMenu class="!p-1.5">
