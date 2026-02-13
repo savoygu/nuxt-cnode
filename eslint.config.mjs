@@ -7,7 +7,7 @@ import withNuxt from './.nuxt/eslint.config.mjs'
 const compat = new FlatCompat()
 
 export default withNuxt(
-  antfu({
+  await antfu({
     formatters: {
       css: 'prettier',
     },
