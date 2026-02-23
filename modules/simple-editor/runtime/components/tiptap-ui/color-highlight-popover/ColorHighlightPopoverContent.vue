@@ -48,7 +48,7 @@ const { selectedIndex } = useMenuNavigation({
 <template>
   <TiptapCard ref="container">
     <TiptapCardBody>
-      <TiptapCardItemGroup>
+      <TiptapCardItemGroup orientation="horizontal">
         <TiptapButtonGroup orientation="horizontal">
           <TiptapColorHighlightButton
             v-for="(color, index) in colors"
@@ -62,7 +62,7 @@ const { selectedIndex } = useMenuNavigation({
           </TiptapColorHighlightButton>
         </TiptapButtonGroup>
         <TiptapSeparator />
-        <TiptapButtonGroup>
+        <TiptapButtonGroup orientation="horizontal">
           <TiptapButton
             type="button"
             data-style="ghost"

@@ -45,6 +45,13 @@ function handleOpenChange(open: boolean) {
     trigger="click"
     :disabled="!canColorHighlight"
     :append-to="appendTo"
+    width="auto"
+    :popper-style="{
+      '--el-popover-padding': 0,
+      '--el-popover-bg-color': 'transparent',
+      '--el-popover-border-color': 'transparent',
+      '--el-box-shadow-light': 'none',
+    }"
     @visible-change="handleOpenChange"
   >
     <template #reference>
