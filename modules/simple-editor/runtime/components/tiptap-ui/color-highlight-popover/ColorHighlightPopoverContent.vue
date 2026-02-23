@@ -55,7 +55,11 @@ const { selectedIndex } = useMenuNavigation({
             :key="color.value"
             :highlight-color="color.value"
             :data-highlighted="index === selectedIndex"
-          />
+          >
+            <template #tooltip>
+              {{ color.label }}
+            </template>
+          </TiptapColorHighlightButton>
         </TiptapButtonGroup>
         <TiptapSeparator />
         <TiptapButtonGroup>

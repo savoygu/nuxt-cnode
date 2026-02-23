@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { ButtonProps } from '../../tiptap-ui-primitive/Button.vue'
 
-const { ...buttonProps } = defineProps<Omit<ButtonProps, 'type'>>()
+interface ColorHighlightPopoverButtonProps extends /* @vue-ignore */ Omit<ButtonProps, 'type'> {}
+
+const { ...buttonProps } = defineProps<ColorHighlightPopoverButtonProps>()
 </script>
 
 <template>
@@ -15,8 +17,7 @@ const { ...buttonProps } = defineProps<Omit<ButtonProps, 'type'>>()
         Highlight
       </slot>
     </template>
-    <slot>
-      <TiptapHighlighterIcon class="tiptap-button-icon" />
-    </slot>
+    <slot v-if="$slots.default" />
+    <TiptapHighlighterIcon v-else class="tiptap-button-icon" />
   </TiptapButton>
 </template>

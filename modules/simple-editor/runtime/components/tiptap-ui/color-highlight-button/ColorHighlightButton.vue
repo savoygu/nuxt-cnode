@@ -49,14 +49,17 @@ function handleClick(event: MouseEvent) {
     v-if="isVisible"
     type="button"
     data-style="ghost"
-    :data-active-state="`${isActive ? 'on' : 'off'}`" :data-disabled="!canColorHighlight"
+    :data-active-state="`${isActive ? 'on' : 'off'}`"
+    :data-disabled="!canColorHighlight"
     :disabled="!canColorHighlight"
     :style="buttonStyle"
     v-bind="buttonProps"
     @click="handleClick"
   >
     <template #tooltip>
-      {{ label }}
+      <slot name="tooltip">
+        {{ label }}
+      </slot>
     </template>
     <slot v-if="slots.default" />
     <template v-else>
