@@ -42,7 +42,7 @@
     "eslint-plugin-format": "^1.4.0",
     "eslint-plugin-tailwindcss": "^3.18.2",
     "lodash-es": "^4.17.23",
-    "nitropack": "^2.13.1",
+    "nitropack": "^2.13.3",
     "nuxt": "^4.3.1",
     "ofetch": "^1.5.1",
     "pino": "^10.3.1",
