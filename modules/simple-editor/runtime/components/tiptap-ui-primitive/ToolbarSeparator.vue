@@ -11,7 +11,7 @@ defineExpose({
 </script>
 
 <template>
-  <div ref="separator" class="tiptap-separator" :orientation="orientation" v-bind="$attrs" />
+  <div ref="separator" class="tiptap-separator" :data-orientation="orientation" v-bind="$attrs" />
 </template>
 
 <style>

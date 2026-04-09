@@ -1,6 +1,8 @@
 import type { Node as TiptapNode } from '@tiptap/pm/model'
 import type { Editor } from '@tiptap/vue-3'
-import { NodeSelection } from '@tiptap/pm/state'
+import { NodeSelection, Selection, TextSelection } from '@tiptap/pm/state'
+
+export const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
 
 /**
  * 判断 mark 是否在 schema 中
@@ -158,4 +160,65 @@ export function sanitizeUrl(url: string, baseUrl?: string): string {
     // For other cases, prepend http://
     return `http://${url}`
   }
+}
+
+/**
+ * Focus the next node after the current node
+ */
+export function focusNextNode(editor: Editor) {
+  const { state, view } = editor
+  const { selection } = state
+
+  const nextSel = Selection.findFrom(selection.$to, 1, true)
+  if (nextSel) {
+    view.dispatch(state.tr.setSelection(nextSel).scrollIntoView())
+    return
+  }
+
+  // If no next node, create a new paragraph at the end
+  const paragraphType = state.schema.nodes.paragraph
+  if (!paragraphType) {
+    console.warn('No paragraph node type found in schema.')
+    return
+  }
+
+  const end = state.doc.content.size
+  const para = paragraphType.create()
+  let tr = state.tr.insert(end, para)
+
+  // Place the selection inside the new paragraph
+  const $inside = tr.doc.resolve(end + 1)
+  tr = tr.setSelection(TextSelection.near($inside)).scrollIntoView()
+  view.dispatch(tr)
+}
+
+/* Handles image upload with progress tracking and abort capability
+ * @param file The file to upload
+ * @param onProgress Optional callback for tracking upload progress
+ * @param abortSignal Optional AbortSignal for cancelling the upload
+ * @returns Promise resolving to the URL of the uploaded image
+ */
+export async function handleImageUpload(file: File, onProgress?: (event: { progress: number }) => void, abortSignal?: AbortSignal): Promise<string> {
+  // Validate file
+  if (!file) {
+    throw new Error('No file provided')
+  }
+
+  if (file.size > MAX_FILE_SIZE) {
+    throw new Error(
+      `File size exceeds maximum allowed (${MAX_FILE_SIZE / (1024 * 1024)}MB)`,
+    )
+  }
+
+  // For demo/testing: Simulate upload progress. In production, replace the following code
+  // with your own upload implementation.
+  for (let progress = 0; progress <= 100; progress += 10) {
+    if (abortSignal?.aborted) {
+      throw new Error('Upload cancelled')
+    }
+    await new Promise(resolve => setTimeout(resolve, 500))
+    onProgress?.({ progress })
+  }
+
+  return '/images/tiptap-ui-placeholder-image.jpg'
 }

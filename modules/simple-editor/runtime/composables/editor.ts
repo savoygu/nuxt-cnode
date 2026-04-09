@@ -1,11 +1,15 @@
 import type { ModelRef, TemplateRef } from 'vue'
 import { Highlight } from '@tiptap/extension-highlight'
+import { Image } from '@tiptap/extension-image'
 import { TaskItem, TaskList } from '@tiptap/extension-list'
 import { Subscript } from '@tiptap/extension-subscript'
 import { Superscript } from '@tiptap/extension-superscript'
 import { TextAlign } from '@tiptap/extension-text-align'
+import { Typography } from '@tiptap/extension-typography'
+import { Selection } from '@tiptap/extensions'
 import StarterKit from '@tiptap/starter-kit'
 import { useEditor } from '@tiptap/vue-3'
+import { ImageUploadNode } from '../components/tiptap-node/image-upload-node/image-upload-node-extension'
 
 export const [useProvideEditorStore, useEditorStore] = createInjectionState((config: {
   editorRef: TemplateRef<HTMLElement>
@@ -28,6 +32,16 @@ export const [useProvideEditorStore, useEditorStore] = createInjectionState((con
       TaskList,
       TaskItem.configure({ nested: true }),
       Highlight.configure({ multicolor: true }),
+      Typography,
+      Selection,
+      Image,
+      ImageUploadNode.configure({
+        accept: 'image/*',
+        maxSize: MAX_FILE_SIZE,
+        limit: 3,
+        upload: handleImageUpload,
+        onError: error => console.error('Upload failed:', error),
+      }),
     ],
     editorProps: {
       attributes: {

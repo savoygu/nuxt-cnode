@@ -58,6 +58,12 @@ const { editor } = useProvideEditorStore({
         <TiptapTextAlignButton align="right" />
         <TiptapTextAlignButton align="justify" />
       </TiptapToolbarGroup>
+
+      <TiptapToolbarSeparator />
+
+      <TiptapImageUploadButton text="Add" />
+
+      <TiptapSpacer />
     </TiptapToolbar>
     <EditorContent :editor="editor" class="simple-editor-content" />
   </div>
@@ -370,6 +376,7 @@ const { editor } = useProvideEditorStore({
 @import './tiptap-node/code-block-node/code-block-node.css';
 @import './tiptap-node/heading-node/heading-node.css';
 @import './tiptap-node/image-node/image-node.css';
+@import './tiptap-node/image-upload-node/image-upload-node.css';
 @import './tiptap-node/list-node/list-node.css';
 @import './tiptap-node/paragraph-node/paragraph-node.css';
 
