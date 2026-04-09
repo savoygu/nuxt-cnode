@@ -1,9 +1,9 @@
 <script setup lang="ts">
-interface Props {
+interface CardItemGroupProps {
   orientation?: 'horizontal' | 'vertical'
 }
 
-withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<CardItemGroupProps>(), {
   orientation: 'vertical',
 })
 </script>

@@ -40,6 +40,7 @@ const { editor } = useProvideEditorStore({
         <TiptapMarkButton type="code" />
         <TiptapMarkButton type="underline" />
         <TiptapColorHighlightPopover />
+        <TiptapLinkPopover />
       </TiptapToolbarGroup>
 
       <TiptapToolbarSeparator />

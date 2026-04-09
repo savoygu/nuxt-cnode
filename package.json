@@ -26,6 +26,7 @@
     "@semi-bot/semi-theme-cnode": "^0.0.1",
     "@tailwindcss/typography": "^0.5.19",
     "@tiptap/extension-highlight": "^3.22.3",
+    "@tiptap/extension-link": "^3.22.3",
     "@tiptap/extension-subscript": "^3.22.3",
     "@tiptap/extension-superscript": "^3.22.3",
     "@tiptap/extension-task-list": "^3.22.3",
@@ -35,6 +36,7 @@
     "@tiptap/vue-3": "^3.22.3",
     "@types/codemirror": "^5.60.17",
     "@types/postcss-js": "^4.1.0",
+    "@vue/language-core": "^3.2.6",
     "@vueuse/core": "^14.2.1",
     "@vueuse/nuxt": "^14.2.1",
     "element-plus": "^2.13.6",
@@ -55,7 +57,7 @@
     "tailwindcss": "^3.4.19",
     "typescript": "^5.9.3",
     "vue": "^3.5.32",
-    "vue-router": "^4.6.4",
+    "vue-router": "^5.0.4",
     "vue-use-hotkeys": "^0.4.0"
   }
 }

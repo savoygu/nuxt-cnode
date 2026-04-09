@@ -7,14 +7,16 @@ const { orientation = 'horizontal', size } = defineProps<{
 const attrs = useAttrs()
 
 const computedStyle = computed(() => {
-  return {
-    ...(attrs.style ?? {}),
-    ...(orientation === 'horizontal' && !size && { flex: 1 }),
-    ...(size && {
-      width: orientation === 'vertical' ? '1px' : size,
-      height: orientation === 'horizontal' ? '1px' : size,
-    }),
-  }
+  return [
+    attrs.style,
+    {
+      ...(orientation === 'horizontal' && !size && { flex: 1 }),
+      ...(size && {
+        width: orientation === 'vertical' ? '1px' : size,
+        height: orientation === 'horizontal' ? '1px' : size,
+      }),
+    },
+  ]
 })
 </script>
 

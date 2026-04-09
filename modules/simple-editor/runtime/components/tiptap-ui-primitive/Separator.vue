@@ -9,7 +9,7 @@ interface SeparatorProps extends /* @vue-ignore */ HTMLAttributes {
   decorative?: boolean
 }
 
-const { decorative, orientation = 'vertical', className, ...divProps } = defineProps<SeparatorProps>()
+const { decorative, orientation = 'vertical', className, ...separatorProps } = defineProps<SeparatorProps>()
 
 const ariaOrientation = computed(() => orientation === 'vertical' ? orientation : undefined)
 const semanticProps = computed(() => {
@@ -24,7 +24,7 @@ const semanticProps = computed(() => {
     class="tiptap-separator"
     :class="[className]"
     :data-orientation="orientation"
-    v-bind="{ ...semanticProps, ...divProps }"
+    v-bind="{ ...semanticProps, ...separatorProps }"
   />
 </template>
 

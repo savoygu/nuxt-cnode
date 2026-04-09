@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { CSSProperties } from 'vue'
 import type { ButtonProps } from '../../tiptap-ui-primitive/Button.vue'
 import type { UseColorHighlightConfig } from './useColorHighlight'
 import { useColorHighlight } from './useColorHighlight'
@@ -27,10 +26,12 @@ const { isVisible, canColorHighlight, isActive, label, handleColorHighlight } = 
 })
 
 const buttonStyle = computed(() => {
-  return {
-    ...(attrs.style ?? {}),
-    '--highlight-color': highlightColor,
-  } as CSSProperties
+  return [
+    attrs.style,
+    {
+      '--highlight-color': highlightColor,
+    },
+  ]
 })
 
 function handleClick(event: MouseEvent) {

@@ -16,7 +16,12 @@ export const [useProvideEditorStore, useEditorStore] = createInjectionState((con
   const editor = useEditor({
     content: modelValue.value,
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        link: {
+          openOnClick: false,
+          enableClickSelection: true,
+        },
+      }),
       Superscript,
       Subscript,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),

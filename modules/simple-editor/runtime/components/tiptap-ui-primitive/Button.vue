@@ -5,7 +5,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const { className, shortcutKeys, showTooltip = true } = defineProps<ButtonProps>()
+const { className, shortcutKeys, showTooltip = true, ...buttonProps } = defineProps<ButtonProps>()
 
 const slots = defineSlots<{
   default: () => any
@@ -18,7 +18,6 @@ export interface ButtonProps extends /* @vue-ignore */ ButtonHTMLAttributes {
   shortcutKeys?: string
 }
 
-const attrs = useAttrs()
 const buttonRef = useTemplateRef('button')
 const { appendTo } = useEditorStore()!
 const { shortcuts } = useShortcuts({ shortcutKeys: () => shortcutKeys })
@@ -30,13 +29,13 @@ defineExpose({
 
 <template>
   <template v-if="!showTooltip || !slots.tooltip">
-    <button ref="button" class="tiptap-button" :class="className" v-bind="attrs">
+    <button ref="button" class="tiptap-button" :class="className" v-bind="{ ...buttonProps, ...$attrs }">
       <slot />
     </button>
   </template>
   <div v-else>
     <ElTooltip placement="top" :append-to="appendTo">
-      <button ref="button" class="tiptap-button" :class="className" v-bind="attrs">
+      <button ref="button" class="tiptap-button" :class="className" v-bind="{ ...buttonProps, ...$attrs }">
         <slot />
       </button>
       <template #content>

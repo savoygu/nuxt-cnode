@@ -137,3 +137,25 @@ export function isNodeTypeSelected(editor: Editor | undefined, types: string[] =
 
   return false
 }
+
+/**
+ * Sanitize URL to prevent XSS attacks
+ */
+export function sanitizeUrl(url: string, baseUrl?: string): string {
+  try {
+    const urlObj = new URL(url, baseUrl)
+    // Only allow http, https, mailto, and tel protocols
+    if (!['http:', 'https:', 'mailto:', 'tel:'].includes(urlObj.protocol)) {
+      return '#'
+    }
+    return urlObj.href
+  }
+  catch {
+    // If it's not a valid URL, treat it as a relative URL
+    if (url.startsWith('/') || url.startsWith('#') || url.startsWith('?')) {
+      return url
+    }
+    // For other cases, prepend http://
+    return `http://${url}`
+  }
+}
