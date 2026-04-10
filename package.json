@@ -37,7 +37,6 @@
     "@tiptap/pm": "^3.22.3",
     "@tiptap/starter-kit": "^3.22.3",
     "@tiptap/vue-3": "^3.22.3",
-    "@types/codemirror": "^5.60.17",
     "@types/postcss-js": "^4.1.0",
     "@vue/language-core": "^3.2.6",
     "@vueuse/core": "^14.2.1",

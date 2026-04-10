@@ -3,18 +3,10 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    /* @apply text-[100%] text-size-adjust-[100%]; */
-  }
-
   body {
     @apply m-0 bg-[#e1e1e1] text-[#333] font-sans text-[14px] leading-[20px];
     font-family: 'Helvetica Neue', 'Luxi Sans', 'DejaVu Sans', Tahoma, 'Hiragino Sans GB', STHeiti, sans-serif;
   }
-
-  /* html, body, #__nuxt {
-    @apply h-full;
-  } */
 
   *,
   *::before,
@@ -25,15 +17,6 @@
   a {
     @apply text-primary no-underline;
   }
-
-  /* a:focus, a:hover {
-    @apply text-[#005580] underline;
-  } */
-
-  /* a:focus {
-    @apply outline-dotted outline-[#333] outline-[thin] outline-offset-[-2px];
-    outline: -webkit-focus-ring-color auto 5px;
-  } */
 
   a.dark,
   a.dark:active,
@@ -69,76 +52,6 @@
     width: auto\9;
   }
 
-  /* h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply my-[10px] font-bold leading-[20px];
-    text-rendering: optimizelegibility;
-  }
-
-  h1 small,
-  h2 small,
-  h3 small,
-  h4 small,
-  h5 small,
-  h6 small {
-    @apply text-[#999] font-normal leading-[1];
-  }
-
-  h1,
-  h2,
-  h3 {
-    @apply leading-[40px];
-  }
-
-  h1 {
-    @apply text-[38.5px];
-  }
-
-  h2 {
-    @apply text-[31.5px];
-  }
-
-  h1 small,
-  h3 {
-    @apply text-[24.5px];
-  }
-
-  h2 small,
-  h4 {
-    @apply text-[17.5px];
-  }
-
-  h3 small,
-  h4 small,
-  h5 {
-    @apply text-[14px];
-  }
-
-  h6 {
-    @apply text-[11.9px];
-  } */
-
-  /* ol,
-  ul {
-    @apply p-0 mb-[10px] ml-[25px] list-disc;
-  }
-
-  ol ul,
-  ul ul {
-    @apply list-circle;
-  }
-
-  ol.inline,
-  ol.unstyled,
-  ul.inline,
-  ul.unstyled {
-    @apply ml-0 list-none;
-  } */
-
   dt {
     @apply font-bold;
   }
@@ -154,46 +67,6 @@
   legend small {
     @apply text-[#999] text-[15px];
   }
-
-  /* blockquote {
-    @apply pl-[15px] border-l-[5px] border-l-[#eee] mb-[20px];
-  }
-
-  blockquote p {
-    @apply text-[17.5px] font-light leading-[1.25];
-  }
-
-  blockquote small {
-    @apply text-[#999];
-  }
-
-  blockquote small::before {
-    content: '\2014 \00A0';
-  }
-
-  blockquote.pull-right {
-    @apply pr-[15px] pl-0 border-r-[5px] border-r-[#eee] border-l-0 float-right;
-  }
-
-  blockquote.pull-right p,
-  blockquote.pull-right small {
-    @apply text-right;
-  }
-
-  blockquote.pull-right small::before {
-    content: '';
-  }
-
-  blockquote.pull-right small::after {
-    content: '\00A0 \2014';
-  }
-
-  blockquote::after,
-  blockquote::before,
-  q::after,
-  q::before {
-    content: '';
-  } */
 
   code,
   pre {
@@ -284,8 +157,8 @@
     outline: -webkit-focus-ring-color auto 5px;
   }
 
-  input:placeholder,
-  textarea:placeholder {
+  input::placeholder,
+  textarea::placeholder {
     @apply text-[#999];
   }
 
@@ -323,48 +196,6 @@
   input[type='checkbox'][disabled],
   input[type='checkbox'][readonly] {
     @apply bg-transparent;
-  }
-}
-
-@layer components {
-  .main {
-    @apply w-[90%] min-w-[960px] max-w-[1400px] min-h-[calc(100vh-166px)] flex-1 my-[15px] mx-auto;
-
-    &__content {
-      @apply mr-[305px];
-    }
-
-    &__sidebar {
-      @apply w-[290px] mb-[20px] float-right text-[14px];
-
-      .panel {
-        @apply text-[13px];
-
-        &__header {
-          @apply text-[#51585c];
-        }
-      }
-    }
-
-    &__panel {
-      @apply mb-[13px] bg-white;
-    }
-
-    &__header {
-      @apply p-[10px] bg-[#f6f6f6] rounded-t-[3px] text-[#444] leading-[20px];
-    }
-
-    &__pagination {
-      @apply py-[10px] pl-[10px];
-
-      ul {
-        @apply mb-0 ml-0 rounded-[4px];
-      }
-    }
-
-    &__empty {
-      @apply py-[100px] text-[#666] text-center;
-    }
   }
 }
 

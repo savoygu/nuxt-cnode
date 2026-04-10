@@ -68,21 +68,3 @@ npm run preview
 ## 项目部署
 
 [Vercel](https://vercel.com/dashboard)
-
-## 贡献者
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tbody>
-    <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/savoygu"><img src="https://avatars.githubusercontent.com/u/9302866?v=4?s=50" width="50px;" alt="huel129"/><br /><sub><b>huel129</b></sub></a><br /><a href="#design-savoygu" title="Design">🎨</a> <a href="#ideas-savoygu" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/savoygu/nuxt-cnode/commits?author=savoygu" title="Documentation">📖</a> <a href="https://github.com/savoygu/nuxt-cnode/commits?author=savoygu" title="Code">💻</a> <a href="https://github.com/savoygu/nuxt-cnode/issues?q=author%3Asavoygu" title="Bug reports">🐛</a></td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
