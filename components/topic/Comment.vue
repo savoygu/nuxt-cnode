@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { Position } from 'codemirror'
 import type { FetchError } from 'ofetch'
 
 const emit = defineEmits<{
@@ -13,12 +12,12 @@ const topic = defineModel<CNodeTopic>('topic', {
 
 // hooks
 const { $api } = useNuxtApp()
-const userState = useUserState()
 const tokenCookie = useTokenCookie()
+
+const userState = useUserState()
 const user = computed(() => userState.value.user)
 
 // reactive
-const repliesRef = useTemplateRef('replies')
 const showReplies = ref<boolean[]>(Array.from({ length: topic.value.replies.length }, () => false))
 
 // methods
@@ -55,23 +54,12 @@ async function handleStarReply(reply: CNodeReply) {
     ElMessage.error({ type: 'error', message: data.msg || '网络错误，点赞失败' })
   }
 }
+
 function handleOpenReply(reply: CNodeReply, index: number) {
   showReplies.value[index] = !showReplies.value[index]
-
-  nextTick(() => {
-    if (showReplies.value[index] && repliesRef.value?.at(-1)) {
-      const loginname = reply.author.loginname
-      const editor = repliesRef.value.at(-1)?.editor
-      if (editor) {
-        editor.codemirror.focus()
-        if (!editor.codemirror.getValue().startsWith(`@${loginname}`)) {
-          editor.value(`@${loginname} `)
-          editor.codemirror.setCursor({ line: 1 } as Position)
-        }
-      }
-    }
-  })
+  // TODO focus && reply.author.loginname
 }
+
 function handleReply(item: CNodeReply, index: number) {
   showReplies.value[index] = !showReplies.value[index]
   emit('replySuccess', item)
@@ -126,10 +114,9 @@ function handleReply(item: CNodeReply, index: number) {
         </div>
         <TopicReply
           v-if="user && showReplies[index]"
-          ref="replies"
           :topic="topic"
           :reply="item"
-          @reply-success="() => handleReply(item, index)"
+          @reply-success="handleReply(item, index)"
         />
       </div>
     </div>

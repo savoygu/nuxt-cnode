@@ -1,15 +1,15 @@
 <script setup lang="ts">
 const { $api } = useNuxtApp()
-const route = useRoute()
 const logger = useLogger('[pages:index]')
 
+const route = useRoute()
 const currentTab = computed<string>(() => route.query.tab as string || 'all')
 const showTag = computed(() => {
   const tab = route.query.tab as string
   return !tab || tab === 'all' || tab === 'good'
 })
 
-const { list: topics, initialLoading, shouldShowLoading, loading, finished, fetch: fetchTopics } = usePaginatedList({
+const { list: topics, initialLoading, shouldShowLoading, loading, finished, fetch: getTopics } = usePaginatedList({
   fetcher: (page, limit) => $api.cnode.topics({ tab: currentTab.value, page, limit, mdrender: 'false' }),
   processor(data) {
     return data ?? []
@@ -24,7 +24,7 @@ const { list: topics, initialLoading, shouldShowLoading, loading, finished, fetc
 })
 
 try {
-  await fetchTopics()
+  await getTopics()
 }
 catch (err) {
   logger.error({ err }, 'get topics error')

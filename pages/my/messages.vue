@@ -4,37 +4,30 @@ definePageMeta({
 })
 
 const { $api } = useNuxtApp()
-const userState = useUserState()
 const tokenCookie = useTokenCookie()
 const logger = useLogger('[page:messages]')
 
-const message = ref<{
-  hasnot_read_messages: CNodeMessage[]
-  has_read_messages: CNodeMessage[]
-}>({
-  hasnot_read_messages: [],
-  has_read_messages: [],
+const userState = useUserState()
+const user = computed(() => userState.value.user)
+
+const { data, fetch: getMessages } = useAPIData({
+  fetcher: () => $api.cnode.messages({ accesstoken: tokenCookie.value! }),
+  processor: (data) => {
+    return data ?? { hasnot_read_messages: [], has_read_messages: [] }
+  },
 })
 
-const currentUser = computed(() => userState.value.user)
+const { lazyFetch: lazyMarkAll } = useAPIData({
+  fetcher: () => $api.cnode.messageMarkAll({ accesstoken: tokenCookie.value! }),
+  processor: data => data ?? { marked_msgs: [] },
+})
 
 try {
-  await fetchMessages()
-  await markAll()
+  await getMessages()
+  await lazyMarkAll()
 }
 catch (err) {
   logger.error({ err }, 'get my messages error')
-}
-
-async function fetchMessages() {
-  const { data, error } = await useAsyncData(() => $api.cnode.messages({ accesstoken: tokenCookie.value! }))
-  if (!error.value) {
-    message.value = data.value?.data || message.value
-  }
-}
-
-async function markAll() {
-  await useLazyAsyncData(() => $api.cnode.messageMarkAll({ accesstoken: tokenCookie.value! }))
 }
 </script>
 
@@ -50,8 +43,8 @@ async function markAll() {
         </ElBreadcrumb>
       </template>
       <div>
-        <template v-if="message?.hasnot_read_messages.length">
-          <Message v-for="item in message.hasnot_read_messages" :key="item.id" :message="item" />
+        <template v-if="data.hasnot_read_messages.length">
+          <Message v-for="item in data.hasnot_read_messages" :key="item.id" :message="item" />
         </template>
         <p v-else class="p-2.5">
           无消息
@@ -60,8 +53,8 @@ async function markAll() {
     </Panel>
     <Panel title="过往消息" :content-padding="false">
       <div>
-        <template v-if="message?.has_read_messages.length">
-          <Message v-for="item in message.has_read_messages" :key="item.id" :message="item" />
+        <template v-if="data.has_read_messages.length">
+          <Message v-for="item in data.has_read_messages" :key="item.id" :message="item" />
         </template>
         <p v-else class="p-2.5">
           无消息
@@ -69,7 +62,7 @@ async function markAll() {
       </div>
     </Panel>
     <template #sidebar>
-      <SidebarUserProfile title="个人信息" :user="currentUser" />
+      <SidebarUserProfile title="个人信息" :user="user" />
     </template>
   </NuxtLayout>
 </template>

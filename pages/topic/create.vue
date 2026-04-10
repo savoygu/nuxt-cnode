@@ -1,62 +1,42 @@
 <script setup lang="ts">
-// useEditor()
-
 const { $api } = useNuxtApp()
 const tokenCookie = useTokenCookie()
 const logger = useLogger('page:topic:create')
 
 // reactive
-const form = reactive({
-  title: '',
-  content: '',
-  tab: '' as TabKey,
-})
-const alert = reactive({
+const [alert, setAlert] = useToggle({
   visible: false,
   title: '',
 })
-const loading = ref(false)
-const editorRef = ref<HTMLTextAreaElement>()
-const editor = ref<Editor>()
-
-// lifecycle
-onMounted(() => {
-  editor.value = new Editor({
-    element: editorRef.value!,
-  })
-  editor.value.render()
+const [loading, toggleLoading] = useToggle(false)
+const topic = reactive({
+  title: '',
+  content: '文章支持 Markdown 语法, 请注意标记代码',
+  tab: '' as TabKey,
 })
 
-// methods
-function setAlert(title: string, visible: boolean) {
-  alert.title = title
-  alert.visible = visible
-}
-
 async function handleTopicSubmit() {
-  if (!form.tab) {
-    return setAlert('请选择发布的板块', true)
-  }
-
-  if (form.title.length < 10) {
-    return setAlert('话题标题字数不能小于 10 个', true)
-  }
-
-  form.content = editor.value?.value()
-  if (!form.content) {
-    return setAlert('话题内容不能为空', true)
-  }
-
   if (loading.value)
     return
-  loading.value = true
 
+  if (!topic.tab) {
+    return setAlert({ visible: true, title: '请选择发布的板块' })
+  }
+
+  if (topic.title.length < 10) {
+    return setAlert({ visible: true, title: '话题标题字数不能小于 10 个' })
+  }
+
+  if (!topic.content) {
+    return setAlert({ visible: true, title: '话题内容不能为空' })
+  }
+
+  toggleLoading()
   try {
-    const { success, msg } = await $api.cnode.createTopic({ accesstoken: tokenCookie.value!, ...form })
-
+    const { success, msg } = await $api.cnode.createTopic({ accesstoken: tokenCookie.value!, ...topic })
     if (success) {
       ElMessage.success({ type: 'success', message: '创建话题成功' })
-      await navigateTo({ path: '/', query: { tab: form.tab } })
+      await navigateTo({ path: '/', query: { tab: topic.tab } })
     }
     else {
       ElMessage.error({ type: 'error', message: msg || '创建话题失败' })
@@ -67,7 +47,7 @@ async function handleTopicSubmit() {
     ElMessage.error({ type: 'error', message: '创建话题失败' })
   }
   finally {
-    loading.value = false
+    toggleLoading()
   }
 }
 </script>
@@ -87,7 +67,7 @@ async function handleTopicSubmit() {
         <ElAlert v-model="alert.visible" :title="alert.title" />
         <div class="mb-5">
           <span>选择板块：</span>
-          <select id="plate" v-model="form.tab" name="plate">
+          <select id="plate" v-model="topic.tab" name="plate">
             <option disabled value="">
               请选择
             </option>
@@ -107,20 +87,18 @@ async function handleTopicSubmit() {
         </div>
         <div class="mb-5">
           <input
-            v-model="form.title"
+            v-model="topic.title"
             type="text"
             class="w-full rounded border border-[#ccc] p-2"
             placeholder="标题字数 10 字以上"
           >
         </div>
         <div class="mb-5">
-          <div id="editormd">
-            <textarea
-              ref="editorRef"
-              class="min-h-[300px] w-full rounded border border-[#ccc] p-2"
-              placeholder="文章支持 Markdown 语法, 请注意标记代码"
-            />
-          </div>
+          <ClientOnly>
+            <div class="min-h-[300px] w-full rounded border border-[#ccc] p-2">
+              <TiptapSimpleEditor v-model="topic.content" />
+            </div>
+          </ClientOnly>
         </div>
         <div>
           <button :disabled="loading" class="button-blue" @click="handleTopicSubmit">

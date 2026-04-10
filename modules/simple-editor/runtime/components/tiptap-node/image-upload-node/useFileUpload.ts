@@ -75,7 +75,7 @@ export function useFileUpload(options: UseFileUploadOptions) {
 
       return null
     }
-    catch (error) {
+    catch (err) {
       if (!abortController.signal.aborted) {
         fileItems.value = fileItems.value.map(item =>
           item.id === id
@@ -83,7 +83,7 @@ export function useFileUpload(options: UseFileUploadOptions) {
             : item,
         )
         options.onError?.(
-          error instanceof Error ? error : new Error('Upload failed'),
+          err instanceof Error ? err : new Error('Upload failed'),
         )
       }
       return null

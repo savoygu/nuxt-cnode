@@ -8,17 +8,12 @@ definePageMeta({
 const route = useRoute()
 const fallback = route.query.fallback as string | undefined
 
-const alert = reactive({
+const [alert, setAlert] = useToggle({
   visible: false,
   title: '',
 })
+const [loading, toggleLoading] = useToggle(false)
 const accesstoken = shallowRef('')
-const loading = shallowRef(false)
-
-function setAlert(title: string, visible: boolean) {
-  alert.title = title
-  alert.visible = visible
-}
 
 async function handleSignin() {
   if (loading.value) {
@@ -26,12 +21,12 @@ async function handleSignin() {
   }
 
   if (!accesstoken.value) {
-    setAlert('请输入 Access Token', true)
+    setAlert({ visible: true, title: '请输入 Access Token' })
     return false
   }
-  setAlert('', false)
+  setAlert({ visible: false, title: '' })
 
-  loading.value = true
+  toggleLoading()
   try {
     const { success } = await useUserLogin(accesstoken.value)
     if (success) {
@@ -40,10 +35,10 @@ async function handleSignin() {
   }
   catch (err: unknown) {
     const data = (err as FetchError).data as APIResponse<CNodeToken>
-    setAlert(data.msg!, true)
+    setAlert({ visible: true, title: data.msg! })
   }
   finally {
-    loading.value = false
+    toggleLoading()
   }
 }
 </script>

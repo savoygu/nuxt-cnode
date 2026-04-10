@@ -60,8 +60,8 @@ export function findNodeAtPosition(editor: Editor, position: number) {
     }
     return node
   }
-  catch (error) {
-    console.error(`Error getting node at position ${position}:`, error)
+  catch (err) {
+    console.error(`Error getting node at position ${position}:`, err)
     return null
   }
 }

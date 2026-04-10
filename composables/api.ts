@@ -9,17 +9,17 @@ export interface APIResponse<T = any> {
 
 export type APIAsyncData<T> = Awaited<AsyncData<APIResponse<T> | undefined, NuxtError<unknown> | undefined>>
 
-interface UseAPIDataOptions<T> {
+interface UseAPIDataOptions<T, R> {
   fetcher: () => Promise<APIResponse<T>>
-  processor: (data?: T) => T
-  initialValue?: T
+  processor: (data?: T) => R
+  initialValue?: R
   logger?: Logger
   logContext?: string
   uniqueKey?: string
   fetchOptions?: AsyncDataOptions<APIResponse<T>>
 }
 
-export function useAPIData<T>({
+export function useAPIData<T, R>({
   fetcher,
   processor,
   initialValue,
@@ -27,7 +27,7 @@ export function useAPIData<T>({
   logContext,
   uniqueKey: providedKey,
   fetchOptions,
-}: UseAPIDataOptions<T>) {
+}: UseAPIDataOptions<T, R>) {
   // 使用 useId() 来生成在 SSR 环境下安全的唯一 ID
   const instanceId = useId()
 
@@ -38,7 +38,7 @@ export function useAPIData<T>({
   // useAsyncData 的返回状态
   const dataState = ref<APIAsyncData<T> | null>(null)
   // 经过 processor 处理后的最终渲染数据
-  const processedData = ref<T>(initialValue ?? processor()) as Ref<T>
+  const processedData = ref<R>(initialValue ?? processor()) as Ref<R>
 
   // 监听 useAsyncData 返回的 data 变化，通常在 refresh 后触发
   watch(

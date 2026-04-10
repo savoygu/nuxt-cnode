@@ -1,15 +1,12 @@
 <script setup lang="ts">
-withDefaults(defineProps<{
+interface PanelProps {
   title?: string
   header?: boolean
   contentPadding?: boolean
   bordered?: boolean
-}>(), {
-  title: '',
-  header: true,
-  contentPadding: true,
-  bordered: false,
-})
+}
+
+const { title, header = true, contentPadding = true, bordered = false } = defineProps<PanelProps>()
 </script>
 
 <template>

@@ -1,67 +1,59 @@
 <script setup lang="ts">
 const route = useRoute()
 const topicType = route.params.topictype as string
+const loginname = route.params.loginname as string
+const isCollections = topicType === 'collections'
 if (!['replies', 'topics', 'collections'].includes(topicType)) {
   throw createError({ statusCode: 404, statusMessage: 'Not Found' })
 }
 
 const { $api } = useNuxtApp()
+const logger = useLogger(`[page:user:${topicType}]`)
+
 const userState = useUserState()
-const logger = useLogger('[page:collections]')
-
-const loginname = route.params.loginname as string
-const isCollections = topicType === 'collections'
-const currentUser = ref<CNodeUser | undefined>(userState.value.user)
-const collections = ref<CNodeTopic[]>([])
-
 const isOwnProfile = computed(() => {
   return userState.value.user?.loginname === loginname
 })
+
+const { data: user, fetch: getUser } = useAPIData({
+  fetcher: () => {
+    // 个人主页
+    if (isOwnProfile.value) {
+      return Promise.resolve({ success: true, data: userState.value.user })
+    }
+    return $api.cnode.user({ loginname })
+  },
+  processor: data => data,
+})
+
+const { data: collections, fetch: getCollections } = useAPIData({
+  fetcher: () => {
+    if (!isCollections) {
+      return Promise.resolve({ success: true, data: [] })
+    }
+    return $api.cnode.topicCollects({ loginname })
+  },
+  processor: data => data ?? [],
+})
+
 const topics = computed(() => {
   if (isCollections) {
     return collections.value
   }
+
   return topicType === 'topics'
-    ? currentUser.value?.recent_topics || []
-    : currentUser.value?.recent_replies || []
+    ? user.value?.recent_topics || []
+    : user.value?.recent_replies || []
 })
 
 try {
   await Promise.all([
-    fetchUser(loginname),
-    fetchCollections(loginname),
+    getUser(),
+    getCollections(),
   ])
 }
 catch (err) {
-  logger.error({ err }, 'get user collections error')
-}
-
-async function fetchUser(loginname: string) {
-  if (isOwnProfile.value) {
-    return
-  }
-
-  const { error, data } = await useAsyncData(() => $api.cnode.user({ loginname }))
-  if (error.value) {
-    currentUser.value = undefined
-  }
-  else {
-    currentUser.value = data.value?.data || undefined
-  }
-}
-
-async function fetchCollections(loginname: string) {
-  if (!isCollections) {
-    return
-  }
-
-  const { error, data } = await useAsyncData(() => $api.cnode.topicCollects({ loginname }))
-  if (error.value) {
-    collections.value = []
-  }
-  else {
-    collections.value = data.value?.data || []
-  }
+  logger.error({ err }, 'get user or collections error')
 }
 </script>
 
@@ -73,12 +65,12 @@ async function fetchCollections(loginname: string) {
           <ElBreadcrumbItem to="/">
             主页
           </ElBreadcrumbItem>
-          <template v-if="currentUser">
-            <ElBreadcrumbItem :to="`/user/${currentUser.loginname}`">
-              {{ currentUser.loginname }}的主页
+          <template v-if="user">
+            <ElBreadcrumbItem :to="`/user/${user.loginname}`">
+              {{ user.loginname }}的主页
             </ElBreadcrumbItem>
             <ElBreadcrumbItem>
-              {{ currentUser.loginname }} {{ isCollections ? '收藏' : topicType === 'topics' ? '创建' : '参与' }}的话题
+              {{ user.loginname }} {{ isCollections ? '收藏' : topicType === 'topics' ? '创建' : '参与' }}的话题
             </ElBreadcrumbItem>
           </template>
           <ElBreadcrumbItem v-else>
@@ -87,7 +79,7 @@ async function fetchCollections(loginname: string) {
         </ElBreadcrumb>
       </template>
       <div>
-        <template v-if="currentUser">
+        <template v-if="user">
           <template v-if="topics.length">
             <TopicItem v-for="item in topics" :key="item.id" :item="item" :show-tag="isCollections" />
           </template>
@@ -99,7 +91,7 @@ async function fetchCollections(loginname: string) {
       </div>
     </Panel>
     <template #sidebar>
-      <SidebarUserProfile v-if="currentUser" title="个人信息" :user="currentUser" />
+      <SidebarUserProfile v-if="user" title="个人信息" :user="user" />
     </template>
   </NuxtLayout>
 </template>

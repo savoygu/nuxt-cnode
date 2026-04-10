@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { isUndefined } from 'lodash-es'
 
-const props = defineProps<{
+const { item, showTag } = defineProps<{
   item: CNodeTopic
   showTag: boolean
 }>()
 
 const showCount = computed(() => {
-  const item = props.item
   if (isUndefined(item.reply_count) && isUndefined(item.visit_count)) {
     return false
   }

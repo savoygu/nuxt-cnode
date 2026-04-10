@@ -3,15 +3,17 @@
 
 // hooks
 const { $api } = useNuxtApp()
-const route = useRoute()
 const tokenCookie = useTokenCookie()
-const userState = useUserState()
-const logger = useLogger('[pages:topic]')
 
-// fetch
+const route = useRoute()
 const id = route.params.id as string
 
-const { state: topicState, data: topic, fetch: fetchTopic } = useAPIData({
+const logger = useLogger(`[pages:topic:${id}]`)
+
+const userState = useUserState()
+const user = computed(() => userState.value.user)
+
+const { state: topicState, data: topic, fetch: getTopic } = useAPIData({
   fetcher: () => $api.cnode.topic({ id, accesstoken: tokenCookie.value ?? '', mdrender: 'true' }),
   processor(data) {
     return data ?? {} as CNodeTopic
@@ -19,38 +21,31 @@ const { state: topicState, data: topic, fetch: fetchTopic } = useAPIData({
   logger,
   logContext: 'topic',
 })
-const author = ref<CNodeUser>()
+
+const isSameUser = computed(() => user.value && user.value.loginname === topic.value?.author?.loginname)
+
+const { data: author, fetch: getAuthor } = useAPIData({
+  fetcher: () => {
+    if (isSameUser.value) {
+      return Promise.resolve({ success: true, data: user.value })
+    }
+    return $api.cnode.user({ loginname: topic.value?.author.loginname ?? '' })
+  },
+  processor: data => data,
+})
 
 // computed
-const user = computed(() => userState.value.user)
-const isSameUser = computed(() => user.value && user.value.loginname === topic.value?.author?.loginname)
 const recentTopics = computed(() => {
-  const topics = isSameUser.value ? user.value?.recent_topics : author.value?.recent_topics
-  return topics?.filter(topic => topic.id !== id) ?? []
+  return author.value?.recent_topics?.filter(topic => topic.id !== id) ?? []
 })
 const tabName = computed(() => TAB_MAP[topic.value?.tab]?.name)
 
 try {
-  await fetchTopic()
-  await fetchAuthor()
+  await getTopic()
+  await getAuthor()
 }
 catch (err) {
   logger.error({ err }, 'get topic error')
-}
-
-async function fetchAuthor() {
-  if (isSameUser.value) {
-    return
-  }
-
-  const { error, data } = await useAsyncData(() => $api.cnode.user({ loginname: topic.value.author.loginname }))
-  if (!error.value) {
-    const { success, data: result } = data.value!
-    if (success) {
-      author.value = result
-    }
-    logger.info({ data: toRaw(data.value), render: toRaw(author.value) })
-  }
 }
 
 // methods
@@ -68,12 +63,11 @@ async function handleTopicCollect() {
     ElMessage.error({ type: 'error', message: msg! })
   }
 }
-async function handleTopicReply(reply: CNodeReply) {
+
+async function handleTopicReply(reply?: CNodeReply) {
   await topicState.value?.refresh()
   reply?.id && navigateTo({ path: route.path, replace: true, hash: `#${reply?.reply_id}` })
 }
-
-const hello = ref(`<p>I'm running Tiptap with Vue.js. 🎉</p>`)
 </script>
 
 <template>
@@ -113,13 +107,7 @@ const hello = ref(`<p>I'm running Tiptap with Vue.js. 🎉</p>`)
     </Panel>
     <TopicComment v-if="topic.replies.length > 0" v-model:topic="topic" @reply-success="handleTopicReply" />
     <Panel v-if="user" id="reply-topic" title="添加回复" bordered>
-      {{ hello }}
-      <ClientOnly>
-        <div class="h-[70vh] w-full">
-          <TiptapSimpleEditor v-model="hello" />
-        </div>
-      </ClientOnly>
-      <!-- <TopicReply :topic="topic" @reply="handleTopicReply" /> -->
+      <TopicReply :topic="topic" @reply-success="handleTopicReply" />
     </Panel>
     <template #sidebar>
       <SidebarUserProfile title="作者" :user="author" />
