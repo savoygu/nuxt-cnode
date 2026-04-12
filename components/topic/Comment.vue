@@ -26,20 +26,18 @@ async function handleStarReply(reply: CNodeReply) {
     const { success, data, msg } = await $api.cnode.upReply({ accesstoken: tokenCookie.value!, reply_id: reply.id })
     if (success) {
       const isUped = data.action === 'up'
-      topic.value.replies = topic.value.replies.map((item) => {
-        if (item.id === reply.id) {
-          item.is_uped = isUped
-          if (user.value) {
-            if (isUped) {
-              item.ups.push(user.value.id)
-            }
-            else {
-              item.ups = item.ups.filter(name => name !== user.value!.id)
-            }
+      const targetReply = topic.value.replies.find(item => item.id === reply.id)
+      if (targetReply) {
+        targetReply.is_uped = isUped
+        if (user.value) {
+          if (isUped) {
+            targetReply.ups.push(user.value.id)
+          }
+          else {
+            targetReply.ups = targetReply.ups.filter(id => id !== user.value!.id)
           }
         }
-        return item
-      })
+      }
       ElMessage.success({
         type: 'success',
         message: isUped ? '点赞成功' : '取消点赞成功',
@@ -57,7 +55,6 @@ async function handleStarReply(reply: CNodeReply) {
 
 function handleOpenReply(reply: CNodeReply, index: number) {
   showReplies.value[index] = !showReplies.value[index]
-  // TODO focus && reply.author.loginname
 }
 
 function handleReply(item: CNodeReply, index: number) {
@@ -81,6 +78,7 @@ function handleReply(item: CNodeReply, index: number) {
               :src="item.author.avatar_url"
               :alt="item.author.loginname"
               class="size-[30px] rounded-small"
+              loading="lazy"
             />
           </NuxtLink>
           <div>

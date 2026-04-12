@@ -18,6 +18,7 @@ const user = computed(() => propUser || userState.value.user)
               class="block size-12 rounded-small"
               :src="user.avatar_url"
               :alt="user.loginname"
+              loading="lazy"
             />
           </NuxtLink>
           <span class="text-base">

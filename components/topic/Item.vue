@@ -15,9 +15,9 @@ const showCount = computed(() => {
 </script>
 
 <template>
-  <div class="relative grid grid-cols-[30px_70px_36px_1fr_80px] items-center border-t border-t-[#f0f0f0] bg-white p-2.5 text-sm first:border-t-0" :class="{ '!grid-cols-[30px_70px_1fr_50px]': showCount && !showTag, '!grid-cols-[30px_35px_1fr_50px]': !showCount && showTag, '!grid-cols-[30px_1fr_50px]': !showCount && !showTag }">
+  <div v-memo="[item.last_reply_at, item.reply_count, item.visit_count, showTag, item.top, item.good, item.tab]" class="relative grid grid-cols-[30px_70px_36px_1fr_80px] items-center border-t border-t-[#f0f0f0] bg-white p-2.5 text-sm first:border-t-0" :class="{ '!grid-cols-[30px_70px_1fr_50px]': showCount && !showTag, '!grid-cols-[30px_35px_1fr_50px]': !showCount && showTag, '!grid-cols-[30px_1fr_50px]': !showCount && !showTag }">
     <NuxtLink :to="`/user/${item.author?.loginname}`">
-      <NuxtImg class="block size-[30px] rounded-small" :src="item.author?.avatar_url" :title="item.author?.loginname" />
+      <NuxtImg class="block size-[30px] rounded-small" :src="item.author?.avatar_url" :title="item.author?.loginname" loading="lazy" />
     </NuxtLink>
     <span v-if="showCount" class="text-center">
       <span class="text-[#9e78c0]"> {{ ` ${item.reply_count} ` }} </span>

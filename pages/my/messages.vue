@@ -10,24 +10,35 @@ const logger = useLogger('[page:messages]')
 const userState = useUserState()
 const user = computed(() => userState.value.user)
 
-const { data, fetch: getMessages } = useAPIData({
+const { data, fetch: getMessages, refresh: refreshMessages } = useAPIData({
   fetcher: () => $api.cnode.messages({ accesstoken: tokenCookie.value! }),
   processor: (data) => {
     return data ?? { hasnot_read_messages: [], has_read_messages: [] }
   },
 })
 
-const { lazyFetch: lazyMarkAll } = useAPIData({
+const { rawFetch: markAll } = useAPIData({
   fetcher: () => $api.cnode.messageMarkAll({ accesstoken: tokenCookie.value! }),
   processor: data => data ?? { marked_msgs: [] },
 })
 
 try {
   await getMessages()
-  await lazyMarkAll()
 }
 catch (err) {
   logger.error({ err }, 'get my messages error')
+}
+
+async function handleMarkAll() {
+  try {
+    await markAll()
+    await refreshMessages()
+    ElMessage.success({ type: 'success', message: '已全部标记为已读' })
+  }
+  catch (err) {
+    logger.error({ err }, 'mark all error')
+    ElMessage.error({ type: 'error', message: '标记失败' })
+  }
 }
 </script>
 
@@ -41,6 +52,9 @@ catch (err) {
           </ElBreadcrumbItem>
           <ElBreadcrumbItem>新消息</ElBreadcrumbItem>
         </ElBreadcrumb>
+        <ElButton v-if="data.hasnot_read_messages.length > 0" size="small" type="primary" @click="handleMarkAll">
+          全部标记已读
+        </ElButton>
       </template>
       <div>
         <template v-if="data.hasnot_read_messages.length">

@@ -75,12 +75,26 @@ export function useAPIData<T, R>({
     }
   }
 
+  async function rawFetch() {
+    const res = await fetcher()
+    processedData.value = processor(res.data)
+    if (logger && logContext) {
+      logger.info({ data: toRaw(res), render: toRaw(processedData.value) }, `raw get ${logContext}`)
+    }
+  }
+
+  function refresh() {
+    dataState.value?.refresh()
+  }
+
   return {
     data: processedData,
     state: dataState,
     pending: computed(() => dataState.value?.pending),
     fetch,
     lazyFetch,
+    rawFetch,
+    refresh,
   }
 }
 
@@ -193,7 +207,9 @@ export function usePaginatedList<T>({
     }
   }
 
-  useInfiniteScroll(scrollTarget || window, loadMore, { distance })
+  if (import.meta.client) {
+    useInfiniteScroll(scrollTarget || window, loadMore, { distance })
+  }
 
   return {
     dataState,
