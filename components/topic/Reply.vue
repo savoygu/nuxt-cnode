@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import type { FetchError } from 'ofetch'
 
-// props
-const { topic, reply } = defineProps<{
+interface ReplyProps {
   topic: CNodeTopic
   reply?: CNodeReply
-}>()
+}
+
+// props
+const { topic, reply } = defineProps<ReplyProps>()
 
 // emits
 const emit = defineEmits<{
